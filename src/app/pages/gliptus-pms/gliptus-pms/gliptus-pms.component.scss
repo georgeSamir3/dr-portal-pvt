@@ -1,0 +1,19 @@
+caption {
+  font-weight: bold;
+  font-size: 14px;
+  display: block;
+}
+
+.star {
+  color: red;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+:host ::ng-deep .ng-select .ng-select-container .ng-arrow-wrapper {
+  display: none !important;
+}
+
+.input-w{
+  min-width: 150px;
+}

@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <a class="back-btn d-inline-block mb-4" [routerLink]="['']">
+        <i class="fa fa-arrow-left"></i>
+        Back to Home
+      </a>
+      <div class="table-title mb-1">
+        <h3 class="title mb-0">My Patient List</h3>
+        <search
+          placeholder="Patient name or mobile number"
+          (search)="searchPatient($event)"
+        ></search>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" style="padding:0px">
+    <div class="card">
+      <ngx-datatable
+        class="material ngx-datatable-custom mt-3"
+        [rows]="patientListItems"
+        [columns]="columns"
+        [limit]="pageSize"
+        [offset]="currentPage - 1"
+        columnMode="force"
+        externalPaging="true"
+        [count]="totalItems"
+        [messages]="messages"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        rowHeight="auto"
+        (page)="onChangePage($event)"
+      >
+        <ng-template
+          let-row="row"
+          #ehrButtonTemplateRef
+          ngx-datatable-row-detail-template
+          style="height: 50px"
+        >
+          <!-- <button class="btn btn-primary btn-sm" (click)="onPatientClick(row)">
+            View EHR
+          </button> -->
+          <span
+            class="bi bi-three-dots"
+            style="cursor: pointer"
+            (click)="showPopUp($event, row)"
+            >g</span
+          >
+          <div
+            class="overlay floatinSM"
+            *ngIf="showOverlay && selectedPatientId === row.patientId"
+          >
+            <div class="overlay-content">
+              <!-- Content of the overlay -->
+              ggg
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>

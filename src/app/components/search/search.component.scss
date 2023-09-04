@@ -1,0 +1,24 @@
+.search-p{
+  background-color: #F6F6F6;
+  border: none;
+  outline: none;
+  border-radius: 100px;
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.8rem;
+  &:focus, &:active{
+      border: none;
+      outline: none;
+  }
+}
+
+.btn-search{
+  border-radius: 50px;
+  // padding-left: 2rem !important;
+  // padding-right: 2rem !important;
+  padding: 0.8rem 2rem !important;
+}
+
+.search-container{
+  row-gap: 15px;
+}

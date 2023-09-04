@@ -1,0 +1,1049 @@
+<div class="container-fluid">
+  <page-header-breadcrumb
+    [pageTitle]="pageTitle"
+    [breadcrumbList]="breadcrumbList"
+  >
+  </page-header-breadcrumb>
+  <div class="card">
+    <div class="card-header" *ngIf="patientData">
+      <h3 class="mb-0">Patient Initials</h3>
+    </div>
+    <div class="card-body">
+      <div class="patient-info-form" *ngIf="!patientData">
+        <form #mobileNumberForm="ngForm" (ngSubmit)="submitDoctorNumber(mobileNumber)">
+          <div class="form-group">
+            <label for="mobileNumber">Mobile Number:</label>
+            <input
+              type="text"
+              id="mobileNumber"
+              name="mobileNumber"
+              [(ngModel)]="mobileNumber"
+              #mobileNumberInput="ngModel"
+              required
+              pattern="^01[0-2|5][0-9]{8}$"
+              class="form-control"
+            >
+            <div class="input-errors" *ngIf="mobileNumberInput.invalid && (mobileNumberInput.dirty || mobileNumberInput.touched)">
+              <p *ngIf="mobileNumberInput.errors.required">
+                Mobile number is required
+              </p>
+              <p *ngIf="mobileNumberInput.errors.pattern" >
+                Please enter a valid mobile number
+              </p>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" [disabled]="mobileNumberForm.invalid">Submit</button>
+        </form>
+      </div>
+      <!-- Start Pateient form -->
+      <div class="patient-info-form" *ngIf="patientData">
+        <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="fullName">Full Name: <span class="star">*</span></label>
+                <input type="text" id="fullName" class="form-control" formControlName="fullName" />
+                <div class="input-errors" *ngIf="patientForm.get('fullName').invalid && patientForm.get('fullName').touched">
+                  <p *ngIf="patientForm.get('fullName').errors.required">Full Name is required.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="nationalId">National ID: </label>
+                <input type="text" id="nationalId" class="form-control" formControlName="nationalId" />
+                <div class="input-errors" *ngIf="patientForm.get('nationalId').invalid && patientForm.get('nationalId').touched">
+                  <p *ngIf="patientForm.get('nationalId').errors.required">National ID is required.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="dateOfBirth">Date of Birth: <span class="star">*</span></label>
+                <!-- <input type="date" id="dateOfBirth" class="form-control" formControlName="dateOfBirth" /> -->
+                <app-date-input formControlName="dateOfBirth" [id]="'dateOfBirth'"></app-date-input>
+                <div class="input-errors" *ngIf="patientForm.get('dateOfBirth').invalid && patientForm.get('dateOfBirth').touched">
+                  <p *ngIf="patientForm.get('dateOfBirth').errors.required">Date of Birth is required.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="gender">Gender: <span class="star">*</span></label>
+                <select id="gender" class="form-control" formControlName="gender">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <div class="input-errors" *ngIf="patientForm.get('gender').invalid && patientForm.get('gender').touched">
+                  <p *ngIf="patientForm.get('gender').errors.required">Gender is required.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4" *ngIf="patientForm.get('gender').value === 'female'">
+              <div class="form-group">
+                <label for="isPregnant">Is Pregnant:</label>
+                <select id="isPregnant" class="form-control" formControlName="isPregnant">
+                  <option [value]="0">No</option>
+                  <option [value]="1">Yes</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="dateOfDiagnosis">Date of Diagnosis: </label>
+                <app-date-input formControlName="dateOfDiagnosis" [id]="'dateOfDiagnosis'"></app-date-input>
+                <div class="input-errors" *ngIf="patientForm.get('dateOfDiagnosis').invalid && patientForm.get('dateOfDiagnosis').touched">
+                  <p *ngIf="patientForm.get('dateOfDiagnosis').errors.required">Date of Diagnosis is required.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="familyHistoryOfDiabetes">Family History of Diabetes: </label>
+                <select id="familyHistoryOfDiabetes" class="form-control" formControlName="familyHistoryOfDiabetes">
+                  <option [value]="0">No</option>
+                  <option [value]="1">Yes</option>
+                </select>
+                <div class="input-errors" *ngIf="patientForm.get('familyHistoryOfDiabetes').invalid && patientForm.get('familyHistoryOfDiabetes').touched">
+                  <p *ngIf="patientForm.get('familyHistoryOfDiabetes').errors.required">Family History of Diabetes is required.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="hasChronicIllnesses">Has chronic diseases: </label>
+                <select id="hasChronicIllnesses" class="form-control" formControlName="hasChronicIllnesses">
+                  <option [value]="0">No</option>
+                  <option [value]="1">Yes</option>
+                </select>
+                <div class="input-errors" *ngIf="patientForm.get('hasChronicIllnesses').invalid && patientForm.get('hasChronicIllnesses').touched">
+                  <p *ngIf="patientForm.get('hasChronicIllnesses').errors.required">Has chronic diseases is required.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4" *ngIf="patientForm.get('hasChronicIllnesses').value === '1'">
+              <div class="form-group">
+                <label for="chronicIllnessesSpecification">Chronic disease Specification:</label>
+                <input type="text" id="chronicIllnessesSpecification" class="form-control" formControlName="chronicIllnessesSpecification" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="mb-2">Lipid Tests</h3>
+              <div formGroupName="lipidTests">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="d-flex mt-4">
+                      <div class="custom-control custom-radio flex-grow-1">
+                        <input class="custom-control-input" id="yes11{{i}}" type="radio" value="1" formControlName="isDone">
+                        <label class="custom-control-label" for="yes11{{i}}">Done</label>
+                      </div>
+                      <div class="custom-control custom-radio flex-grow-1">
+                        <input class="custom-control-input" id="no11{{i}}" type="radio" value="0" formControlName="isDone" #notDone>
+                        <label class="custom-control-label" for="no11{{i}}">Not Done</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="cholesterol">Cholesterol:</label>
+                      <div class="input-group">
+                        <input type="number" id="cholesterol" class="form-control" formControlName="cholesterol" />
+                        <div class="input-group-append">
+                          <span class="input-group-text">mg/dL</span>
+                        </div>
+                      </div>
+                      <div class="input-errors" *ngIf="patientForm.get('lipidTests.cholesterol').invalid && patientForm.get('lipidTests.cholesterol').touched">
+                        <p *ngIf="patientForm.get('lipidTests.cholesterol').errors.required">Cholesterol is required.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="hdl">HDL:</label>
+                      <div class="input-group">
+                        <input type="number" id="hdl" class="form-control" formControlName="hdl" />
+                        <div class="input-group-append">
+                          <span class="input-group-text">mg/dL</span>
+                        </div>
+                      </div>
+                      <div class="input-errors" *ngIf="patientForm.get('lipidTests.hdl').invalid && patientForm.get('lipidTests.hdl').touched">
+                        <p *ngIf="patientForm.get('lipidTests.hdl').errors.required">hdl is required.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="ldl">LDL:</label>
+                      <div class="input-group">
+                        <input type="number" id="ldl" class="form-control" formControlName="ldl" />
+                        <div class="input-group-append">
+                          <span class="input-group-text">mg/dL</span>
+                        </div>
+                      </div>
+                      <div class="input-errors" *ngIf="patientForm.get('lipidTests.ldl').invalid && patientForm.get('lipidTests.ldl').touched">
+                        <p *ngIf="patientForm.get('lipidTests.ldl').errors.required">ldl is required.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="triglycerides">Triglycerides:</label>
+                      <div class="input-group">
+                        <input type="number" id="triglycerides" class="form-control" formControlName="triglycerides" />
+                        <div class="input-group-append">
+                          <span class="input-group-text">mg/dL</span>
+                        </div>
+                      </div>
+                      <div class="input-errors" *ngIf="patientForm.get('lipidTests.triglycerides').invalid && patientForm.get('lipidTests.triglycerides').touched">
+                        <p *ngIf="patientForm.get('lipidTests.triglycerides').errors.required">Triglycerides is required.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="mb-2">Kidney Tests</h3>
+              <div formGroupName="kidneyTests">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="d-flex mt-4">
+                      <div class="custom-control custom-radio flex-grow-1">
+                        <input class="custom-control-input" id="yes12{{i}}" type="radio" value="1" formControlName="isDone">
+                        <label class="custom-control-label" for="yes12{{i}}">Done</label>
+                      </div>
+                      <div class="custom-control custom-radio flex-grow-1">
+                        <input class="custom-control-input" id="no13{{i}}" type="radio" value="0" formControlName="isDone">
+                        <label class="custom-control-label" for="no13{{i}}">Not Done</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="egfr">eGFR:</label>
+                      <div class="input-group">
+                        <input type="number" class="form-control" formControlName="egfr" >
+                        <div class="input-group-append">
+                          <span class="input-group-text">mg/dL</span>
+                        </div>
+                      </div>
+                      <div class="input-errors" *ngIf="patientForm.get('kidneyTests.egfr').invalid && patientForm.get('kidneyTests.egfr').touched">
+                        <p *ngIf="patientForm.get('kidneyTests.egfr').errors.required">eGFR is required.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="bloodUreaNitrogen">Blood Urea Nitrogen:</label>
+                      <div class="input-group">
+                        <input type="number" id="bloodUreaNitrogen" class="form-control" formControlName="bloodUreaNitrogen" />
+                        <div class="input-group-append">
+                          <span class="input-group-text">mg/dL</span>
+                        </div>
+                      </div>
+                      <div class="input-errors" *ngIf="patientForm.get('kidneyTests.bloodUreaNitrogen').invalid && patientForm.get('kidneyTests.bloodUreaNitrogen').touched">
+                        <p *ngIf="patientForm.get('kidneyTests.bloodUreaNitrogen').errors.required">Blood Urea Nitrogen is required.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="serumCreatinine">Serum Creatinine:</label>
+                      <div class="input-group">
+                        <input type="number" id="serumCreatinine" class="form-control" formControlName="serumCreatinine" />
+                        <div class="input-group-append">
+                          <span class="input-group-text">mg/dL</span>
+                        </div>
+                      </div>
+                      <div class="input-errors" *ngIf="patientForm.get('kidneyTests.serumCreatinine').invalid && patientForm.get('kidneyTests.serumCreatinine').touched">
+                        <p *ngIf="patientForm.get('kidneyTests.serumCreatinine').errors.required">Serum Creatinine is required.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- End Patient Form-->
+    </div>
+  </div>
+  <div class="card" *ngIf="patientData">
+    <div class="card-header">
+      <h3 class="mb-0">Patient Visits</h3>
+    </div>
+    <div class="card-body">
+    <!-- Start Visits form -->
+    <div class="patient-info-form">
+      <form [formGroup]="visitForm">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <caption>Patient Data: </caption>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                      Visit {{i + 1}}
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                    <div [formGroup]="visitForm.get(visit.key)">
+
+                      <div class="mb-2">
+                        <caption>Visit Date: <span class="star">*</span></caption>
+                        <app-date-input formControlName="visitDate" [id]="'visitDate'"></app-date-input>
+                        <div class="input-errors" *ngIf="visitForm.get(visit.key).get('visitDate').invalid && visitForm.get(visit.key).get('visitDate').touched">
+                          <p *ngIf="visitForm.get(visit.key).get('visitDate').errors.required">Visit Date is required.</p>
+                        </div>
+                      </div>
+
+                      <div class="mb-2">
+                        <caption>Blood Pressure: </caption>
+                        <div class="input-group">
+                          <input type="text" class="form-control" [formControlName]="'bloodPressure'" placeholder="000/000" (input)="onInputChange(visit.key)">
+                          <div class="input-group-append">
+                            <span class="input-group-text">mmHg</span>
+                          </div>
+                        </div>
+                        <div class="input-errors" *ngIf="visitForm.get(visit.key).get('bloodPressure').invalid && visitForm.get(visit.key).get('bloodPressure').touched">
+                          <p *ngIf="visitForm.get(visit.key).get('bloodPressure').errors.required">Blood pressure is required.</p>
+                          <p *ngIf="visitForm.get(visit.key).get('bloodPressure').errors.pattern">Blood pressure format not correct</p>
+                        </div>
+                      </div>
+
+                      <div class="mb-2">
+                        <caption>Does the patient suffer from any diabetes <br> related complication(s)?</caption>
+                        <div class="d-flex mt-2">
+                          <div class="custom-control custom-radio flex-grow-1">
+                            <input class="custom-control-input" id="yes{{i}}" type="radio" value="1" formControlName="hasDiabetesRelatedComplications">
+                            <label class="custom-control-label" for="yes{{i}}">Yes</label>
+                          </div>
+                          <div class="custom-control custom-radio flex-grow-1">
+                            <input class="custom-control-input" id="no{{i}}" type="radio" value="0" formControlName="hasDiabetesRelatedComplications">
+                            <label class="custom-control-label" for="no{{i}}">No</label>
+                          </div>
+                        </div>
+                        <div class="mt-2" *ngIf="visitForm.get(visit.key).get('hasDiabetesRelatedComplications').value === '1'">
+                          <label>please specify:</label>
+                          <input type="text" class="form-control mt-2" formControlName="diabetesRelatedComplicationsSpecification">
+                        </div>
+                      </div>
+
+                      <div class="mb-2">
+                        <caption>Has the patient been hospitalized previously <br> due to diabetes complication? </caption>
+                        <div class="d-flex mt-2">
+                          <div class="custom-control custom-radio flex-grow-1">
+                            <input class="custom-control-input" id="yes14{{i}}" type="radio" value="1" formControlName="hasHospitalizedDiabetesComplications">
+                            <label class="custom-control-label" for="yes14{{i}}">Yes</label>
+                          </div>
+                          <div class="custom-control custom-radio flex-grow-1">
+                            <input class="custom-control-input" id="no14{{i}}" type="radio" value="0" formControlName="hasHospitalizedDiabetesComplications">
+                            <label class="custom-control-label" for="no14{{i}}">No</label>
+                          </div>
+                        </div>
+                        <div class="mt-2" *ngIf="visitForm.get(visit.key).get('hasHospitalizedDiabetesComplications').value === '1'">
+                          <label>please specify:</label>
+                          <input type="text" class="form-control mt-2" formControlName="hospitalizedDiabetesComplicationsSpecification">
+                        </div>
+                      </div>
+
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <caption>Laboratory Tests Results: <span class="star">*</span></caption>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                      Visit {{i + 1}}
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td *ngFor="let visit of visitForm.controls | keyvalue: unsorted">
+                    <div [formGroup]="visitForm.get(visit.key)">
+                      <div class="mb-2">
+                        <caption>Date: </caption>
+                        <app-date-input formControlName="laboratoryTestsResultsDate" [id]="'laboratoryTestsResultsDate'"></app-date-input>
+                        <div class="input-errors" *ngIf="visitForm.get(visit.key).get('laboratoryTestsResultsDate').invalid && visitForm.get(visit.key).get('laboratoryTestsResultsDate').touched">
+                          <p *ngIf="visitForm.get(visit.key).get('laboratoryTestsResultsDate').errors.required">Laboratory Tests Results Date is required.</p>
+                        </div>
+                      </div>
+
+                      <div formGroupName="bloodGlucoseTests" class="form-group">
+                        <caption>Blood Glucose tests: </caption>
+                        <div class="mt-1">
+                          <label>HbAC:</label>
+                          <div class="input-group">
+                            <input formControlName="hbAC" type="number" class="form-control">
+                            <div class="input-group-append">
+                              <span class="input-group-text">%</span>
+                            </div>
+                          </div>
+                          <div class="input-errors" *ngIf="visitForm.get(visit.key).get('bloodGlucoseTests.hbAC').invalid &&  visitForm.get(visit.key).get('bloodGlucoseTests.hbAC').touched">
+                            <p *ngIf="visitForm.get(visit.key).get('bloodGlucoseTests.hbAC').errors.required">HbAC is required.</p>
+                          </div>
+                        </div>
+                        <div class="mt-1">
+                          <label>FPG:</label>
+                          <div class="input-group">
+                            <input formControlName="fpg" type="number" class="form-control">
+                            <div class="input-group-append">
+                              <span class="input-group-text">mg/dL</span>
+                            </div>
+                          </div>
+                          <div class="input-errors" *ngIf="visitForm.get(visit.key).get('bloodGlucoseTests.fpg').invalid && visitForm.get(visit.key).get('bloodGlucoseTests.fpg').touched">
+                            <p *ngIf="visitForm.get(visit.key).get('bloodGlucoseTests.fpg').errors.required">FPG is required.</p>
+                          </div>
+                        </div>
+                        <div class="mt-1">
+                          <label>PPG:</label>
+                          <div class="input-group">
+                            <input formControlName="ppg" type="number" class="form-control">
+                            <div class="input-group-append">
+                              <span class="input-group-text">mg/dL</span>
+                            </div>
+                          </div>
+                          <div class="input-errors" *ngIf="visitForm.get(visit.key).get('bloodGlucoseTests.ppg').invalid && visitForm.get(visit.key).get('bloodGlucoseTests.ppg').touched">
+                            <p *ngIf="visitForm.get(visit.key).get('bloodGlucoseTests.ppg').errors.required">PPG is required.</p>
+                          </div>
+                        </div>
+                        <div class="mt-1">
+                          <div #bloodGlucoseErrorTemplate [class.invalid]="visitForm.get(visit.key).get('bloodGlucoseTests').invalid && visitForm.get(visit.key).get('bloodGlucoseTests').touched">
+                            <div class="input-errors" *ngIf="visitForm.get(visit.key).get('bloodGlucoseTests').invalid && visitForm.get(visit.key).get('bloodGlucoseTests').touched">
+                              <p>Please enter a valid blood glucose measurement. At least one blood glucose field must be filled out or all fields left empty.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="currentVisit !== 1">
+            <div class="table-responsive">
+              <caption>Are there any changes in diabetes medication since last visit?</caption>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                      Visit {{i + 1}}
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                    <div [formGroup]="visitForm.get(visit.key)" *ngIf="(visit.key === 'visitTwo' || visit.key === 'visitThree')">
+                      <div class="d-flex mt-2">
+                        <div class="custom-control custom-radio flex-grow-1">
+                          <input class="custom-control-input" id="yes10{{i}}" type="radio" value="1" formControlName="isMedicationsChanged">
+                          <label class="custom-control-label" for="yes10{{i}}">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio flex-grow-1">
+                          <input class="custom-control-input" id="no10{{i}}" type="radio" value="0" formControlName="isMedicationsChanged">
+                          <label class="custom-control-label" for="no10{{i}}">No</label>
+                        </div>
+                      </div>
+                      <div class="mt-2" *ngIf="visitForm.get(visit.key).get('isMedicationsChanged').value === '1'">
+                        <label>reason for change:</label>
+                        <input type="text" class="form-control mt-2" formControlName="reasonOfChanging">
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <caption>Check Diabetes medications that the patient is currently taking</caption>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Drug</th>
+                    <th scope="col">Dose(mg)</th>
+                    <th scope="col">Freq(OD/BID)</th>
+                    <th scope="col">Start Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                    <th scope="row">Visit {{i + 1}}</th>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls.slice(0, 2); let j=index" [formGroupName]="j">
+                          <div class="custom-control custom-checkbox form-control mb-2" style="border: none">
+                            <input type="checkbox" class="custom-control-input" id="{{visit.key}}-{{j}}" formControlName="selected">
+                            <label class="custom-control-label" for="{{visit.key}}-{{j}}">{{medication.value.title}}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls.slice(0, 2); let j=index" [formGroupName]="j">
+                          <input type="text" formControlName="dose" class="form-control mb-2 input-w">
+                          <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('dose').invalid && visitForm.get(visit.key).get('medications').controls[j].get('dose').touched">
+                            <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('dose').errors.required">Dose is required</p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls.slice(0, 2); let j=index" [formGroupName]="j">
+                          <input type="text" formControlName="frequency" class="form-control mb-2 input-w">
+                          <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('frequency').invalid && visitForm.get(visit.key).get('medications').controls[j].get('frequency').touched">
+                            <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('frequency').errors.required">Freq is required</p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls.slice(0, 2); let j=index" [formGroupName]="j">
+                          <div class="mb-2">
+                            <app-date-input formControlName="startDate" [id]="'startDate'"></app-date-input>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <caption>Other Oral Anti-diabetics [Please check all that applies]</caption>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Drug</th>
+                    <th scope="col">Dose(mg)</th>
+                    <th scope="col">Freq(OD/BID)</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Ongoing</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                    <th scope="row">Visit {{i + 1}}</th>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index" >
+                          <div [formGroupName]="j" *ngIf="j >= 2 && j <= 9">
+                            <div class="custom-control custom-checkbox form-control mb-2" style="border: none">
+                              <input type="checkbox" class="custom-control-input" id="{{visit.key}}-{{j}}" formControlName="selected">
+                              <label class="custom-control-label" for="{{visit.key}}-{{j}}">{{medication.value.title}}</label>
+                            </div>
+                            <div *ngIf="visitForm.get(visit.key).get('medications').value[j].selected && visitForm.get(visit.key).get('medications').value[j].title === 'Other'">
+                              <input type="text" class="form-control" placeholder="Enter medication name" formControlName="name">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 2 && j <= 9">
+                            <input type="text" formControlName="dose" class="form-control mb-2 input-w">
+                            <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('dose').invalid && visitForm.get(visit.key).get('medications').controls[j].get('dose').touched">
+                              <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('dose').errors.required">Dose is required</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 2 && j <= 9">
+                            <input type="text" formControlName="frequency" class="form-control mb-2 input-w">
+                            <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('frequency').invalid && visitForm.get(visit.key).get('medications').controls[j].get('frequency').touched">
+                              <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('frequency').errors.required">Freq is required</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 2 && j <= 9">
+                            <div class="mb-2">
+                              <app-date-input formControlName="startDate" [id]="'startDate'"></app-date-input>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 2 && j <= 9">
+                            <div class="mb-2">
+                              <app-date-input formControlName="endDate" [id]="'endDate'"></app-date-input>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 2 && j <= 9">
+                            <div class="custom-control custom-checkbox form-control mb-2" style="border: none">
+                              <input type="checkbox" class="custom-control-input" id="{{visit.key}}-{{j}}-1" formControlName="onGoing">
+                              <label class="custom-control-label" for="{{visit.key}}-{{j}}-1"></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <caption>Insulins</caption>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Drug</th>
+                    <th scope="col">Dose(mg)</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Ongoing</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                    <th scope="row">Visit {{i + 1}}</th>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index" >
+                          <div [formGroupName]="j" *ngIf="j >= 10 && j <= 14">
+                            <div class="custom-control custom-checkbox form-control mb-2" style="border: none">
+                              <input type="checkbox" class="custom-control-input" id="{{visit.key}}-{{j}}" formControlName="selected">
+                              <label class="custom-control-label" for="{{visit.key}}-{{j}}">{{medication.value.title}}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 10 && j <= 14">
+                            <input type="text" formControlName="dose" class="form-control mb-2 input-w">
+                            <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('dose').invalid && visitForm.get(visit.key).get('medications').controls[j].get('dose').touched">
+                              <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('dose').errors.required">Dose is required</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 10 && j <= 14">
+                            <div class="mb-2">
+                              <app-date-input formControlName="startDate" [id]="'startDate'"></app-date-input>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 10 && j <= 14">
+                            <div class="mb-2">
+                              <app-date-input formControlName="endDate" [id]="'endDate'"></app-date-input>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 10 && j <= 14">
+                            <div class="custom-control custom-checkbox form-control mb-2" style="border: none">
+                              <input type="checkbox" class="custom-control-input" id="{{visit.key}}-{{j}}-2" formControlName="onGoing">
+                              <label class="custom-control-label" for="{{visit.key}}-{{j}}-2"></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between mt-2">
+              <caption>Other medications</caption>
+              <button class="btn btn-default btn-sm" (click)="addMedication()" type="button">Add New Drug</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Drug</th>
+                    <th scope="col">Class Drug</th>
+                    <th scope="col">Dose(mg)</th>
+                    <th scope="col">Freq(OD/BID)</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Ongoing</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                    <th scope="row">Visit {{i + 1}}</th>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index" >
+                          <div [formGroupName]="j" *ngIf="j >= 15" class="d-flex">
+                            <div class="custom-control custom-checkbox form-control mb-2" style="border: none">
+                              <input type="checkbox" class="custom-control-input" id="{{visit.key}}-{{j}}" formControlName="selected">
+                              <label class="custom-control-label" for="{{visit.key}}-{{j}}"></label>
+                            </div>
+                            <div>
+                              <input type="text" formControlName="name" class="form-control mb-2" style="min-width: 160px">
+                              <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('name').invalid && visitForm.get(visit.key).get('medications').controls[j].get('name').touched">
+                                <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('name').errors.required">Name is required</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 15">
+                            <input type="text" formControlName="classDrug" class="form-control mb-2 input-w">
+                            <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('classDrug').invalid && visitForm.get(visit.key).get('medications').controls[j].get('classDrug').touched">
+                              <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('classDrug').errors.required">Class Drug is required</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 15">
+                            <input type="text" formControlName="dose" class="form-control mb-2 input-w">
+                            <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('dose').invalid && visitForm.get(visit.key).get('medications').controls[j].get('dose').touched">
+                              <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('dose').errors.required">Dose is required</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 15">
+                            <input type="text" formControlName="frequency" class="form-control mb-2 input-w">
+                            <div class="input-errors" *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('frequency').invalid && visitForm.get(visit.key).get('medications').controls[j].get('frequency').touched">
+                              <p *ngIf="visitForm.get(visit.key).get('medications').controls[j].get('frequency').errors.required">Freq is required</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 15">
+                            <div class="mb-2">
+                              <app-date-input formControlName="startDate" [id]="'startDate'"></app-date-input>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 15">
+                            <div class="mb-2">
+                              <app-date-input formControlName="endDate" [id]="'endDate'"></app-date-input>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 15">
+                            <div class="custom-control custom-checkbox form-control mb-2" style="border: none">
+                              <input type="checkbox" class="custom-control-input" id="{{visit.key}}-{{j}}-3" formControlName="onGoing">
+                              <label class="custom-control-label" for="{{visit.key}}-{{j}}-3"></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td [formGroup]="visitForm.get(visit.key)">
+                      <div formArrayName="medications">
+                        <div *ngFor="let medication of visitForm.get(visit.key).get('medications').controls; let j=index">
+                          <div [formGroupName]="j" *ngIf="j >= 15">
+                            <div class="form-control mb-2" style="border: none">
+                              <button
+                                class="btn btn-warning btn-sm"
+                                (click)="deleteMedication(j)"
+                                type="button"
+                                [disabled]="j <= 15 || visitForm.get(visit.key)?.disabled"
+                              >
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="currentVisit !== 1">
+            <div class="table-responsive">
+              <caption>Did the patient experience any adverse events since last visit?</caption>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                      Visit {{i + 1}}
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                    <div [formGroup]="visitForm.get(visit.key)" *ngIf="(visit.key === 'visitTwo' || visit.key === 'visitThree')">
+                      <div class="d-flex mt-2">
+                        <div class="custom-control custom-radio flex-grow-1">
+                          <input class="custom-control-input" id="yes4{{i}}" type="radio" value="1" formControlName="experiencedAdverseEvents">
+                          <label class="custom-control-label" for="yes4{{i}}">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio flex-grow-1">
+                          <input class="custom-control-input" id="no4{{i}}" type="radio" value="0" formControlName="experiencedAdverseEvents">
+                          <label class="custom-control-label" for="no4{{i}}">No</label>
+                        </div>
+                      </div>
+                      <div class="mt-2" *ngIf="visitForm.get(visit.key).get('experiencedAdverseEvents').value === '1'">
+                        <label>please specify:</label>
+                        <input type="text" class="form-control mt-2" formControlName="experiencedAdverseEventsSpecification">
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="currentVisit !== 1">
+            <div class="table-responsive">
+              <caption>Did the patient experience any symptomatic hypoglycemic event since last visit?</caption>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                      Visit {{i + 1}}
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td *ngFor="let visit of visitForm.controls | keyvalue: unsorted; let i=index">
+                    <div [formGroup]="visitForm.get(visit.key)" *ngIf="(visit.key === 'visitTwo' || visit.key === 'visitThree')">
+                      <div class="d-flex mt-2">
+                        <div class="custom-control custom-radio flex-grow-1">
+                          <input class="custom-control-input" id="yes5{{i}}" type="radio" value="1" formControlName="experiencedSymptomaticHypoglycemicEvents">
+                          <label class="custom-control-label" for="yes5{{i}}">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio flex-grow-1">
+                          <input class="custom-control-input" id="no5{{i}}" type="radio" value="0" formControlName="experiencedSymptomaticHypoglycemicEvents">
+                          <label class="custom-control-label" for="no5{{i}}">No</label>
+                        </div>
+                      </div>
+                      <div class="mt-2" *ngIf="visitForm.get(visit.key).get('experiencedSymptomaticHypoglycemicEvents').value === '1'">
+                        <label>please specify the following</label>
+                        <div formGroupName="experiencedSymptomaticHypoglycemicEventsSpecification" class="form-group">
+                          <div class="mt-1">
+                            <label>Date:</label>
+                            <app-date-input formControlName="date" [id]="'date'"></app-date-input>
+                          </div>
+                          <div class="mt-1">
+                            <label>Duration:</label>
+                            <div class="input-group">
+                              <input formControlName="duration" type="text" class="form-control">
+                              <div class="input-group-append">
+                                <span class="input-group-text">(hours /minutes)</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-1">
+                            <label>Blood glucose level:</label>
+                            <div class="input-group">
+                              <input formControlName="bloodGlucoseLevel" type="number" class="form-control">
+                              <div class="input-group-append">
+                                <span class="input-group-text">mg/dl</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-2">
+                            <label>Did it require external assistance?</label>
+                            <div class="d-flex">
+                              <div class="custom-control custom-radio flex-grow-1">
+                                <input class="custom-control-input" id="yes6{{i}}" type="radio" value="1" formControlName="requiredExternalAssistance">
+                                <label class="custom-control-label" for="yes6{{i}}">Yes</label>
+                              </div>
+                              <div class="custom-control custom-radio flex-grow-1">
+                                <input class="custom-control-input" id="no6{{i}}" type="radio" value="0" formControlName="requiredExternalAssistance">
+                                <label class="custom-control-label" for="no6{{i}}">No</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-2">
+                            <label>Did this hypoglycemia require visit to Emergency Department?</label>
+                            <div class="d-flex">
+                              <div class="custom-control custom-radio flex-grow-1">
+                                <input class="custom-control-input" id="yes7{{i}}" type="radio" value="1" formControlName="requiredVisitToEmergencyDepartment">
+                                <label class="custom-control-label" for="yes7{{i}}">Yes</label>
+                              </div>
+                              <div class="custom-control custom-radio flex-grow-1">
+                                <input class="custom-control-input" id="no7{{i}}" type="radio" value="0" formControlName="requiredVisitToEmergencyDepartment">
+                                <label class="custom-control-label" for="no7{{i}}">No</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-2">
+                            <label>Was this hypoglycemia associated with loss of consciousness?</label>
+                            <div class="d-flex">
+                              <div class="custom-control custom-radio flex-grow-1">
+                                <input class="custom-control-input" id="yes8{{i}}" type="radio" value="1" formControlName="wasWithLossOfConsciousness">
+                                <label class="custom-control-label" for="yes8{{i}}">Yes</label>
+                              </div>
+                              <div class="custom-control custom-radio flex-grow-1">
+                                <input class="custom-control-input" id="no8{{i}}" type="radio" value="0" formControlName="wasWithLossOfConsciousness">
+                                <label class="custom-control-label" for="no8{{i}}">No</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-2">
+                            <label>Was this hypoglycemia associated with seizure?</label>
+                            <div class="d-flex">
+                              <div class="custom-control custom-radio flex-grow-1">
+                                <input class="custom-control-input" id="yes9{{i}}" type="radio" value="1" formControlName="wasWithSeizure">
+                                <label class="custom-control-label" for="yes9{{i}}">Yes</label>
+                              </div>
+                              <div class="custom-control custom-radio flex-grow-1">
+                                <input class="custom-control-input" id="no9{{i}}" type="radio" value="0" formControlName="wasWithSeizure">
+                                <label class="custom-control-label" for="no9{{i}}">No</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-2">
+                            <label>Possible causes</label>
+                            <div class="custom-control custom-checkbox mt-2">
+                              <input class="custom-control-input" id="irregularMeals{{i}}" type="checkbox" formControlName="irregularMeals">
+                              <label class="custom-control-label" for="irregularMeals{{i}}">Irregular Meals</label>
+                            </div>
+                            <div class="custom-control custom-checkbox mt-2">
+                              <input class="custom-control-input" id="excessivePhysicalActivity{{i}}" type="checkbox" formControlName="excessivePhysicalActivity">
+                              <label class="custom-control-label" for="excessivePhysicalActivity{{i}}">Excessive physical activity</label>
+                            </div>
+                            <div class="custom-control custom-checkbox mt-2">
+                              <input class="custom-control-input" id="medication{{i}}" type="checkbox" formControlName="medication">
+                              <label class="custom-control-label" for="medication{{i}}">Medication</label>
+                            </div>
+                            <div class="custom-control custom-checkbox mt-2">
+                              <input class="custom-control-input" id="others{{i}}" type="checkbox" formControlName="others">
+                              <label class="custom-control-label" for="others{{i}}">Others</label>
+                            </div>
+                            <div class="w-50 mt-3" *ngIf="visitForm.get(visit.key).get('experiencedSymptomaticHypoglycemicEventsSpecification.others').value">
+                              <ng-select
+                                [addTag]="true"
+                                [multiple]="true"
+                                [selectOnTab]="true"
+                                [isOpen]="false"
+                                formControlName="othersTagInput"
+                              >
+                              </ng-select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- End Visits Form-->
+    <div class="form-actions " style="margin-top: 25px">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="createRequest()"
+      >
+        Create Request
+      </button>
+    </div>
+    </div>
+  </div>
+  <div class="card" *ngIf="!patientData">
+    <div class="card-header">
+      <button type="button" class="btn btn-psp-primary btn-tool mr--1" data-card-widget="tab" title="tab"
+        (click)="typeId = 0" [ngClass]="{'opacity-5' : typeId == 1}">
+        Visits Statistics
+      </button>
+      <button type="button" class="btn btn-psp-primary btn-tool" data-card-widget="tab" title="tab"
+        (click)="typeId = 1" [ngClass]="{'opacity-5' : typeId == 0}">
+        My Patient's List
+      </button>
+    </div>
+    <div class="card-body">
+      <canvas id="canvas" [hidden]="typeId !== 0"></canvas>
+      <div [hidden]="typeId !== 1">
+        <app-gliptus-patientList (patientSelected)="onPatientSelected($event)"></app-gliptus-patientList>
+      </div>
+    </div>
+  </div>
+</div>
+

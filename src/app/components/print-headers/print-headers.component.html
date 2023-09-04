@@ -1,0 +1,23 @@
+<div class="doctor-name">
+  <h1 class="ngxPrintH1">
+    Doctor Name: <span class="ngxPrintSpan">{{ doctorName }}</span>
+  </h1>
+</div>
+<div class="patient-name" *ngIf="patient?.patient?.patientName">
+  <h1 class="ngxPrintH1">
+    Patient Name: <span class="ngxPrintSpan">{{ patient?.patient?.patientName }}</span>
+  </h1>
+</div>
+<div class="patient-phone">
+  <h1 class="ngxPrintH1">
+    Patient Phone: <span class="ngxPrintSpan">{{ patient?.patient?.phone }}</span>
+  </h1>
+</div>
+<div *ngIf="selectedDiagnoses.length" class="diagnoses">
+  <h1 class="ngxPrintH1">Diagnoses:</h1>
+  <ul class="ngxPrintUl">
+    <li class="ngxPrintLi" *ngFor="let item of selectedDiagnoses">
+      {{ item.name }}
+    </li>
+  </ul>
+</div>

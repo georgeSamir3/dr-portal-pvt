@@ -1,0 +1,375 @@
+<div class="container-fluid">
+
+  <div class="position-relative">
+    <page-header-breadcrumb [pageTitle]="pageTitle" [breadcrumbList]="breadcrumbList">
+    </page-header-breadcrumb>
+
+    <div class="align-items-center bottom-0 d-flex justify-content-end left-0 position-absolute pr-4 right-0 top-0">
+      <button type="button" class="btn btn-primary" (click)="reDirectToCreatePrescriptionPage()">
+        Create Request
+      </button>
+    </div>
+  </div>
+  <div class="page-container">
+    <section class="personal-information-container">
+      <div class="section-title">
+        <h2>Demographic Information</h2>
+      </div>
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="details-section">
+            <h2 class="details-section-title">Details</h2>
+            <div class="row">
+              <div class="col-xs-6 col-sm-3 prop">
+                <h5 class="prop-key">Patient Name</h5>
+                <h4 class="prop-value">
+                  {{ patientEmrDetails?.demographicInformation?.fullName || "--" }}
+                </h4>
+              </div>
+              <div class="col-xs-6 col-sm-3 prop">
+                <h5 class="prop-key">National ID</h5>
+                <h4 class="prop-value">
+                  {{ patientEmrDetails?.demographicInformation?.nationalId || "--" }}
+                </h4>
+              </div>
+              <div class="col-xs-6 col-sm-3 prop">
+                <h5 class="prop-key">Mobile Phone</h5>
+                <h4 class="prop-value">
+                  {{
+                  patientEmrDetails?.demographicInformation?.phone || "--"
+                  }}
+                </h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6 col-sm-3 prop">
+                <h5 class="prop-key">Date of Birth</h5>
+                <h4 class="prop-value">
+                  {{ (patientEmrDetails?.demographicInformation?.birthdate | date) || "--" }}
+                </h4>
+              </div>
+              <div class="col-xs-6 col-sm-3 prop">
+                <h5 class="prop-key">Gender</h5>
+                <h4 class="prop-value">
+                  {{ patientEmrDetails?.demographicInformation?.gender || "--" }}
+                </h4>
+              </div>
+              <div class="col-xs-6 col-sm-3 prop">
+                <h5 class="prop-key">Insured or not insured</h5>
+                <h4 class="prop-value">
+                  {{ (patientEmrDetails?.demographicInformation?.isInsured ? "Insured" : "Not insured") || "--"}}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vitals-container">
+      <div class="section-title">
+        <h2>Vital Signs</h2>
+        <a [routerLink]="'vitals-data'"> View All </a>
+      </div>
+      <ul *ngIf="patientEmrDetails?.recentVitals?.length" class="cards-container">
+        <li *ngFor="let recentVitalSigns of patientEmrDetails?.recentVitals" class="card-element">
+          <div class="card-element-header">
+            <h6>Visit Vitals</h6>
+          </div>
+          <div class="divider"></div>
+          <div class="card-element-body">
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Date</h5>
+                <h4 class="prop-value">
+                  {{ recentVitalSigns?.creationDate?.split('T')[0] || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Blood Type</h5>
+                <h4 class="prop-value">{{recentVitalSigns?.bloodType || "--"}}</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Blood Pressure</h5>
+                <h4 class="prop-value">{{recentVitalSigns?.bloodPressure || "--"}}</h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Heart Rate</h5>
+                <h4 class="prop-value">{{ recentVitalSigns?.heartRate ? (recentVitalSigns?.heartRate + ' BPM') : '--' }}</h4>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="row" *ngIf="!patientEmrDetails?.recentVitals?.length">
+        <div class="col-12 py-3">There is no recent Vital Signs</div>
+      </div>
+    </section>
+    <section class="medical-tests-container">
+      <div class="section-title">
+        <h2>Recent Medical Tests</h2>
+        <a [routerLink]="'medical-tests'"> View All </a>
+      </div>
+      <ul *ngIf="patientEmrDetails?.recentMedicalTests?.ehrTestRequests?.length ||
+        patientEmrDetails?.recentMedicalTests?.ehrUploadedTests?.length ||
+        patientEmrDetails?.recentMedicalTests?.ehrTestPrescriptionFulfillments?.length
+        " class="cards-container">
+        <li *ngFor="let recentTest of patientEmrDetails?.recentMedicalTests?.ehrTestRequests" class="card-element">
+          <div class="card-element-header">
+            <h6>{{ recentTest?.centerName || '--' }}</h6>
+          </div>
+          <div class="divider"></div>
+          <div class="card-element-body">
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Date</h5>
+                <h4 class="prop-value">
+                  {{ recentTest?.creationDate?.split('T')[0] || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Channel</h5>
+                <h4 class="prop-value">{{ getChannelType(recentTest?.channelId) }}</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">No. Of tests</h5>
+                <h4 class="prop-value">
+                  {{ recentTest?.testsNumber || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Status</h5>
+                <h4 class="prop-value">Pending</h4>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li *ngFor="let recentTest of patientEmrDetails?.recentMedicalTests?.ehrUploadedTests" class="card-element">
+          <div class="card-element-header">
+            <h6>Uploaded Tests Result{{ recentTest?.attachmentUrls.length > 1 ? 's' : ''}}</h6>
+          </div>
+          <div class="divider"></div>
+          <div class="card-element-body">
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Uploading Date</h5>
+                <h4 class="prop-value">
+                  {{ recentTest?.testDate?.split('T')[0] || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">No. Of Files</h5>
+                <h4 class="prop-value">{{ recentTest?.attachmentUrls.length }}</h4>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li *ngFor="let testPrescription of patientEmrDetails?.recentMedicalTests?.ehrTestPrescriptionFulfillments"
+          class="card-element">
+          <div class="card-element-header">
+            <h6>{{testPrescription.prescriptionFulFillmentTypeIds | getTestPrescriptionName}} Prescription</h6>
+          </div>
+          <div class="divider"></div>
+          <div class="card-element-body">
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Date</h5>
+                <h4 class="prop-value">
+                  {{ testPrescription?.creationDate?.split('T')[0] || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Channel</h5>
+                <h4 class="prop-value">{{ getChannelType(testPrescription?.channelId) }}</h4>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="row" *ngIf="!patientEmrDetails?.recentMedicalTests?.ehrTestRequests?.length
+        && !patientEmrDetails?.recentMedicalTests?.ehrUploadedTests?.length
+        && !patientEmrDetails?.recentMedicalTests?.ehrTestPrescriptionFulfillments?.length
+        ">
+        <div class="col-12 py-3">Hmm, There is no recent medical tests 🥳</div>
+      </div>
+    </section>
+    <section class="medical-hospitals-container">
+      <div class="section-title">
+        <h2>Recent Hospital Procedures</h2>
+        <a [routerLink]="'hospital-Procedures'"> View All </a>
+      </div>
+      <ul *ngIf="patientEmrDetails?.recentHospitalProcedures?.ehrUploadedProcedures?.length" class="cards-container">
+        <li *ngFor="let recentHospital of patientEmrDetails?.recentHospitalProcedures?.ehrUploadedProcedures"
+          class="card-element">
+          <div class="card-element-header">
+            <h6> Uploaded Procedure</h6>
+          </div>
+          <div class="divider"></div>
+          <div class="card-element-body">
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Date</h5>
+                <h4 class="prop-value">
+                  {{ recentHospital?.creationDate?.split('T')[0] || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Channel</h5>
+                <h4 class="prop-value">{{ getChannelType(recentHospital?.channelId) }}</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Status</h5>
+                <h4 class="prop-value">Pending</h4>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="row" *ngIf="!patientEmrDetails?.recentHospitalProcedures?.ehrUploadedProcedures?.length">
+        <div class="col-12 py-3">Hmm, There is no recent Hospital Procedures 🥳</div>
+      </div>
+    </section>
+    <section class="medications-container">
+      <div class="section-title">
+        <h2>Recent Medications</h2>
+        <a [routerLink]="'medications'"> View All </a>
+      </div>
+      <ul *ngIf="
+          patientEmrDetails?.recentMedications?.patientMedications?.length ||
+          patientEmrDetails?.recentMedications?.prescribedMedications?.length ||
+          patientEmrDetails?.recentMedications?.uploadedPrescriptions?.length
+        " class="cards-container">
+        <li *ngFor="
+            let patientMedication of patientEmrDetails?.recentMedications
+              ?.patientMedications
+          " class="card-element">
+          <div class="card-element-header">
+            <h6>Patient Medication</h6>
+          </div>
+          <div class="divider"></div>
+          <div class="card-element-body">
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Date</h5>
+                <h4 class="prop-value">
+                  {{ patientMedication?.creationDate?.split('T')[0] || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Channel</h5>
+                <h4 class="prop-value">
+                  {{ patientMedication?.channelId | getChannelName }}
+                </h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Medication Name</h5>
+                <h4 class="prop-value">
+                  {{ patientMedication?.medicationName || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Chronic Drug</h5>
+                <h4 class="prop-value">
+                  {{ patientMedication?.isChronic ? "Yes" : "No" || "--" }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li *ngFor="
+            let prescribedMedication of patientEmrDetails?.recentMedications
+              ?.prescribedMedications
+          " class="card-element">
+          <div class="card-element-header">
+            <h6>Prescribed Medication</h6>
+          </div>
+          <div class="divider"></div>
+          <div class="card-element-body">
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Date</h5>
+                <h4 class="prop-value">
+                  {{ prescribedMedication?.creationDate?.split('T')[0] || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Channel</h5>
+                <h4 class="prop-value">
+                  {{ prescribedMedication?.channelId | getChannelName }}
+                </h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Doctor Name</h5>
+                <h4 class="prop-value">
+                  {{ prescribedMedication?.doctorName || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Speciality</h5>
+                <h4 class="prop-value">
+                  {{ prescribedMedication?.specialty || "--" }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li *ngFor="
+            let uploadedPrescription of patientEmrDetails?.recentMedications
+              ?.uploadedPrescriptions
+          " class="card-element">
+          <div class="card-element-header">
+            <h6>Uploaded Prescription</h6>
+          </div>
+          <div class="divider"></div>
+          <div class="card-element-body">
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Request Date</h5>
+                <h4 class="prop-value">
+                  {{ uploadedPrescription?.creationDate?.split('T')[0] || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Channel</h5>
+                <h4 class="prop-value">
+                  {{ uploadedPrescription?.channelId | getChannelName }}
+                </h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 prop">
+                <h5 class="prop-key">Doctor Name</h5>
+                <h4 class="prop-value">
+                  {{ uploadedPrescription?.doctorName || "--" }}
+                </h4>
+              </div>
+              <div class="col-6 prop">
+                <h5 class="prop-key">Speciality</h5>
+                <h4 class="prop-value">
+                  {{ uploadedPrescription?.specialty || "--" }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="row" *ngIf="
+          !patientEmrDetails?.recentMedications?.patientMedications?.length &&
+          !patientEmrDetails?.recentMedications?.prescribedMedications?.length
+        ">
+        <div class="col-12 py-3">Hmm, There is no recent medications 🥳</div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="top-medicines">
+  <h2>{{title}}</h2>
+  <div *ngIf="topServices?.length" class="medicines-container">
+    <ul>
+      <li *ngFor="let service of topServices; let i = index">
+        <div class="input-group">
+          <input
+            type="checkbox"
+            [id]="service.name+service.id"
+            [value]="service.name+service.id"
+            (change)="onTopMedicineClick(service)"
+            [attr.disabled]="service.isChecked ? ''  : null"
+            
+          />
+          <label [for]="service.name+service.id">
+            {{ service.name }}
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!topServices?.length" class="no-top-medicines">
+    <p>{{Text}}</p>
+  </div>
+</div>

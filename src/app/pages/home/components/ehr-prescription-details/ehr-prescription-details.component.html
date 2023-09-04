@@ -1,0 +1,208 @@
+<div class="container-fluid">
+  <page-header-breadcrumb
+    [pageTitle]="pageTitle"
+    [breadcrumbList]="breadcrumbList"
+  >
+  </page-header-breadcrumb>
+  <div>
+    <div class="card">
+      <div class="card-body">
+        <a
+          class="back-btn"
+          [routerLink]="['/patient-emr', patientId, 'medications']"
+        >
+          <i class="fa fa-arrow-left"></i>
+          Back to EHR Medications
+        </a>
+        <div class="table-title">
+          <h3 class="title">Prescription Details</h3>
+        </div>
+        <div
+          *ngIf="prescriptionSourceType == prescriptionSourceTypeEnum.details && prescriptionDetails"
+          class="prescription-details-container"
+        >
+          <div class="details-section">
+            <div class="brief-info-card">
+              <small>{{
+                prescriptionDetails?.prescriptionSummary?.creationDate
+                  | date: "mediumDate"
+              }}</small>
+              <h2>{{ prescriptionDetails?.prescriptionSummary?.doctorName }}</h2>
+              <div class="brief-body">
+                <p class="diagnoses-title">Diagnoses</p>
+                <ul class="diagnoses-list">
+                  <li
+                    *ngFor="
+                      let diagnosis of prescriptionDetails?.prescriptionSummary?.diagnoses"
+                  >
+                    {{ diagnosis }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="details-section">
+            <h2>Prescriped Medicines</h2>
+            <div class="row">
+              <div class="col-12">
+                <div
+                  *ngIf="prescriptionDetails?.prescribedMedicines?.length"
+                  class="table-responsive"
+                >
+                  <table class="table align-items-center table-dark table-flush">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>Medicine Name</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Direction</th>
+                        <th>Period</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let prescribedMedicine of prescriptionDetails.prescribedMedicines
+                        "
+                      >
+                        <td>
+                          {{ prescribedMedicine.name }}
+                          <span
+                            *ngIf="prescribedMedicine.isChronic"
+                            class="badge badge-pill badge-danger ml-2"
+                            >Chronic</span
+                          >
+                        </td>
+                        <td>
+                          {{ prescribedMedicine.dosage }}
+                          {{ prescribedMedicine.unit }}
+                        </td>
+                        <td>
+                          {{ prescribedMedicine.frequency == 1 ? 'مره فى ال' + prescribedMedicine.frequencyType
+                          : prescribedMedicine.frequency == 2 ? 'مرتين فى ال' + prescribedMedicine.frequencyType
+                          : prescribedMedicine.frequency + ' مرات فى ال' + prescribedMedicine.frequencyType }}
+                        </td>
+                        <td>{{ prescribedMedicine.drugTime }}</td>
+                        <td>
+                          {{ prescribedMedicine.period }}
+                          {{ prescribedMedicine.periodType }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p *ngIf="!prescriptionDetails?.prescribedMedicines?.length">
+                  There Is No Prescriped Medicines
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="details-section">
+            <h2>Lab Tests</h2>
+            <div class="row">
+              <div class="col-12 prop">
+                <ul *ngIf="prescriptionDetails?.labTests?.length" class="mb-0">
+                  <li *ngFor="let labTest of prescriptionDetails.labTests">
+                    {{ labTest.name }}
+                  </li>
+                </ul>
+                <p *ngIf="!prescriptionDetails?.labTests?.length">
+                  There Is No Lab Tests
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="details-section">
+            <h2>Radiology</h2>
+            <div class="row">
+              <div class="col-12 prop">
+                <ul *ngIf="prescriptionDetails?.radiology?.length" class="mb-0">
+                  <li *ngFor="let radiology of prescriptionDetails.radiology">
+                    {{ radiology.name }}
+                  </li>
+                </ul>
+                <p *ngIf="!prescriptionDetails?.radiology?.length">
+                  There Is No Radiology
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="details-section">
+            <h2>Physiotherapy</h2>
+            <div class="row">
+              <div class="col-12 prop">
+                <ul
+                  *ngIf="prescriptionDetails?.physiotherapy?.length"
+                  class="mb-0"
+                >
+                  <li
+                    *ngFor="
+                      let physioTherapy of prescriptionDetails.physiotherapy
+                    "
+                  >
+                    {{ physioTherapy.name }}
+                  </li>
+                </ul>
+                <p *ngIf="!prescriptionDetails?.physiotherapy?.length">
+                  There Is No Physiotherapy
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="details-section">
+            <h2>Additional Notes</h2>
+            <div class="row">
+              <div class="col-12 prop">
+                <div class="notes">
+                  {{
+                    prescriptionDetails?.additionalNotes
+                      ? prescriptionDetails?.additionalNotes
+                      : "There Is No Additional Notes"
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="prescriptionSourceType == prescriptionSourceTypeEnum.files"
+          class="prescription-files-container"
+        >
+          <h3 *ngIf="prescriptionFilesAsPDFs?.length" class="mt-4">PDFs</h3>
+          <div *ngIf="prescriptionFilesAsPDFs?.length" class="files-as-file">
+            <a
+              *ngFor="let prescriptionSrc of prescriptionFilesAsPDFs"
+              (click)="downloadFile(prescriptionSrc)"
+              placement="top"
+              tooltip="Click To Download"
+            >
+              {{ prescriptionSrc.split("/").pop() }}
+            </a>
+          </div>
+          <h3 *ngIf="prescriptionFilesAsImages?.length" class="mt-4">Images</h3>
+          <div *ngIf="prescriptionFilesAsImages?.length" class="files-as-img">
+            <img
+              *ngFor="let prescriptionSrc of prescriptionFilesAsImages"
+              [src]="prescriptionSrc"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

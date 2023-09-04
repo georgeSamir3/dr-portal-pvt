@@ -1,0 +1,539 @@
+<div class="container-fluid">
+  <page-header-breadcrumb [pageTitle]="pageTitle" [breadcrumbList]="breadcrumbList">
+  </page-header-breadcrumb>
+
+
+  <div class="card">
+    <div class="card-body">
+      <h2></h2>
+      <div class="row align-items-baseline">
+        <div class="col" style="width: -webkit-fill-available ">
+          <div class="row justify-content-between" [formGroup]="createPersonalPatientDataForm">
+            <div class="col-6 col-md-4 mt-3">
+
+              <label>Patient Name<span *ngIf="!patient?.patient?.patientName"> *</span></label>
+              <p *ngIf="patient?.patient?.patientName; else patientNameInputBlock">
+                {{ patient?.patient?.patientName}}
+              </p>
+              <ng-template #patientNameInputBlock>
+                <input formControlName="patientName" class="form-control" type="text" />
+              </ng-template>
+            </div>
+
+            <div class="col-6 col-md-4 mt-3">
+              <label>Patient Phone</label>
+              <p *ngIf="patient?.patient?.phone; else phoneInputBlock">
+                {{ patient?.patient?.phone }}
+              </p>
+              <ng-template #phoneInputBlock>
+                <input formControlName="phone" class="form-control" type="text" />
+              </ng-template>
+            </div>
+
+            <div class="col-6 col-md-4 mt-3">
+              <label>Blood Type </label>
+              <p *ngIf="patient?.patient?.bloodType; else bloodTypeInputBlock">
+                {{ patient?.patient?.bloodType }}
+              </p>
+              <ng-template #bloodTypeInputBlock>
+                <input formControlName="bloodType" class="form-control" type="text" />
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm col" style="max-width: fit-content;"
+          (click)="router.navigateByUrl('patient-emr/'+patientId)">View EHR</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="card">
+    <div class="card-body" style="overflow-x: auto;">
+      <h2>Visit's Vitals</h2>
+      <table class="table table-bordered text-center" [formGroup]="createVitalsDataForm">
+        <thead>
+          <tr>
+            <th scope="col" class="">Vitals</th>
+            <th scope="col" class="">Previous visit Readings <span style="white-space: nowrap;">(
+                {{patient?.vital?.creationDate | date}} )</span></th>
+            <th scope="col" class="">Our Today’s Visit Readings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="text-left" scope="row">Blood Pressure (in mmHg)</th>
+            <td *ngIf="patient.vital">{{ patient?.vital?.bloodPressure || '--' }}</td>
+            <td *ngIf="!patient.vital" rowspan="9" class="align-middle">No Vitals History For This Patient</td>
+            <td>
+              <div class="p-inputgroup">
+                <p-inputNumber [min]="0" [max]="999" [maxlength]="3" [(ngModel)]="bloodPressureTop"
+                  (keyup)="focusOnNextInput($event , goBloodPressureBottom , 3)" [ngModelOptions]="{standalone: true}"
+                  placeholder="120"></p-inputNumber>
+                <span class="p-inputgroup-addon">
+                  /
+                </span>
+                <span #goBloodPressureBottom class="inputInSpan">
+                  <p-inputNumber [min]="0" [max]="999" [maxlength]="3" [(ngModel)]="bloodPressureBottom"
+                    (keyup)="focusOnNextInput($event ,goHeartRate , 3 )" [ngModelOptions]="{standalone: true}"
+                    placeholder="80"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  mmHg
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-left" scope="row">Heart Rate (in bpm)</th>
+            <td *ngIf="patient.vital">{{ patient?.vital?.heartRate || '--' }}</td>
+            <td>
+              <div class="p-inputgroup" #goHeartRate>
+                <p-inputNumber formControlName="heartRate" [min]="0" [max]="999" [maxlength]="3"
+                  (keyup)="focusOnNextInput($event , goTemperature , 3)"></p-inputNumber>
+                <span class="p-inputgroup-addon">
+                  bpm
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-left" scope="row">Temperature (in degree Celsius) </th>
+            <td *ngIf="patient.vital">{{ patient?.vital?.temperature || '--' }}</td>
+            <td>
+              <div class="p-inputgroup">
+                <span class="inputInSpan firstInputInSpan" #goTemperature>
+                  <p-inputNumber formControlName="temperature" [min]="0" [max]="99" [maxlength]="2"
+                    (keyup)="focusOnNextInput($event , goRespiratoryRate , 2)"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  .
+                </span>
+                <span class="inputInSpan">
+                  <p-inputNumber [min]="0" [max]="9" [maxlength]="1" [(ngModel)]="tempreatureDecimal"
+                    [disabled]="!createVitalsDataForm.controls.temperature.value"
+                    (keyup)="focusOnNextInput($event ,goRespiratoryRate , 1 )"
+                    [ngModelOptions]="{standalone: true}"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  degree
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-left" scope="row">Respiratory Rate (in Breaths per minute) </th>
+            <td *ngIf="patient.vital">{{ patient?.vital?.respiratoryRate || '--' }}</td>
+            <td>
+              <div class="p-inputgroup" #goRespiratoryRate>
+                <p-inputNumber formControlName="respiratoryRate" [min]="0" [max]="99" [maxlength]="2"
+                  (keyup)="focusOnNextInput($event , goOxygenSaturation , 2)"></p-inputNumber>
+                <span class="p-inputgroup-addon">
+                  Breaths per minute
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-left" scope="row">Oxygen Saturation (in %) </th>
+            <td *ngIf="patient.vital">{{ patient?.vital?.oxygenSaturation || '--' }}</td>
+            <td>
+              <div class="p-inputgroup">
+                <span class="inputInSpan firstInputInSpan" #goOxygenSaturation>
+                  <p-inputNumber formControlName="oxygenSaturation" [min]="0" [max]="99" [maxlength]="2"
+                    (keyup)="focusOnNextInput($event , goHeight , 2)"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  .
+                </span>
+                <span class="inputInSpan">
+                  <p-inputNumber [min]="0" [max]="9" [maxlength]="1" [(ngModel)]="oxygenDecimal"
+                    [disabled]="!createVitalsDataForm.controls.oxygenSaturation.value"
+                    (keyup)="focusOnNextInput($event ,goHeight , 1 )"
+                    [ngModelOptions]="{standalone: true}"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  %
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-left" scope="row">Height. (in cm) </th>
+            <td *ngIf="patient.vital">{{ patient?.vital?.height || '--' }}</td>
+            <!-- <td *ngIf="patient.vital">{{ patient?.vital?.height ? patient?.vital?.height + ' cm' : '--' }}</td> -->
+            <td>
+              <div class="p-inputgroup">
+                <span class="inputInSpan firstInputInSpan" #goHeight>
+                  <p-inputNumber formControlName="height" [min]="0" [max]="999" [maxlength]="3"
+                    (keyup)="focusOnNextInput($event , goWeight , 3)"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  .
+                </span>
+                <span class="inputInSpan">
+                  <p-inputNumber [min]="0" [max]="9" [maxlength]="1" [(ngModel)]="heightDecimal"
+                    [disabled]="!createVitalsDataForm.controls.height.value"
+                    (keyup)="focusOnNextInput($event ,goWeight , 1 )"
+                    [ngModelOptions]="{standalone: true}"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  cm
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-left" scope="row">Weight (in kg) </th>
+            <td *ngIf="patient.vital">{{ patient?.vital?.weight || '--' }}</td>
+            <td>
+              <div class="p-inputgroup">
+                <span class="inputInSpan firstInputInSpan" #goWeight>
+                  <p-inputNumber formControlName="weight" [min]="0" [max]="999" [maxlength]="3"
+                    (keyup)="focusOnNextInput($event , goIsSmoker , 3)"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  .
+                </span>
+                <span class="inputInSpan">
+                  <p-inputNumber [min]="0" [max]="9" [maxlength]="1" [(ngModel)]="weightDecimal"
+                    [disabled]="!createVitalsDataForm.controls.weight.value"
+                    (keyup)="focusOnNextInput($event ,goIsSmoker , 1 )"
+                    [ngModelOptions]="{standalone: true}"></p-inputNumber>
+                </span>
+                <span class="p-inputgroup-addon">
+                  kg
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-left" scope="row">Are You Smoker ?</th>
+            <td *ngIf="patient.vital">{{ patient.vital.isSmoker ? 'Yes': patient.vital.isSmoker == null ? '--' : 'No' }}
+            </td>
+            <td #goIsSmoker>
+              <ng-select id="smoker" name="smoker" formControlName="isSmoker" bindValue="value" bindLabel="name"
+                placeholder="are you smoker" dropdownPosition="bottom" [clearable]="false" [items]="booleanAnswer">
+              </ng-select>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-left" scope="row">Do You Drink Alcohol ? </th>
+            <td *ngIf="patient.vital">{{ patient.vital.isAlcoholic ? 'Yes': patient.vital.isAlcoholic == null ?
+              '--':'No' }}</td>
+            <td>
+              <ng-select id="alcohol" name="alcohol" formControlName="isAlcoholic" #goIsAlcoholic bindValue="value"
+                bindLabel="name" placeholder="do you drink alcohol" dropdownPosition="bottom" [clearable]="false"
+                [items]="booleanAnswer">
+              </ng-select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-body">
+      <div class="prescription-form">
+        <form [formGroup]="prescriptionForm" (ngSubmit)="checkDrugDrugInteractionAndSubmit(false)">
+          <div class="row">
+            <div class="form-group col-8">
+              <label for="diagnoses"> Diagnoses *</label>
+              <ng-select id="diagnoses" name="diagnoses" formControlName="diagnoses" bindValue="id" bindLabel="name"
+                placeholder="Search for diagnoses" typeToSearchText="Search Diagnose" notFoundText="No Diagnoses Found"
+                dropdownPosition="bottom" [multiple]="true" [searchable]="true" [closeOnSelect]="false"
+                [clearOnBackspace]="true" [virtualScroll]="true" [clearSearchOnAdd]="true" [trackByFn]="trackByFn"
+                [typeahead]="diagnosesTypeahead$" [items]="diagnosesItems$ | async"
+                (remove)=" removetopDiagnoses($event)" (clear)="clearAllDiagnoses()" (keyup)="onKeyUpDiagnoses($event )" 
+                (change)="getDiagnosesBySearch($event ,'c')">
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  {{ item.name }} -
+                  <strong [ngStyle]="{ color: '#172b4d' }">[{{ item.code }}]</strong>
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="col-4">
+              <app-GeneralTopUsedServices [topServices]="topDiagnoses"
+                (selectedTopServiceId)="addToDiagnosesList($event)" title="Top Diagnoses"
+                Text="No Top Diagnoses Found!"></app-GeneralTopUsedServices>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-8">
+              <div formArrayName="medicines">
+                <div *ngFor="
+                    let medicine of medicines.controls;
+                    let medicineIndex = index;
+                    let isFirst = first;
+                    let isLast = last
+                  " class="medicines" tabindex="1" #medicinesListContainer>
+                  <div class="medicine-container" [formGroupName]="medicineIndex">
+                    <div class="form-group">
+                      <label for="medicine"> Medicines </label>
+                      <ng-select id="medicine" name="medicine" formControlName="medicine" bindLabel="name"
+                        bindValue="id" placeholder="Search for a medicine" typeToSearchText="Search Medicine"
+                        notFoundText="No Medicines Found" dropdownPosition="bottom" [searchable]="true"
+                        [clearOnBackspace]="true" [virtualScroll]="true" [trackByFn]="trackByFn"
+                        [typeahead]="medicinesTypeahead$" [items]="medicinesItems$ | async" [clearable]="false" 
+                        (keyup)="onKeyUpDrugIndex($event)" (change)="getDrugIndexBySearch($event, 'c')">
+                      </ng-select>
+                    </div>
+                    <div class="medicine-info">
+                      <div class="form-group">
+                        <label for="drug-dosage{{ medicineIndex }}">
+                          Dosage
+                        </label>
+                        <select id="drug-dosage{{ medicineIndex }}" name="drug-dosage" class="form-control"
+                          formControlName="drugDosage">
+                          <option *ngFor="let item of drugDosageCount" [ngValue]="item.value">
+                            {{ item.text }}
+                          </option>
+                        </select>
+                      </div>
+                      <div formGroupName="drugFrequency" class="frequence-info">
+                        <label>Frequency</label>
+                        <div class="drug-frequency">
+                          <div class="form-group">
+                            <select name="count" class="form-control" formControlName="count">
+                              <option *ngFor="let item of drugFrequencyCount" [ngValue]="item.value">
+                                {{ item.text }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <select name="period" class="form-control" formControlName="period">
+                              <option *ngFor="let item of drugFrequencyPeriod" [ngValue]="item.value">
+                                {{ item.text }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div formGroupName="drugPeriod" class="period-info">
+                        <label>Duration</label>
+                        <div class="drug-period">
+                          <div class="form-group">
+                            <select name="count" class="form-control" formControlName="count">
+                              <option *ngFor="let item of drugPeriodCount" [ngValue]="item.value">
+                                {{ item.text }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <select name="period" class="form-control" formControlName="period">
+                              <option *ngFor="let item of drugPeriodPeriod" [ngValue]="item.value">
+                                {{ item.text }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="drug-direction{{ medicineIndex }}">
+                          Direction
+                        </label>
+                        <select id="drug-direction{{ medicineIndex }}" name="drugDirection" class="form-control"
+                          formControlName="drugDirection">
+                          <option *ngFor="let item of drugDirectionList" [ngValue]="item.value">
+                            {{ item.text }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group is-chronic-form-group">
+                        <label [for]="'is-chronic' + medicineIndex">
+                          Is Chronic
+                        </label>
+                        <input type="checkbox" [id]="'is-chronic' + medicineIndex" [name]="'is-chronic' + medicineIndex"
+                          formControlName="isChronic" />
+                      </div>
+                    </div>
+                    <button *ngIf="medicines.controls.length > 1" type="button" class="remove-medicine" (click)="
+                        removeMedicine(medicineIndex, medicine?.value?.medicine)
+                      ">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                  <div class="add-another-medicine">
+                    <button *ngIf="isLast" class="btn btn-outline-primary" type="button"
+                      [disabled]="checkAddAnotherMedicineDisable()" (click)="addMedicine()">
+                      Add Another Medicine
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <app-GeneralTopUsedServices [topServices]="topmedicine"
+                (selectedTopServiceId)=" addToMedicineDosageList($event)" title="Top Medicines"
+                Text="No Top Medicines Found!"></app-GeneralTopUsedServices>
+            </div>
+          </div>
+
+          <div formGroupName="labFields" class="lab-fields">
+            <div class="row mt-4">
+              <div class="form-group col-8">
+                <label for="lab-tests"> Lab Tests </label>
+                <ng-select id="lab-tests" name="labTests" formControlName="labTests" bindLabel="name" bindValue="id"
+                  placeholder="Search for tests" typeToSearchText="Search Tests" notFoundText="No Tests Found"
+                  dropdownPosition="bottom" [multiple]="true" [searchable]="true" [closeOnSelect]="false"
+                  [clearOnBackspace]="true" [clearSearchOnAdd]="true" [virtualScroll]="true" [trackByFn]="trackByFn"
+                  [typeahead]="labTestsTypeahead$" [items]="labTestsItems$ | async" (remove)="removeTopLabTest($event)"
+                  (clear)="clearAllLabTests()" (change)="getLabTestsBySearch($event ,'c')" (keyup)="onKeyUpLabTests($event)" >
+                </ng-select>
+              </div>
+              <div class="col-4">
+                <app-GeneralTopUsedServices [topServices]="topLabTests"
+                  (selectedTopServiceId)="addToLabTestsList($event)" title="Top LabTests"
+                  Text="No Top LabTests Found!"></app-GeneralTopUsedServices>
+              </div>
+            </div>
+
+            <div class="row  mt-4">
+              <div class="form-group col-8">
+                <label for="radiology"> Radiology </label>
+                <ng-select id="radiology" name="radiology" formControlName="radiology" bindLabel="name" bindValue="id"
+                  placeholder="Search for radiology" typeToSearchText="Search Radiology"
+                  notFoundText="No Radiology Found" dropdownPosition="bottom" [multiple]="true" [searchable]="true"
+                  [closeOnSelect]="false" [clearOnBackspace]="true" [clearSearchOnAdd]="true" [virtualScroll]="true"
+                  [trackByFn]="trackByFn" [typeahead]="radiologyTypeahead$" [items]="radiologyItems$ | async"
+                  (remove)="removetopRadiologies($event)" (clear)="clearAllRadiologies()"
+                  (keyup)="onKeyUpRadiologies($event)" (change)="getRadiologyTestsBySearch($event ,'c')">
+                </ng-select>
+              </div>
+              <div class="col-4">
+                <app-GeneralTopUsedServices [topServices]="topRadiologies"
+                  (selectedTopServiceId)="addToRadiologiesList($event)" title="Top Radiologies"
+                  Text="No Top Radiologies Found!"></app-GeneralTopUsedServices>
+              </div>
+            </div>
+
+            <div class="row  mt-4">
+              <div class="form-group col-8">
+                <label for="physiotherapy"> Physiotherapy </label>
+                <ng-select id="physiotherapy" name="physiotherapy" formControlName="physiotherapy" bindLabel="name"
+                  bindValue="id" placeholder="Search for physiotherapy" typeToSearchText="Search Physiotherapy"
+                  notFoundText="No Physiotherapy Found" dropdownPosition="bottom" [multiple]="true" [searchable]="true"
+                  [closeOnSelect]="false" [clearOnBackspace]="true" [clearSearchOnAdd]="true" [virtualScroll]="true"
+                  [trackByFn]="trackByFn" [typeahead]="physiotherapyTypeahead$" [items]="physiotherapyItems$ | async"
+                  (remove)="removetopPhysiotherapy($event)" (clear)=" clearAllPhysiotherapy()"
+                  (keyup)="onKeyUpPhysiotherapy($event)" (change)="getPhysiotherapiesBySearch($event ,'c')">
+                </ng-select>
+              </div>
+              <div class="col-4">
+                <app-GeneralTopUsedServices [topServices]="topPhysiotherapy"
+                  (selectedTopServiceId)="addToPhysiotherapyList($event)" title="Top Physiotherapies"
+                  Text="No Top Physiotherapies Found!"></app-GeneralTopUsedServices>
+              </div>
+            </div>
+
+            <!-- <div class="row  mt-4">
+              <div class="form-group col-8">
+                <label for="Hospital"> Procedures</label>
+                <ng-select
+                  id="hospital"
+                  name="hospital"
+                  formControlName="hospital"
+                  bindLabel="name"
+                  bindValue="id"
+                  placeholder="Search for Procedures"
+                  typeToSearchText="Search Hospital"
+                  notFoundText="No Hospital Found"
+                  dropdownPosition="bottom"
+                  [multiple]="true"
+                  [searchable]="true"
+                  [closeOnSelect]="false"
+                  [clearOnBackspace]="true"
+                  [clearSearchOnAdd]="true"
+                  [virtualScroll]="true"
+                  [trackByFn]="trackByFn"
+                  [typeahead]="HospitalTypeahead$"
+                  [items]="HospitalItems$ | async"
+                  (remove)="removetopHospital($event)"
+                  (clear)="clearAllHospitals()
+                   (keyup)="onKeyUpHospital($event) 
+                   (change)="getHospitalsBySearch($event ,'c')""
+                >
+                </ng-select>
+              </div>
+              <div class="col-4">
+                <app-GeneralTopUsedServices
+                  [topServices]="topHospital"
+                  (selectedTopServiceId)="addToHospitalList($event)"
+                  title="Top Procedures"
+                  Text="No Top Procedures Found!"
+                ></app-GeneralTopUsedServices>
+              </div>
+            </div> -->
+          </div>
+
+
+          <div class="form-group">
+            <label for="general-notes"> General Notes </label>
+            <textarea name="general-notes" id="general-notes" class="form-control" rows="3"
+              placeholder="Add General Notes" formControlName="notes"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-primary" [disabled]="checkSubmitDisable()"
+              (click)="checkDrugDrugInteractionAndSubmit(true)">
+              Create & Print E-Prescription
+            </button>
+            <button type="submit" class="btn btn-default" [disabled]="checkSubmitDisable()">
+              Create E-Prescription
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button #printBtn class="d-none" ngxPrint printSectionId="section-to-print" printTitle="Electronic Prescription"
+  printFooter="Electronic Prescription" [useExistingCss]="true"></button>
+<div id="section-to-print" class="d-none">
+  <print-section *ngIf="selectedMedicines?.length" [headerInfo]="headerInfo" [patientInfo]="patientInfo"
+    [rxDiagnoses]="selectedDiagnoses" [rxMedicines]="selectedMedicines" [notes]="prescriptionForm.value.notes"
+    [doctorInfo]="doctorInfo" [footerInfo]="{
+      printSectionTitle: 'Pharmacy',
+      printSectionSrc: '../../../../../assets/img/rx/pharmacy.svg'
+    }">
+  </print-section>
+  <print-section *ngIf="selectedLabTests?.length" [headerInfo]="headerInfo" [patientInfo]="patientInfo"
+    [rxDiagnoses]="selectedDiagnoses" [rxData]="selectedLabTests" [notes]="prescriptionForm.value.notes"
+    [doctorInfo]="doctorInfo" [footerInfo]="{
+      printSectionTitle: 'Lab',
+      printSectionSrc: '../../../../../assets/img/rx/lab.svg'
+    }">
+  </print-section>
+  <print-section *ngIf="selectedRadiology?.length" [headerInfo]="headerInfo" [patientInfo]="patientInfo"
+    [rxDiagnoses]="selectedDiagnoses" [rxData]="selectedRadiology" [notes]="prescriptionForm.value.notes"
+    [doctorInfo]="doctorInfo" [footerInfo]="{
+      printSectionTitle: 'Radiology',
+      printSectionSrc: '../../../../../assets/img/rx/radiology.svg'
+    }">
+  </print-section>
+  <print-section *ngIf="selectedPhysiotherapy?.length" [headerInfo]="headerInfo" [patientInfo]="patientInfo"
+    [rxDiagnoses]="selectedDiagnoses" [rxData]="selectedPhysiotherapy" [notes]="prescriptionForm.value.notes"
+    [doctorInfo]="doctorInfo" [footerInfo]="{
+      printSectionTitle: 'Physiotherapy',
+      printSectionSrc: '../../../../../assets/img/rx/physiotherapy.svg'
+    }">
+  </print-section>
+  <!-- <print-section
+    *ngIf="selectedHospital?.length"
+    [headerInfo]="headerInfo"
+    [patientInfo]="patientInfo"
+    [rxDiagnoses]="selectedDiagnoses"
+    [rxData]="selectedHospital"
+    [doctorInfo]="doctorInfo"
+    [footerInfo]="{
+      printSectionTitle: 'Hospital',
+      printSectionSrc: '../../../../../assets/img/rx/hospital.svg'
+    }"
+  >
+  </print-section> -->
+</div>
+<!-- <top-medicines
+[unSelectedTopMedicineId]="unSelectedMedicineId"
+(selectedTopMedicineId)="onSelectTopMedicine($event)"
+></top-medicines> -->

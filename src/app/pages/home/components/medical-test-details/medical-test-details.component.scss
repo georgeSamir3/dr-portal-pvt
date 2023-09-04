@@ -1,0 +1,156 @@
+.back-btn {
+  margin: 25px 25px 0 25px;
+}
+
+.request-details-container {
+  padding: 25px;
+
+  .card-body {
+    border: 1px solid #cecece;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+
+    .row {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      li {
+        color: #0a0a0a;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.5em;
+      }
+    }
+
+    .prop {
+      .prop-key {
+        color: #8898aa;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+
+      .prop-value {
+        color: #0a0a0a;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.25em;
+        margin-bottom: 0;
+      }
+    }
+
+    .details-section {
+      .invoice-card {
+        padding: 15px;
+        border-radius: 15px;
+        background-color: #fff;
+        border: 1px solid #e8e8e8;
+
+        .invoice-header {
+          h6 {
+            font-size: 16px;
+          }
+        }
+
+        .divider {
+          margin: 10px -15px;
+        }
+
+        .invoice-body {
+          .element {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .divider {
+            margin: 10px 0;
+          }
+        }
+      }
+    }
+
+    .medical-tests-container {
+      ul {
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 15px;
+
+        li {
+          list-style: none;
+          border: 1px solid #e8e8e8;
+          border-radius: 15px;
+          margin-bottom: 0;
+          overflow: hidden;
+
+          .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 15px;
+            background-color: #fff;
+
+            h6 {
+              color: #0a0a0a;
+              font-size: 15px;
+              font-weight: bold;
+              margin: 0;
+            }
+
+            span {
+              margin: 0;
+              color: #6c63ff;
+              font-size: 13px;
+              cursor: pointer;
+            }
+          }
+
+          .divider {
+            height: 1px;
+            background-color: #eaeaea;
+            margin: 0;
+          }
+
+          .test-body {
+            padding: 10px 15px;
+          }
+        }
+      }
+    }
+
+    .divider {
+      height: 1px;
+      margin: 20px -25px;
+      background-color: #cecece;
+    }
+  }
+}
+
+.medical-test-files-container {
+  padding: 25px;
+
+  .files-as-file {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      width: max-content;
+      color: #5e72e4;
+      cursor: pointer;
+    }
+  }
+
+  .files-as-img {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+
+    img {
+      width: 100%;
+      max-width: 500px;
+    }
+  }
+}

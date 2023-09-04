@@ -1,0 +1,106 @@
+<div class="print-section rx-data-container">
+  <div class="rx-header">
+    <section class="rx-logo">
+      <p class="rx-p rx-logo-p">Powered By</p>
+      <img src="../../../../../assets/img/rx/logo.png" alt="Logo" />
+    </section>
+    <section class="rx-date">
+      <label class="rx-label">Date</label>
+      <div class="rx-border-elm">{{ headerInfo?.date | date: "shortDate" }}</div>
+    </section>
+  </div>
+  <div [ngClass]="{'rx-patient-info': patientInfo?.memberId, 'rx-patient-info-3-columns': !patientInfo?.memberId}">
+    <section class="rx-patient-name">
+      <label class="rx-label">Patient Name</label>
+      <div class="rx-border-elm">{{ patientInfo?.patientName }}</div>
+    </section>
+    <section class="rx-patient-id">
+      <label class="rx-label">Patient ID</label>
+      <div class="rx-border-elm">{{ patientInfo?.patientId }}</div>
+    </section>
+    <section *ngIf="patientInfo?.memberId" class="rx-patient-nano-id">
+      <label class="rx-label">Member ID</label>
+      <div class="rx-border-elm">{{ patientInfo?.memberId }}</div>
+    </section>
+    <section class="rx-prescription-id">
+      <label class="rx-label">Prescription ID</label>
+      <div class="rx-border-elm rx-border-elm-grow">
+        {{ patientInfo?.prescriptionId }}
+      </div>
+    </section>
+  </div>
+  <div *ngIf="rxDiagnoses?.length" class="rx-diagnoses">
+    <label class="rx-label">Diagnosis</label>
+    <div class="rx-border-elm">
+      <ul class="rx-ul">
+        <li *ngFor="let item of rxDiagnoses">
+          {{ item.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="rx-divider">
+    <img src="../../../assets/img/rx/rx.png" alt="RX" />
+  </div>
+  <div *ngIf="rxMedicines?.length" class="rx-large-elm">
+    <div class="rx-border-elm rx-large-border-elm">
+      <ul class="rx-ul rx-medicine-list">
+        <li class="rx-medicine-item" *ngFor="let item of rxMedicines">
+          <p class="rx-medicine-name">{{ item.medicine.name }}</p>
+          <div class="rx-medicine-info">
+            <span>{{ item.dosage + ' ' + item.medicine.arShape + ' ' }}
+              <span *ngIf="item.frequency > 2"> {{ item.frequency + ' ' }} </span>
+              <span *ngIf="item.frequency == 1">مرة فى ال{{ item.frequencyDuration + ' ' }}</span>
+              <span *ngIf="item.frequency == 2">مرتين فى ال{{ item.frequencyDuration + ' ' }}</span>
+              <span *ngIf="item.frequency > 2">مرات فى ال{{ item.frequencyDuration + ' ' }}</span>
+              <span *ngIf="item.direction && item.direction != 'لايوجد' && item.direction != 'لا يوجد'"> {{ item.direction + ' ' }} </span>
+              <span> لمدة </span>
+              <span> {{ ' ' + item.period + ' ' }} </span>
+              <span> {{ item.PeriodDuration }} </span>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div *ngIf="rxData?.length" class="rx-large-elm">
+    <div class="rx-border-elm rx-large-border-elm">
+      <ul class="rx-ul">
+        <li *ngFor="let item of rxData">
+          {{ item.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div *ngIf="notes" class="rx-notes">
+    <label class="rx-label">Notes</label>
+    <div class="rx-border-elm">{{ notes }}</div>
+  </div>
+  <div class="rx-doctor-info">
+    <section class="rx-doctor-name">
+      <label class="rx-label">Doctor Name</label>
+      <div class="rx-border-elm">{{ doctorInfo?.doctorName }}</div>
+    </section>
+    <section class="rx-doctor-signature">
+      <label class="rx-label">Doctor Signature</label>
+      <div class="rx-border-elm rx-border-elm-grow"></div>
+    </section>
+  </div>
+  <div class="rx-footer">
+    <section class="rx-footer-section rx-qr">
+      <img src="../../../../../assets/img/rx/qr.png" class="qr-img" alt="QR Code" />
+      <span
+        >Scan here or <br />
+        Call 16066</span
+      >
+    </section>
+    <section class="rx-footer-section">
+      <span>{{ footerInfo?.printSectionTitle }}</span>
+      <img
+        src="{{ footerInfo?.printSectionSrc }}"
+        alt="{{ footerInfo?.printSectionTitle }}"
+        class="rx-img"
+      />
+    </section>
+  </div>
+</div>

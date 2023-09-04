@@ -1,0 +1,89 @@
+.border-bottom {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.prescription-details-container {
+  padding: 25px;
+
+  .details-section {
+    .brief-info-card {
+      border: 1px solid #cecece;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 15px;
+
+      .brief-body {
+        .diagnoses-title {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  .divider {
+    height: 1px;
+    margin: 30px 0 20px 0;
+    background-color: #ddd;
+  }
+
+  .row {
+    margin-bottom: 10px;
+  }
+
+  ul {
+    list-style: none;
+    margin-bottom: 0;
+  }
+
+  ul,
+  .notes {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    box-shadow: 0 1px 10px 2px #fafafa;
+  }
+
+  .prop {
+    .prop-key {
+      color: #8898aa;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+
+    .prop-value {
+      color: #0a0a0a;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.25em;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.prescription-files-container {
+  padding: 25px;
+
+  .files-as-file {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      width: max-content;
+      color: #5e72e4;
+      cursor: pointer;
+    }
+  }
+
+  .files-as-img {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+
+    img {
+      width: 100%;
+      max-width: 500px;
+    }
+  }
+}

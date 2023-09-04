@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.657" height="16.285" viewBox="0 0 17.657 16.285">
+  <g id="patient" transform="translate(0 -3)">
+    <g id="Group_36233" data-name="Group 36233" transform="translate(0 13.399)">
+      <path id="Path_28456" data-name="Path 28456" d="M11.4,21.886H.368A.368.368,0,0,1,0,21.518V18.575A2.578,2.578,0,0,1,2.575,16H9.2a2.578,2.578,0,0,1,2.575,2.575v2.943A.368.368,0,0,1,11.4,21.886ZM.736,21.15h10.3V18.575A1.841,1.841,0,0,0,9.2,16.736H2.575A1.841,1.841,0,0,0,.736,18.575Z" transform="translate(0 -16)" fill="#291f6c"/>
+    </g>
+    <g id="Group_36234" data-name="Group 36234" transform="translate(2.575 5.306)">
+      <path id="Path_28457" data-name="Path 28457" d="M6.811,11.621a3.311,3.311,0,1,1,3.311-3.311A3.315,3.315,0,0,1,6.811,11.621Zm0-5.886A2.575,2.575,0,1,0,9.386,8.311,2.578,2.578,0,0,0,6.811,5.736Z" transform="translate(-3.5 -5)" fill="#291f6c"/>
+    </g>
+    <g id="Group_36240" data-name="Group 36240" transform="translate(11.036 3)">
+      <g id="Group_36236" data-name="Group 36236">
+        <path id="Path_28459" data-name="Path 28459" d="M18.311,8.093A3.315,3.315,0,0,1,15,4.782V1.1A1.1,1.1,0,0,1,16.1,0h4.414a1.1,1.1,0,0,1,1.1,1.1V4.782A3.315,3.315,0,0,1,18.311,8.093ZM16.1.736a.368.368,0,0,0-.368.368V4.782a2.575,2.575,0,1,0,5.15,0V1.1a.368.368,0,0,0-.368-.368Z" transform="translate(-15)" fill="#291f6c"/>
+      </g>
+      <g id="Group_36241" data-name="Group 36241" transform="translate(2.009 2.847)">
+        <g id="Group_35885" data-name="Group 35885" transform="translate(0 0)">
+          <path id="Path_27812" data-name="Path 27812" d="M101.962,32.185a.769.769,0,0,0-1.116.1.77.77,0,0,0-1.116-.1.739.739,0,0,0-.016,1.061l1.133,1.133,1.133-1.133A.739.739,0,0,0,101.962,32.185Zm-.124.921-.992.992-.992-.992a.54.54,0,0,1,.012-.776.518.518,0,0,1,.359-.139c.285,0,.413.17.621.379.2-.2.333-.379.621-.379a.52.52,0,0,1,.359.139A.54.54,0,0,1,101.837,33.106Z" transform="translate(-99.496 -31.992)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

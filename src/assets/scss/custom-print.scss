@@ -1,0 +1,123 @@
+.print-section {
+  page-break-after: always;
+}
+
+.rx-data-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #000;
+}
+
+.rx-p {
+  margin-bottom: 3px;
+}
+
+.rx-label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.rx-border-elm {
+  border: 2px solid #666;
+  border-radius: 10px;
+  padding: 10px 25px;
+  font-weight: bold;
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.rx-center-text {
+  text-align: center;
+}
+
+.rx-ul {
+  list-style: none;
+}
+
+.rx-medicine-list {
+  width: max-content !important;
+}
+
+.rx-medicine-item {
+  width: 100% !important;
+  margin-bottom: 20px !important;
+}
+
+.rx-medicine-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+.rx-medicine-name {
+  margin-bottom: 0;
+}
+
+.rx-medicine-info {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  direction: rtl !important;
+}
+
+.rx-large-elm {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rx-large-border-elm {
+  flex-grow: 1;
+}
+
+.rx-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.rx-logo-p {
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+.rx-patient-info {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-gap: 15px;
+}
+
+.rx-prescription-id,
+.rx-doctor-signature {
+  display: flex;
+  flex-direction: column;
+}
+
+.rx-border-elm-grow {
+  flex-grow: 1;
+}
+
+.rx-doctor-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+}
+
+.rx-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rx-footer-section {
+  display: flex;
+  align-items: flex-end;
+  gap: 25px;
+}
+
+.rx-img, .qr-img {
+  width: 80px;
+}

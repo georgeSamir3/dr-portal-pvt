@@ -1,0 +1,149 @@
+
+<div class="row text-center justify-content-md-around align-items-md-center">
+  <div class="col-md-4 mb-3">
+    <h3>{{ viewDate | calendarDate:('weekViewTitle') }}</h3>
+    <div class="btn-group ">
+
+      <div
+        class="btn btn-primary"
+        mwlCalendarPreviousView
+        [view]="'week'"
+        [(viewDate)]="viewDate"
+      >
+        Previous
+      </div>
+      <div
+        class="btn btn-outline-secondary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+      >
+        Today
+      </div>
+      <div
+        class="btn btn-primary"
+        mwlCalendarNextView
+        [view]="'week'"
+        [(viewDate)]="viewDate"
+      >
+        Next
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="btn-group">
+      <span class="align-self-center mr-3 fas fa-cog text-primary fa-2x"></span>
+     <div class="btn-group">
+      <div
+      class="btn btn-primary"
+      (click)="openDaysOffModal()"
+    >
+      Days Off
+    </div>
+    <div
+      class="btn btn-outline-secondary"
+      (click)="openWorkingHoursModal()"
+    >
+      Working Hours
+    </div>
+    <div
+      class="btn btn-primary"
+      (click)="openConsulationDurationModal()"
+    >
+      Consultaion Duration
+    </div>
+     </div>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<ng-template
+  #weekViewHourSegmentTemplate
+  let-segment="segment"
+  let-locale="locale"
+  let-segmentHeight="segmentHeight"
+  let-isTimeLabel="isTimeLabel"
+>
+  <div
+    #segmentElement
+    class="cal-hour-segment"
+    [style.height.px]="segmentHeight"
+    [class.cal-hour-start]="segment.isStart"
+    [class.cal-after-hour-start]="!segment.isStart"
+    [ngClass]="segment.cssClass"
+    (click)="startDragToCreate(segment, $event, segmentElement, mouseDownEvent)"
+  >
+    <div class="cal-time" *ngIf="isTimeLabel">
+      {{ segment.date | calendarDate:'weekViewHour':locale }}
+    </div>
+  </div>
+</ng-template>
+
+<mwl-calendar-week-view
+  [viewDate]="viewDate"
+  [events]="events"
+  [hourSegmentTemplate]="weekViewHourSegmentTemplate"
+  [hourSegments]="hourSegment"
+  (beforeViewRender)="beforeViewRender($event)"
+  (eventClicked)="handleEvent('Clicked', $event.event)"
+  [excludeDays]="excludeDays"
+  #weeklyCalnder
+ >
+</mwl-calendar-week-view>
+
+<ng-template  #modalContent1 let-close="close">
+  <div class="modal-header ">
+    <h2>Patient Details</h2>
+    <button
+      class="close"
+      type="button"
+      (click)="close()"
+    >
+      <span aria-hidden="true"> × </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <div class="row justify-content-between">
+          <div class="col-6">
+            <label>Patient Name</label>
+            <p>{{ patientDetails?.fullName }}</p>
+          </div>
+          <div class="col-6">
+            <label>Phone Number</label>
+            <p>{{ patientDetails?.phone }}</p>
+          </div>
+          <div class="col-6">
+            <label>Height</label>
+            <p>{{ patientDetails?.height }}</p>
+          </div>
+          <div class="col-6">
+            <label>Weight</label>
+            <p>{{ patientDetails?.weight }}</p>
+          </div>
+          <div class="col-6">
+            <label>Gender</label>
+            <p>{{ patientDetails?.gender }}</p>
+          </div>
+          <div class="col-6">
+            <label>Birthdate</label>
+            <p>{{ patientDetails?.birthdate }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="modal-footer d-flex justify-content-center">
+    <button
+      type="button"
+      class="btn btn-primary text-white"
+      (click)="onSubmit()"
+    >
+      Continue
+    </button>
+  </div> -->
+</ng-template>
+

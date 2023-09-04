@@ -1,0 +1,152 @@
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  padding-bottom: 68px;
+
+  .info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    h3 {
+      font-size: 22px;
+      font-weight: bold;
+      color: #000;
+      line-height: 1em;
+      margin-bottom: 0;
+      align-self: center;
+    }
+
+    h4 {
+      font-weight: 400;
+      color: #2c2c2c;
+      line-height: 1.5em;
+      text-align: center;
+      align-self: center;
+    }
+
+    input {
+      display: none;
+    }
+
+    .label-files {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      border: 1px dashed #6c63ff;
+      border-radius: 15px;
+      background-color: #fcfcff;
+      padding: 20px;
+      width: 100%;
+      margin: 0;
+      cursor: pointer;
+
+      p {
+        margin: 0;
+        color: #6c63ff;
+        font-size: 13px;
+        font-weight: bold;
+      }
+    }
+
+    input:disabled ~ label {
+      cursor: no-drop;
+    }
+
+    .files-count {
+      color: #2c2c2c;
+      font-size: 11px;
+      font-weight: bold;
+      align-self: flex-start;
+      margin: 0;
+    }
+
+    ul.interaction-details {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+
+      li {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #e8e8e8;
+        border-radius: 15px;
+        background-color: #fcfcfc;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .file-info {
+          p {
+            margin: 0;
+            font-size: 11px;
+            font-weight: 600;
+
+            &.filename {
+              color: #6c63ff;
+            }
+
+            &.file-size {
+              color: #777777;
+            }
+          }
+        }
+
+        .file-action {
+          button {
+            border: none;
+            padding: 0;
+            background-color: transparent;
+
+            i {
+              color: #8898aa;
+            }
+          }
+        }
+
+        a {
+          color: #5e72e4;
+          text-decoration: none;
+          background-color: transparent;
+          cursor: pointer;
+        }
+
+        a:hover {
+          color: #0621d1;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .actions {
+    .action-btn {
+      border-radius: 25px;
+      color: #fff;
+      background-color: #291f6c;
+      width: 200px;
+    }
+
+    .continue-btn {
+      background-color: #172b4d;
+    }
+
+    .back-btn {
+      background-color: #5e72e4;
+    }
+  }
+}
+
+.black-text{
+  color: black;
+}

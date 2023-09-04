@@ -1,0 +1,50 @@
+.table-responsive {
+    padding: 1rem;
+    transition: all 0.25s ease-in-out;
+  
+    thead {
+      tr {
+        th {
+          background-color: #F6F6F6;
+          border: 0;
+  
+          &:first-of-type {
+            border-radius: 15px 0 0 15px;
+          }
+  
+          &:last-of-type {
+            border-radius: 0 15px 15px 0;
+          }
+        }
+      }
+    }
+  
+    tbody {
+      tr {
+        td {
+          &:first-of-type {
+            border-radius: 15px 0 0 15px;
+          }
+  
+          &:last-of-type {
+            border-radius: 0 15px 15px 0;
+          }
+        }
+  
+        &:hover {
+          transition: box-shadow 0.25s ease-in-out;
+          box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.167);
+          border-radius: 25px;
+        }
+  
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.167);
+  
+      }
+    }
+  
+}
+
+.link {
+  cursor: pointer;
+  color: #6C63FF;
+}

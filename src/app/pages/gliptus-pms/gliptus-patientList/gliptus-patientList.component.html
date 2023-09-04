@@ -1,0 +1,17 @@
+<div class="table-title mb-1">
+  <h3 class="title mb-0">My Patient List</h3>
+</div>
+<ngx-datatable class="material ngx-datatable-custom mt-3"
+  [rows]="gliptusPatientList" [columns]="columns" [limit]="pageSize" [offset]="currentPage-1"
+  columnMode="force" externalPaging="true" [count]="totalItems" [messages]="messages" [scrollbarH]="true"
+  [headerHeight]="50" [footerHeight]="50" rowHeight="auto" (page)="onChangePage($event)" (activate)="onActivate($event)">
+  <ng-template let-row="row" #visitNumberTemplateRef ngx-datatable-row-detail-template>
+    <div class="d-flex align-items-center" style="gap: 20px">
+      <div class="custom-control custom-checkbox" *ngFor="let i of generateArray(row.visitNumber)">
+        <input type="checkbox" class="custom-control-input" [id]="'customCheck'+i" [checked]="true" [disabled]="true">
+        <label class="custom-control-label" [for]="'customCheck'+i">Visit {{i + 1}}</label>
+      </div>
+    </div>
+  </ng-template>
+</ngx-datatable>
+

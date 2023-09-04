@@ -1,0 +1,42 @@
+<div class="upload-test-result-modal">
+  <div class="modal-header">
+    <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="handleModalHide()">
+      <span aria-hidden="true"> × </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="info">
+      <h3>{{title}}</h3>
+      <h4>{{subtitle}}</h4>
+      <ng-content></ng-content>
+      <label class="form-control-label black-text m-0" *ngIf="details.severities.length > 0">Severity</label>
+      <ul class="interaction-details" *ngIf="details.severities.length > 0">
+        <li [ngClass]="{'bg-danger': severity == 'high', 'text-white': severity == 'high'}"
+          *ngFor="let severity of details.severities; let i = index">
+          {{severity | titlecase}}
+        </li>
+      </ul>
+      <label class="form-control-label black-text m-0">Generic Names - Trade Names</label>
+      <ul class="interaction-details">
+        <li *ngFor="let medicine of details.medicines; let i = index;">
+          <a (click)="openLinkInNewTab(medicine.url)">
+            {{medicine.genericName | titlecase}} - {{medicine.tradeName | titlecase}}</a>
+        </li>
+      </ul>
+      <label class="form-control-label black-text m-0">Descriptions</label>
+      <ul class="interaction-details">
+        <li *ngFor="let description of details.descriptions; let i = index">
+          {{description | titlecase}}
+        </li>
+      </ul>
+    </div>
+    <div class="actions">
+      <button class="btn action-btn back-btn" (click)="ifNotDDI() ? handleModalHide() : backToHome()">
+        {{ifNotDDI() ? ' Go Back':'Back to Home' }}
+      </button>
+      <button class="btn action-btn continue-btn" *ngIf="ifNotDDI()" (click)="onDiscardEvent()">
+        Discard & Continue
+      </button>
+    </div>
+  </div>
+</div>

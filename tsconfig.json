@@ -1,0 +1,35 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths":{
+      "@assets/*":["src/assets/*"],
+      "@directives/*":["src/app/_directives/*"],
+      "@enums/*":["src/app/_enums/*"],
+      "@guards/*":["src/app/_guards/*"],
+      "@interfaces/*":["src/app/_interfaces/*"],
+      "@interceptors/*":["src/app/_interceptors/*"],
+      "@models/*":["src/app/_models/*"],
+      "@pipes/*":["src/app/_pipes/*"],
+      "@services/*":["src/app/_services/*"],
+      "@components/*":["src/app/components/*"],
+      "@helpers/*":["src/app/_helpers/*"],
+      "@layout/*":["src/app/layout/*"],
+      "@pages/*":["src/app/pages/*"],
+      "@shared/*":["src/app/shared/*"],
+    },
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2020",
+    "module": "es2020",
+    "lib": [
+      "es2019",
+      "dom"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="card mb-4">
+        <div class="row align-items-center pt-3">
+            <div class="col-lg-6 col-7">
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-3">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item text-primary psp-breadcrumb">
+                            <a class="text-primary" [routerLink]="'/patients'"> Patients </a>
+                        </li>
+                        <li aria-current="page" class="breadcrumb-item active text-gray psp-breadcrumb">
+                            Patient Profile
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="border-bottom title d-flex p-3 align-items-center mt-2">
+            <h2 class="m-0">Patient Profile</h2>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <a class="back-btn d-inline-block mb-4" [routerLink]="['/patient-emr', patientId]">
+                <i class="fa fa-arrow-left"></i>
+                Back to EMR
+            </a>
+            <br>
+            <div class="card-body">
+                <div class="card-title">
+                    <h3>Patient's Vital Signs</h3>
+                    <div class="divider"></div>
+                </div>
+                <ngx-datatable class="material ngx-datatable-custom" [rows]="patientVitalsDate" [columns]="columns"
+                    [limit]="pageSize" [offset]="currentPage-1" columnMode="force" externalPaging="true"
+                    [count]="totalItems" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                    (page)="onChangePage($event)" [messages]="messages">
+                </ngx-datatable>
+            </div>
+        </div>
+
+    </div>
+</div>

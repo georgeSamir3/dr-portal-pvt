@@ -1,0 +1,10 @@
+.page-not-found {
+  display: grid;
+  place-items: center;
+  padding: 50px;
+
+  img {
+    width: 75%;
+    max-width: 300px;
+  }
+}

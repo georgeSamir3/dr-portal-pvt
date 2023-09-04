@@ -1,0 +1,109 @@
+<div class="container-fluid">
+  <div class="card mb-4">
+    <div class="row align-items-center pt-3">
+      <div class="col-lg-6 col-7">
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-3">
+          <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+            <li class="breadcrumb-item text-primary psp-breadcrumb">
+              <a class="text-primary" [routerLink]="'/patients'"> Patients </a>
+            </li>
+            <li
+              aria-current="page"
+              class="breadcrumb-item active text-gray psp-breadcrumb"
+            >
+              Patient Profile
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="border-bottom title d-flex p-3 align-items-center mt-2">
+      <h2 class="m-0">Patient Profile</h2>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <a class="back-btn" [routerLink]="['/patient-emr', patientId]">
+        <i class="fa fa-arrow-left"></i>
+        Back to EMR
+      </a>
+      <div class="table-title">
+        <h3 class="title">Hospital Procedures</h3>
+      </div>
+      <div class="filter-btns mb-3">
+        <h5 class="title">Filter By</h5>
+        <div class="filter-btn-container">
+          <button
+            class="btn filter-btn"
+            [class.active-btn]="
+            hospitalProcedureCreatorType == prescriptionTypeEnum.all
+            "
+            (click)="onGetHospitalProcedures(prescriptionTypeEnum.all)"
+          >
+            All
+          </button>
+          <button
+            class="btn filter-btn"
+            [class.active-btn]="
+            hospitalProcedureCreatorType == prescriptionTypeEnum.patient
+            "
+            (click)="onGetHospitalProcedures(prescriptionTypeEnum.patient)"
+          >
+            Added by Patient
+          </button>
+          <button
+            class="btn filter-btn"
+            [class.active-btn]="
+            hospitalProcedureCreatorType == prescriptionTypeEnum.doctor
+            "
+            (click)="onGetHospitalProcedures(prescriptionTypeEnum.doctor)"
+          >
+            Prescribed by Doctor
+          </button>
+        </div>
+      </div>
+      <div
+        *ngIf="hospitalList?.length"
+        class="table-responsive"
+        infinite-scroll
+        [infiniteScrollDistance]="0"
+        [infiniteScrollThrottle]="0"
+        [scrollWindow]="false"
+        (scrolled)="handleHospitalPagination()"
+      >
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th *ngFor="let th of  hospitalThead">
+                {{ th | uppercase }}
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let hospitalProcedure of hospitalList; index as i"
+              (click)="onEmrHospitalDetails(hospitalProcedure.sourceType, hospitalProcedure.id)"
+            >
+              <td>
+                <span>{{
+                  hospitalProcedure.creationDate?.split("T")[0] || "--"
+                }}</span>
+              </td>
+              <td>
+                <span>{{ getChannelType(hospitalProcedure.channelId) }}</span>
+              </td>
+              <td>
+                <span>{{ hospitalProcedure.notes || "--" }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row" *ngIf="!hospitalList?.length">
+        <div class="col-12 py-3">Hmm, There is no Hospital Procedures </div>
+      </div>
+    </div>
+  </div>
+</div>
+

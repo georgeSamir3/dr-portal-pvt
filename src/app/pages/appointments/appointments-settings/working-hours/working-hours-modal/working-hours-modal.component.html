@@ -1,0 +1,58 @@
+<div class="add-Working-Hours-modal" >
+  <div class="modal-header">
+    <button
+      aria-label="Close"
+      class="close"
+      data-dismiss="modal"
+      type="button"
+      (click)="handleModalHide()"
+    >
+      <span aria-hidden="true"> × </span>
+    </button>
+  </div>
+  <div class="modal-body" style="display: flex; justify-content: center; align-items: center;">
+    <form [formGroup]="adjustForm" (ngSubmit)="onContinue()">
+      <div class="info">
+        <h2>Add Working Hours</h2>
+        <label>Select Day</label>
+        <select class="form-control" formControlName="dayOfWeek">
+          <option  [disabled]="true">Select Day</option>
+          <option *ngFor="let day of availableDays" [value]="day.dayNo">{{day.dayName}}</option>
+        </select>
+        <span *ngIf="
+                adjustForm.controls['dayOfWeek'].hasError('required') &&
+                adjustForm.controls['dayOfWeek'].touched"
+                class="error">Day is required</span>
+        <br>
+        <label>Start Time</label>
+        <br>
+        <input class="form-control" formControlName="startTime" type="time" />
+        <span *ngIf="
+        adjustForm.controls['startTime'].hasError('required') &&
+        adjustForm.controls['startTime'].touched"
+        class="error">Start Time is required</span>
+
+
+        <br>
+        <label>To Time</label>
+        <br>
+        <input class="form-control" formControlName="endTime" type="time"  />
+        <span
+        *ngIf="
+        adjustForm.controls['endTime'].hasError('required') &&
+        adjustForm.controls['endTime'].touched"
+        class="error">To Time is required
+        </span>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" [disabled]="adjustForm.invalid" >
+          Continue
+        </button>
+        <p class="mt-1 text-sm text-gray-500">{{ ErrorMessage }}</p>
+      </div>
+    </form>
+
+  </div>
+</div>
+

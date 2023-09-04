@@ -1,0 +1,24 @@
+<div class="modal-body">
+  <div class="card mx-auto" [style.maxWidth.px]="900">
+    <div class="card-body" [formGroup]="medicineForm">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <label for="medicine"> Medicines </label>
+          <ng-select id="medicine" name="medicine" bindLabel="name" bindValue="id" placeholder="Search for a medicine"
+            [closeOnSelect]="false" formControlName="medicines" typeToSearchText="Search Medicine"
+            notFoundText="No Medicines Found" [multiple]="true" dropdownPosition="bottom" [searchable]="true"
+            [clearOnBackspace]="true" [virtualScroll]="true" [trackByFn]="trackByFn" [typeahead]="medicinesTypeahead$"
+            [items]="medicinesItems$ | async" [clearable]="true" (change)="getDrugIndexBySearch($event)" 
+             (keyup)="onKeyUpDrugIndex($event)" [clearSearchOnAdd]="true" >
+
+          </ng-select>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-4">
+        <div class="col-12 text-right">
+          <button class="btn btn-primary" type="button" (click)="checkDrugDrugInteraction()" > Interaction </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

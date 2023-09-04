@@ -1,0 +1,27 @@
+<div class="add-consultation-Duration-modal">
+  <div class="modal-header">
+    <button
+      aria-label="Close"
+      class="close"
+      data-dismiss="modal"
+      type="button"
+      (click)="handleModalHide()"
+    >
+      <span aria-hidden="true"> × </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="info">
+      <h2>Change Consultation Duration</h2>
+      <select class="form-control" [(ngModel)]="selectedOption">
+        <option [disabled]="true">Select Duration</option>
+        <option *ngFor="let duration of availableDuration" [value]="duration.segment">{{duration.minute}}</option>
+      </select>
+    </div>
+    <div class="actions mt-3">
+      <button class="btn btn-primary" (click)="onContinue()" [disabled]="!selectedOption">
+        Continue
+      </button>
+    </div>
+  </div>
+</div>

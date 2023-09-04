@@ -1,0 +1,117 @@
+<div class="container-fluid">
+  <page-header-breadcrumb
+    [pageTitle]="pageTitle"
+    [breadcrumbList]="breadcrumbList"
+  >
+  </page-header-breadcrumb>
+  <div class="card">
+    <div class="card-body">
+      <a class="back-btn" [routerLink]="['/patient-emr', patientId]">
+        <i class="fa fa-arrow-left"></i>
+        Back to EHR
+      </a>
+      <div class="table-title">
+        <h3 class="title">Medications</h3>
+      </div>
+      <div class="filter-btns mb-3">
+        <h5 class="title">Filter By</h5>
+        <div class="filter-btn-container">
+          <button
+            class="btn filter-btn"
+            [class.active-btn]="
+              prescriptionCreatorType == prescriptionTypeEnum.all
+            "
+            (click)="onGetPrescriptions(prescriptionTypeEnum.all)"
+          >
+            All
+          </button>
+          <button
+            class="btn filter-btn"
+            [class.active-btn]="
+              prescriptionCreatorType == prescriptionTypeEnum.patient
+            "
+            (click)="onGetPrescriptions(prescriptionTypeEnum.patient)"
+          >
+            Added by Patient
+          </button>
+          <button
+            class="btn filter-btn"
+            [class.active-btn]="
+              prescriptionCreatorType == prescriptionTypeEnum.doctor
+            "
+            (click)="onGetPrescriptions(prescriptionTypeEnum.doctor)"
+          >
+            Prescribed by Doctor
+          </button>
+        </div>
+      </div>
+      <div
+        *ngIf="prescriptionList?.length"
+        class="table-responsive"
+        infinite-scroll
+        [infiniteScrollDistance]="0"
+        [infiniteScrollThrottle]="0"
+        [scrollWindow]="false"
+        (scrolled)="handlePrescriptionPagination()"
+      >
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th *ngFor="let th of prescriptionThead">
+                {{ th | uppercase }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let prescription of prescriptionList; index as i"
+              (click)="
+                onEmrPrescriptionDetails(
+                  prescription.isClickable,
+                  prescription.sourceType,
+                  prescription.id
+                )
+              "
+              [class.disabled]="!prescription.isClickable"
+              placement="top"
+              [tooltip]="
+                prescription.isClickable
+                  ? ''
+                  : 'This prescription isn\'t clickable!'
+              "
+            >
+              <td>
+                <span>{{
+                  prescription.creationDate?.split("T")[0] || "--"
+                }}</span>
+              </td>
+              <td>
+                <span>{{ getChannelType(prescription.channelId) }}</span>
+              </td>
+              <td>
+                <span>{{ prescription.medicationsCount }}</span>
+              </td>
+              <td>
+                <span>{{ prescription.title || "--" }}</span>
+              </td>
+              <td>
+                <span>{{ prescription.notes || "--" }}</span>
+              </td>
+              <td>
+                <span>{{
+                  getEhrType(
+                    prescription.ehrTypeIds,
+                    prescription.uploadedPrescriptionTypeId
+                  )
+                }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row" *ngIf="!prescriptionList?.length">
+        <div class="col-12 py-3">Hmm, There is no Prescriptions</div>
+      </div>
+    </div>
+  </div>
+</div>

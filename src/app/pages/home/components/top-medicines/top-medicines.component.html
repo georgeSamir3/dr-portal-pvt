@@ -1,0 +1,165 @@
+
+
+<div class="top-medicines">
+  <h2>Top Medicines</h2>
+  <div *ngIf="topMedicines?.length" class="medicines-container">
+    <ul>
+      <li *ngFor="let medicine of topMedicines; let i = index">
+        <div class="input-group">
+          <input
+            type="checkbox"
+            [id]="medicine.id"
+            [value]="medicine.id"
+            (change)="onTopMedicineClick($event.target.value, medicine)"
+            [attr.disabled]="medicine.isChecked ? '' : null"
+          />
+          <label *ngIf="!medicine.isChecked" [for]="medicine.id">
+            {{ medicine.name }}
+          </label>
+          <label
+            *ngIf="medicine.isChecked"
+            [for]="medicine.id"
+            placement="top"
+            tooltip="It's Already Selected!"
+          >
+            {{ medicine.name }}
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!topMedicines?.length" class="no-top-medicines">
+    <p>There Is No Top Medicines Found!</p>
+  </div>
+</div>
+
+<!-- <div class="top-LabTest">
+  <h2>Top LabTests</h2>
+  <div *ngIf="topMedicines?.length" class="medicines-container">
+    <ul>
+      <li *ngFor="let medicine of topMedicines; let i = index">
+        <div class="input-group">
+          <input
+            type="checkbox"
+            [id]="medicine.id"
+            [value]="medicine.id"
+            (change)="onTopMedicineClick($event.target.value, medicine)"
+            [attr.disabled]="medicine.isChecked ? '' : null"
+          />
+          <label *ngIf="!medicine.isChecked" [for]="medicine.id">
+            {{ medicine.name }}
+          </label>
+          <label
+            *ngIf="medicine.isChecked"
+            [for]="medicine.id"
+            placement="top"
+            tooltip="It's Already Selected!"
+          >
+            {{ medicine.name }}
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!topMedicines?.length" class="no-top-medicines">
+    <p>There Is No Top LabTests Found!</p>
+  </div>
+</div>
+<div class="top-Radiology">
+  <h2>Top Radiology</h2>
+  <div *ngIf="topMedicines?.length" class="medicines-container">
+    <ul>
+      <li *ngFor="let medicine of topMedicines; let i = index">
+        <div class="input-group">
+          <input
+            type="checkbox"
+            [id]="medicine.id"
+            [value]="medicine.id"
+            (change)="onTopMedicineClick($event.target.value, medicine)"
+            [attr.disabled]="medicine.isChecked ? '' : null"
+          />
+          <label *ngIf="!medicine.isChecked" [for]="medicine.id">
+            {{ medicine.name }}
+          </label>
+          <label
+            *ngIf="medicine.isChecked"
+            [for]="medicine.id"
+            placement="top"
+            tooltip="It's Already Selected!"
+          >
+            {{ medicine.name }}
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!topMedicines?.length" class="no-top-medicines">
+    <p>There Is No Top Radiology Found!</p>
+  </div>
+</div>
+
+<div class="top-Phsiotherapy">
+  <h2>Top Phsiotherapy</h2>
+  <div *ngIf="topMedicines?.length" class="medicines-container">
+    <ul>
+      <li *ngFor="let medicine of topMedicines; let i = index">
+        <div class="input-group">
+          <input
+            type="checkbox"
+            [id]="medicine.id"
+            [value]="medicine.id"
+            (change)="onTopMedicineClick($event.target.value, medicine)"
+            [attr.disabled]="medicine.isChecked ? '' : null"
+          />
+          <label *ngIf="!medicine.isChecked" [for]="medicine.id">
+            {{ medicine.name }}
+          </label>
+          <label
+            *ngIf="medicine.isChecked"
+            [for]="medicine.id"
+            placement="top"
+            tooltip="It's Already Selected!"
+          >
+            {{ medicine.name }}
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!topMedicines?.length" class="no-top-medicines">
+    <p>There Is No Top Phsiotherapy Found!</p>
+  </div>
+</div>
+
+<div class="top-Hospital">
+  <h2>Top Hospital</h2>
+  <div *ngIf="topMedicines?.length" class="medicines-container">
+    <ul>
+      <li *ngFor="let medicine of topMedicines; let i = index">
+        <div class="input-group">
+          <input
+            type="checkbox"
+            [id]="medicine.id"
+            [value]="medicine.id"
+            (change)="onTopMedicineClick($event.target.value, medicine)"
+            [attr.disabled]="medicine.isChecked ? '' : null"
+          />
+          <label *ngIf="!medicine.isChecked" [for]="medicine.id">
+            {{ medicine.name }}
+          </label>
+          <label
+            *ngIf="medicine.isChecked"
+            [for]="medicine.id"
+            placement="top"
+            tooltip="It's Already Selected!"
+          >
+            {{ medicine.name }}
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!topMedicines?.length" class="no-top-medicines">
+    <p>There Is No Top Hospital Found!</p>
+  </div>
+</div> -->

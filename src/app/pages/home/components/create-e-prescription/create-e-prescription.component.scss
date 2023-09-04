@@ -1,0 +1,204 @@
+.medicines {
+  .medicine-container {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 25px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+
+    .form-group {
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .is-chronic-form-group {
+      input {
+        width: max-content;
+      }
+    }
+
+    .medicine-info {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      gap: 10px;
+
+      &>div {
+        flex-grow: 1;
+
+        &:last-child {
+          flex-grow: 0;
+        }
+      }
+
+      .frequence-info .drug-frequency,
+      .period-info .drug-period {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+
+        &>div {
+          flex-grow: 1;
+        }
+      }
+
+      .form-group {
+        margin-bottom: 0;
+      }
+
+      .form-control {
+        height: unset;
+        padding: 2px 5px;
+      }
+
+      .is-chronic-form-group {
+        display: flex;
+
+        input[type="checkbox"] {
+          flex-grow: 1;
+        }
+      }
+    }
+
+    .remove-medicine {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-top-right-radius: 5px;
+      border: none;
+      color: #fff;
+      background-color: #f00;
+    }
+  }
+
+  .add-another-medicine {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
+
+.print-section {
+  page-break-after: always;
+}
+
+.rx-data-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #000;
+}
+
+.rx-p {
+  margin-bottom: 3px;
+}
+
+.rx-label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.rx-border-elm {
+  border: 2px solid #666;
+  border-radius: 10px;
+  padding: 10px 25px;
+  font-weight: bold;
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.rx-center-text {
+  text-align: center;
+}
+
+.rx-ul {
+  list-style: none;
+}
+
+.rx-large-elm {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rx-large-border-elm {
+  flex-grow: 1;
+}
+
+.rx-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.rx-logo-p {
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+.rx-patient-info {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-gap: 15px;
+}
+
+.rx-doctor-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+}
+
+.rx-doctor-signature {
+  display: flex;
+  flex-direction: column;
+}
+
+.rx-doctor-border-elm {
+  flex-grow: 1;
+}
+
+.rx-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rx-footer-section {
+  display: flex;
+  align-items: flex-end;
+  gap: 25px;
+}
+
+.table th {
+  font-size: 12px;
+  white-space: break-spaces;
+  vertical-align: text-top;
+
+}
+
+::ng-deep .inputInSpan {
+  display: contents;
+
+  p-inputnumber span input {
+    border-radius: 0 !important;
+    border-right: 0;
+  }
+}
+
+::ng-deep .firstInputInSpan p-inputnumber span input {
+  border-radius: 4px !important;
+  border-right: 0;
+}
+
+::ng-deep .p-inputtext.p-component.p-element.p-inputnumber-input {
+  min-width: 60px;
+}

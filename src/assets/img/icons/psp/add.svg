@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="add" transform="translate(-1505 -952)">
+    <g id="Ellipse_4098" data-name="Ellipse 4098" transform="translate(1505 952)" fill="#fff" stroke="#6c63ff" stroke-width="1">
+      <circle cx="32" cy="32" r="32" stroke="none"/>
+      <circle cx="32" cy="32" r="31.5" fill="none"/>
+    </g>
+    <path id="ic_add_24px" d="M23.347,15.484H15.484v7.863H12.863V15.484H5V12.863h7.863V5h2.621v7.863h7.863Z" transform="translate(1522.692 969.692)" fill="#6c63ff"/>
+  </g>
+</svg>

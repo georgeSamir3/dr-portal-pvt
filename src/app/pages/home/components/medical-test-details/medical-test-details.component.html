@@ -1,0 +1,320 @@
+<div class="container-fluid">
+  <page-header-breadcrumb
+    [pageTitle]="pageTitle"
+    [breadcrumbList]="breadcrumbList"
+  >
+  </page-header-breadcrumb>
+  <div class="card">
+    <a class="back-btn" [routerLink]="['../']">
+      <i class="fa fa-arrow-left"></i>
+      Back to Medical Tests
+    </a>
+    <div class="request-details-container">
+      <div class="card-body" *ngIf="sourceType==0">
+        <div class="details-section">
+          <h2>Patient Personal Details</h2>
+          <div class="row">
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Full Name</h5>
+              <h4 class="prop-value">
+                {{ patientPersonalDetails?.fullName || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">National ID</h5>
+              <h4 class="prop-value">
+                {{ patientPersonalDetails?.nationalId || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Phone Number</h5>
+              <h4 class="prop-value">
+                {{ patientPersonalDetails?.phone || "--" }}
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="details-section">
+          <h2>Request Information</h2>
+          <div class="row">
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Request ID</h5>
+              <h4 class="prop-value">
+                {{ medicalTestDetails?.id || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Request Date</h5>
+              <h4 class="prop-value">
+                {{
+                  testRequestInformation?.creationDate?.split("T")[0] || "--"
+                }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Channel</h5>
+              <h4 class="prop-value">
+                {{ checkChannel() }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Status</h5>
+              <h4 class="prop-value">
+                {{ testRequestInformation?.status || "--" }}
+              </h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Lab Name</h5>
+              <h4 class="prop-value">
+                {{ testRequestInformation?.centerNames.join(', ') || "--" }}
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="details-section">
+          <h2>Request Place</h2>
+          <div *ngIf="testRequestPlace?.location == 'Branch'" class="row">
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Place</h5>
+              <h4 class="prop-value">
+                {{ testRequestPlace?.location || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Branch</h5>
+              <h4 class="prop-value">
+                {{ testRequestPlace?.branch?.name || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Branch Address</h5>
+              <h4 class="prop-value">
+                {{ testRequestPlace?.branch?.address || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Branch Phone No.</h5>
+              <h4 class="prop-value">
+                {{ testRequestPlace?.phone || "--" }}
+              </h4>
+            </div>
+          </div>
+          <div *ngIf="testRequestPlace?.location == 'Home'" class="row">
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Place</h5>
+              <h4 class="prop-value">
+                {{ testRequestPlace?.location || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Address</h5>
+              <h4 class="prop-value">
+                {{ testRequestPlace?.patientAddress || "--" }}
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="details-section medical-tests-container">
+          <div class="medical-tests-header">
+            <h2>Medical Tests</h2>
+          </div>
+          <ul class="medical-tests">
+            <li
+              class="test-card"
+              *ngFor="let medicalTest of medicalTests?.testRequestDetails; let i = index"
+            >
+              <div class="test-header">
+                <h6>{{ medicalTest?.test?.name }}</h6>
+                <span *ngIf="medicalTest?.resultFiles.length || medicalTests.testRequestResults.length" class="link" (click)="onDownloadTestResult(medicalTest.resultFiles, medicalTests.testRequestResults)">
+                  Download Result
+                </span>
+              </div>
+              <div class="divider"></div>
+              <div class="test-body">
+                <div class="row">
+                  <div class="col-6 prop">
+                    <h5 class="prop-key">Fees</h5>
+                    <h4 class="prop-value">{{ medicalTest?.fees || "--" }}</h4>
+                  </div>
+                  <div class="col-6 prop">
+                    <h5 class="prop-key">Promo Code</h5>
+                    <h4 class="prop-value">
+                      {{ medicalTest?.promoCode || "--" }}
+                    </h4>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 prop">
+                    <h5 class="prop-key">Results</h5>
+                    <h4 class="prop-value">
+                      {{ (medicalTest?.resultFiles?.length || medicalTests.testRequestResults.length) ? "Available" : "Not Available" }}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="details-section medical-tests-container">
+          <div class="medical-tests-header">
+            <h2>Radiologies</h2>
+          </div>
+          <ul class="medical-tests">
+            <li
+              class="test-card"
+              *ngFor="let medicalTest of radiologies?.testRequestDetails; let i = index"
+            >
+              <div class="test-header">
+                <h6>{{ medicalTest?.test?.name }}</h6>
+                <span *ngIf="medicalTest?.resultFiles.length || radiologies.testRequestResults.length" class="link" (click)="onDownloadTestResult(medicalTest.resultFiles, radiologies.testRequestResults)">
+                  Download Result
+                </span>
+              </div>
+              <div class="divider"></div>
+              <div class="test-body">
+                <div class="row">
+                  <div class="col-6 prop">
+                    <h5 class="prop-key">Fees</h5>
+                    <h4 class="prop-value">{{ medicalTest?.fees || "--" }}</h4>
+                  </div>
+                  <div class="col-6 prop">
+                    <h5 class="prop-key">Promo Code</h5>
+                    <h4 class="prop-value">
+                      {{ medicalTest?.promoCode || "--" }}
+                    </h4>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 prop">
+                    <h5 class="prop-key">Results</h5>
+                    <h4 class="prop-value">
+                      {{ (medicalTest?.resultFiles?.length || radiologies.testRequestResults.length) ? "Available" : "Not Available" }}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="details-section">
+          <h2>Physiotherapies</h2>
+          <div *ngIf="physiotherapies?.length" class="row">
+            <div class="col-12 prop">
+              <ul class="mb-0">
+                <li *ngFor="let physiotherapy of physiotherapies">
+                  {{ physiotherapy }}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div *ngIf="!physiotherapies?.length" class="row">
+            <div class="col-12 prop">
+              <h4 class="prop-value">--</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="details-section">
+          <h2>Payment Information</h2>
+          <div class="row">
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Invoice Number</h5>
+              <h4 class="prop-value">
+                {{ paymentInformation?.invoiceNumber || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Payment Method</h5>
+              <h4 class="prop-value">
+                {{ paymentInformation?.paymentMethod || "--" }}
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 prop">
+              <h5 class="prop-key">Payment Status</h5>
+              <h4 class="prop-value">
+                {{ paymentInformation?.paymentStatus || "--" }}
+              </h4>
+            </div>
+          </div>
+          <div class="invoice-card">
+            <div class="invoice-header">
+              <h6>Invoice</h6>
+            </div>
+            <div class="divider"></div>
+            <div class="invoice-body">
+              <div class="prop element">
+                <h5 class="prop-key">Test Fees</h5>
+                <h4 class="prop-value">
+                  {{
+                    invoice?.totalFeesBeforeDiscount || "--"
+                  }}
+                </h4>
+              </div>
+              <div class="prop element">
+                <h5 class="prop-key">Promo Code</h5>
+                <h4 class="prop-key">
+                  {{ invoice?.promoCode || "--" }}
+                </h4>
+              </div>
+              <div class="prop element">
+                <h5 class="prop-key">Discount {{ checkPromocode() }}</h5>
+                <h4 class="prop-key">
+                  {{ invoice?.discount || "--" }}
+                </h4>
+              </div>
+              <div class="divider"></div>
+              <div class="prop element">
+                <h5 class="prop-key">Total Amount</h5>
+                <h4 class="prop-value" [style]="{ fontSize: '17px' }">
+                  {{ invoice?.totalFeesAfterDiscount || "--" }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="medical-test-files-container" *ngIf="sourceType == medicalTestSourceTypeEnum.files">
+
+      <h3 *ngIf="medicalTestFilesAsPdf?.length">PDFs</h3>
+      <div *ngIf="medicalTestFilesAsPdf?.length" class="files-as-file mb-4">
+        <a
+          *ngFor="let medicalTestSrc of medicalTestFilesAsPdf"
+          (click)="downloadFile(medicalTestSrc)"
+          placement="top"
+          tooltip="Click To Download"
+        >
+          {{ medicalTestSrc.split("/").pop() }}
+        </a>
+      </div>
+      <h3 *ngIf="medicalTestFilesAsImages?.length">Images</h3>
+      <div *ngIf="medicalTestFilesAsImages?.length" class="files-as-img">
+        <img
+          *ngFor="let medicalTestSrc of medicalTestFilesAsImages"
+          [src]="medicalTestSrc"
+        />
+      </div>
+    </div>
+
+  </div>
+</div>

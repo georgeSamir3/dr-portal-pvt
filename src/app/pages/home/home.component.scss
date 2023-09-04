@@ -1,0 +1,39 @@
+.bullets-separator {
+  position: relative;
+  margin: 50px 0 40px 0;
+  height: 1px;
+  background-color: #dedede;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #fff;
+
+    li {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+
+      &:nth-child(1) {
+        background-color: red;
+      }
+
+      &:nth-child(2) {
+        background-color: green;
+      }
+
+      &:nth-child(3) {
+        background-color: blue;
+      }
+    }
+  }
+}

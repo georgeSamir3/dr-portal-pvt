@@ -1,0 +1,104 @@
+.icon-show-more {
+  background: url(../img/icons/psp/ic_more_horiz_24px.svg) no-repeat center center;
+}
+
+.icon-add-address {
+  background: url(../img/icons/psp/add.svg) no-repeat center center;
+}
+
+.icon-view {
+  background: url(../img/icons/psp/ic_visibility_24px.svg) no-repeat center center;
+}
+
+.icon-delete {
+  background: url(../img/icons/psp/ic_delete_24px.svg) no-repeat center center;
+}
+
+.icon-create {
+  background: url(../img/icons/psp/ic_create_24px.svg) no-repeat center center;
+}
+
+.icon-arrow-call {
+  background: url(../img/icons/psp/ic_call_made_24px.svg) no-repeat center center;
+}
+
+.icon-left-arrow {
+  background: url(../img/icons/psp/left-arrow.svg) no-repeat center center;
+}
+
+.icon-box {
+  background: url(../img/icons/psp/noun_Box_1554051.svg) no-repeat center center;
+}
+
+.icon-delivery {
+  background: url(../img/icons/psp/noun_delivery_1334949.svg) no-repeat center center;
+}
+
+.icon-key {
+  background: url(../img/icons/psp/noun_Key_241646.svg) no-repeat center center;
+}
+
+.icon-correct {
+  background: url(../img/icons/psp/green-correct-icon.svg) no-repeat center center;
+}
+
+.icon-location {
+  background: url(../img/icons/psp/location-not-active.svg) no-repeat center center;
+
+  &.ico-active {
+    animation: fadeIn 0.3s forwards ease-in-out;
+    background: url(../img/icons/psp/location-active.svg) no-repeat center center;
+  }
+}
+
+.icon-info {
+  background: url(../img/icons/psp/info-not-active.svg) no-repeat center center;
+
+  &.ico-active {
+    animation: fadeIn 0.3s forwards ease-in-out;
+    background: url(../img/icons/psp/info-active.svg) no-repeat center center;
+  }
+}
+
+.icon-select-pharmacy {
+  background: url(../img/icons/psp/pharmacy-not-active.svg) no-repeat center center;
+
+  &.ico-active {
+    animation: fadeIn 0.3s forwards ease-in-out;
+    background: url(../img/icons/psp/pharmacy-active.svg) no-repeat center center;
+  }
+}
+
+.patient-side-menu-icon {
+  background: url(../img/icons/psp/patient.svg) no-repeat center center;
+  height: 17px;
+  background-position-x: left;
+  background-position-y: top;
+  top: 0 !important;
+}
+
+.icon-down-arrow {
+  background: url(../img/icons/psp/down-arrow.svg) no-repeat center center;
+}
+
+.icon-eye{
+  background: url(../img/icons/psp/show-eye.svg) no-repeat center center;
+}
+
+.icon-copy{
+  background: url(../img/icons/psp/copy.svg) no-repeat center center;
+}
+
+.icon-image-placeholder{
+  background: url(../img/icons/psp/image-placeholder.svg) no-repeat center center;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}

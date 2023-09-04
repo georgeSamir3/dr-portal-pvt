@@ -1,0 +1,89 @@
+<div class="main-content">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-12 py-5">
+        <h1 class="text-center text-white">Welcome Back!</h1>
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-lg-5 col-md-7">
+        <div class="card bg-secondary">
+          <div class="card-body">
+            <div class="logo text-center">
+              <img
+                src="../../../assets/img/logo.png"
+                alt="Limitless Care Logo"
+              />
+            </div>
+            <form [formGroup]="signInForm" (ngSubmit)="onSignInSubmit()">
+              <div
+                class="form-group mb-3"
+                [ngClass]="{ focused: emailFocus === true }"
+              >
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="ni ni-email-83"></i
+                    ></span>
+                  </div>
+                  <input
+                    class="form-control"
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    id="email"
+                    formControlName="email"
+                    (focus)="emailFocus = true"
+                    (blur)="emailFocus = false"
+                    checkValidity
+                    [elementControl]="signInForm?.controls?.email"
+                  />
+                </div>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{ focused: passwordFocus === true }"
+              >
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="ni ni-lock-circle-open"></i
+                    ></span>
+                  </div>
+                  <input
+                    class="form-control"
+                    placeholder="Password"
+                    type="password"
+                    name="password"
+                    id="password"
+                    minlength="6"
+                    formControlName="password"
+                    (focus)="passwordFocus = true"
+                    (blur)="passwordFocus = false"
+                  />
+                </div>
+              </div>
+              <div class="form-actions">
+                <button
+                  type="submit"
+                  class="btn btn-block"
+                  role="button"
+                  [disabled]="signInForm.invalid"
+                >
+                  Sign in
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <a
+          href="javascript:void(0)"
+          class="forgot-password"
+          (click)="onForgotPassword()"
+        >
+          <small>Forgot Password?</small>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

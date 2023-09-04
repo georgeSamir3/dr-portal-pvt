@@ -1,0 +1,18 @@
+.error{
+  position: absolute;
+  opacity:0;
+  left: 0;
+  top: 90%;
+  color: red;
+  transition: 0.4s all;
+}
+
+
+.errorAdded{
+  position: absolute;
+  opacity:1;
+  left: 0;
+  top: 110%;
+  color: red;
+  transition: 0.4s all;
+}

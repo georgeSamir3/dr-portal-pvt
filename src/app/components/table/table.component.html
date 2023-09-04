@@ -1,0 +1,41 @@
+<div [ngClass]="{'table-responsive': isResponsive}">
+    <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+            <tr>
+                <th class="sort" *ngFor="let header of headers"
+                    [attr.data-sort]="header|lowercase|removeSpaces|removeSpecialCharacters"
+                    scope="col"
+                    sortable="{{header|lowercase|removeSpaces|removeSpecialCharacters}}"
+                    (sort)="onSort($event)">{{header|uppercase}}</th>
+                <th *ngIf="isDownloadable"></th>
+                <th *ngIf="isUploadable"></th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            <tr class="pointer" *ngFor="let object of list" (click)="rowClicked(object)">
+                <td *ngFor="let header of headers">
+                    <ul *ngIf="isArray(object[header|lowercase|removeSpaces|removeSpecialCharacters])" class="m-0 pl-3">
+                        <li *ngFor="let item of object[header|lowercase|removeSpaces|removeSpecialCharacters]">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <span *ngIf="!isArray(object[header|lowercase|removeSpaces|removeSpecialCharacters])">
+                        {{object[header|lowercase|removeSpaces|removeSpecialCharacters]}}
+                    </span>
+                </td>
+                <td *ngIf="object.download" (click)="ondownloadClicked($event, object)">
+                    <span class="link">
+                        <i class="fa fa-download mr-1"></i>
+                        Download All
+                    </span>
+                </td>
+                <td *ngIf="object.upload" (click)="onviewFilesClicked($event, object)">
+                    <span class="link">
+                        View Files
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

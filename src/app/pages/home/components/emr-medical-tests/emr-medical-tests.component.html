@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="card mb-4">
+    <div class="row align-items-center pt-3">
+      <div class="col-lg-6 col-7">
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-3">
+          <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+            <li class="breadcrumb-item text-primary psp-breadcrumb">
+              <a class="text-primary" [routerLink]="'/patients'"> Patients </a>
+            </li>
+            <li
+              aria-current="page"
+              class="breadcrumb-item active text-gray psp-breadcrumb"
+            >
+              Patient Profile
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div
+      class="border-bottom title d-flex p-3 align-items-center mt-2"
+    >
+      <h2 class="m-0">Patient Profile</h2>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <a class="back-btn d-inline-block mb-4" [routerLink]="['/patient-emr', patientId]">
+        <i class="fa fa-arrow-left"></i>
+        Back to EMR
+      </a>
+      <div class="table-title mb-1">
+        <h3 class="title mb-0">Recent Medical Tests Requests</h3>
+      </div>
+      <div *ngIf="modifiedRecentMedicalTests?.length" class="table-responsive page-height"
+        [scrollWindow]="false" [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50" infinite-scroll (scrolled)="onScrollDown(true)">
+        <div>
+          <app-table [list]="modifiedRecentMedicalTests" [headers]="recentTestsThead" (rowSelected)="onMedicalTestClick($event)"></app-table>
+        </div>
+      </div>
+      <div class="row" *ngIf="!modifiedRecentMedicalTests?.length">
+        <div class="col-12 py-3">Hmm, There is no recent tests requests 🥳</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-title mb-1">
+        <h3 class="title mb-0">Completed Medical Tests Requests</h3>
+      </div>
+      <div *ngIf="modifiedCompletedMedicalTests?.length" class="table-responsive page-height"
+        [scrollWindow]="false" [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50" infinite-scroll (scrolled)="onScrollDown(true)">
+        <div>
+          <app-table [isDownloadable]="true" [isUploadable]="true" [list]="modifiedCompletedMedicalTests" 
+            [headers]="previousRequestsThead" (rowSelected)="onMedicalTestClick($event)"
+            (downloadClicked)="downloadTestRequestResults($event)"></app-table>
+        </div>
+      </div>
+      <div class="row" *ngIf="!modifiedCompletedMedicalTests?.length">
+        <div class="col-12 py-3">Hmm, There is no previous requests 🥳</div>
+      </div>
+    </div>
+  </div>
+</div>

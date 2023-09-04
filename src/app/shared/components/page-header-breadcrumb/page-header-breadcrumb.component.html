@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="title mb-0">{{ pageTitle }}</h1>
+      </div>
+      <div class="col-12">
+        <nav class="d-none d-md-inline-block">
+          <ol class="breadcrumb breadcrumb-links">
+            <li class="breadcrumb-item">
+              <a [routerLink]="'/'"> <i class="fas fa-home"> </i> </a>
+            </li>
+            <li *ngFor="
+                let item of breadcrumbList;
+                index as i;
+                first as isFirst;
+                last as isLast
+              " class="breadcrumb-item" [class.active]="isLast">
+              <a *ngIf="!isLast" [routerLink]="item.link"> {{ item.text }}</a>
+              <span *ngIf="isLast">{{ item.text }}</span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
