@@ -4,6 +4,10 @@ import { AddPatientVisitComponent } from './add-patient-visit/add-patient-visit.
 import { AddPatientVisitRoutingModule } from './add-patient-visit-routing.module';
 import { SharedModule } from '@shared/shared.module';
 import { AddVisitComponent } from './add-visit/add-visit.component';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+
 @NgModule({
   declarations: [
     AddPatientVisitComponent,
@@ -12,7 +16,10 @@ import { AddVisitComponent } from './add-visit/add-visit.component';
   imports: [
     CommonModule,
     AddPatientVisitRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    DropdownModule,
+    CalendarModule
   ]
 })
 export class AddPatientVisitModule{ 

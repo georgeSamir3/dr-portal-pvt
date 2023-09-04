@@ -1,1 +1,77 @@
-<p>add-visit works!</p>
+<form action="">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <a class="back-btn d-inline-block mb-4" [routerLink]="['']">
+          <i class="fa fa-arrow-left"></i>
+          Back to Home
+        </a>
+        <div class="table-title mb-1">
+          <h3 class="title mb-0">Add a Patient Visit</h3>
+        </div>
+        <hr />
+        <div class="table-title mb-1">
+          <h4 class="title mb-0">Patient Information</h4>
+        </div>
+        <div class="container">
+          <span>
+            <p>patient name</p>
+            just a placeholder
+          </span>
+          <span>
+            <p>patient phone number</p>
+            just a placeholder
+          </span>
+        </div>
+        <hr />
+        <div class="table-title mb-1">
+          <h4 class="title mb-0">Visit Information</h4>
+        </div>
+        <div class="container">
+          <span>
+            <p>visit type</p>
+            <p-dropdown
+              [options]="visitType"
+              [(ngModel)]="selectedType"
+            ></p-dropdown>
+          </span>
+          <span>
+            <p>visit date</p>
+            <p-calendar [(ngModel)]="selectedDate"></p-calendar>
+          </span>
+        </div>
+        <hr />
+        <div class="table-title mb-1">
+          <h4 class="title mb-0">Insurance Information</h4>
+        </div>
+        <div class="container">
+          <span>
+            <p>Patient type</p>
+            <button class="btn btn-primary">insured</button>
+            <button class="btn btn-outline-primary">uninsured</button>
+          </span>
+        </div>
+        <hr />
+        <div class="table-title mb-1">
+          <h4 class="title mb-0">Amount Details</h4>
+        </div>
+        <div class="container">
+          <span>
+            <p>Money recieved</p>
+            <input
+              type="text"
+              class="form-control"
+              style="width: 25vw"
+              placeholder="ex:100 le"
+            />
+          </span>
+          <span>
+            <p>Discount applied</p>
+            <button class="btn btn-primary">yes</button>
+            <button class="btn btn-outline-primary">no</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

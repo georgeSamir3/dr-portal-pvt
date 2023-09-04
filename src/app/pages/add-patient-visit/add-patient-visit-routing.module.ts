@@ -9,7 +9,7 @@ const routes: Routes = [
     component: AddPatientVisitComponent,
     pathMatch: 'full',
   },
-  { path: 'addvisit', component: AddVisitComponent },
+  { path: 'addvisit/:userId', component: AddVisitComponent },
 ];
 
 @NgModule({

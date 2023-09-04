@@ -10,3 +10,29 @@
     overflow: auto;
     z-index: 1000;
 }
+.patient-avatar{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: grey;
+}
+.card-container{
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-between;
+    align-items: center;
+}
+.patient-data{
+    margin-right: 15vw;
+    margin-left: 15px;
+}
+.patient-data p{
+    margin: 0;
+}
+.btn-new-visit{
+    border-radius: 50px;
+    // padding-left: 2rem !important;
+    // padding-right: 2rem !important;
+    padding: 0.8rem 2rem !important;
+    width: fit-content;
+  }

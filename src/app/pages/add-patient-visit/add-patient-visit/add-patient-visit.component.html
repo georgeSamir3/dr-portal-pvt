@@ -6,7 +6,7 @@
         Back to Home
       </a>
       <div class="table-title mb-1">
-        <h3 class="title mb-0">My Patient List</h3>
+        <h3 class="title mb-0">Add a Patient Visit</h3>
         <search
           placeholder="Patient name or mobile number"
           (search)="searchPatient($event)"
@@ -14,49 +14,82 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid" style="padding:0px">
-    <div class="card">
-      <ngx-datatable
-        class="material ngx-datatable-custom mt-3"
-        [rows]="patientListItems"
-        [columns]="columns"
-        [limit]="pageSize"
-        [offset]="currentPage - 1"
-        columnMode="force"
-        externalPaging="true"
-        [count]="totalItems"
-        [messages]="messages"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        rowHeight="auto"
-        (page)="onChangePage($event)"
-      >
-        <ng-template
-          let-row="row"
-          #ehrButtonTemplateRef
-          ngx-datatable-row-detail-template
-          style="height: 50px"
+</div>
+
+<div class="container-fluid" style="padding: 0px">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="title mb-0">Recent Visits</h3>
+      <ng-container *ngIf="showTable">
+        <ngx-datatable
+          class="material ngx-datatable-custom mt-3"
+          [rows]="patientListItems"
+          [columns]="columns"
+          [limit]="pageSize"
+          [offset]="currentPage - 1"
+          columnMode="force"
+          externalPaging="true"
+          [count]="totalItems"
+          [messages]="messages"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          rowHeight="auto"
+          (page)="onChangePage($event)"
         >
-          <!-- <button class="btn btn-primary btn-sm" (click)="onPatientClick(row)">
-            View EHR
-          </button> -->
-          <span
-            class="bi bi-three-dots"
-            style="cursor: pointer"
-            (click)="showPopUp($event, row)"
-            >g</span
+          <ng-template
+            let-row="row"
+            #ehrButtonTemplateRef
+            ngx-datatable-row-detail-template
+            style="height: 50px"
           >
-          <div
-            class="overlay floatinSM"
-            *ngIf="showOverlay && selectedPatientId === row.patientId"
-          >
-            <div class="overlay-content">
-              <!-- Content of the overlay -->
-              ggg
+            <span
+              class="bi bi-three-dots"
+              style="cursor: pointer"
+              (click)="showPopUp($event, row)"
+              >g</span
+            >
+            <div
+              class="overlay floatinSM"
+              *ngIf="showOverlay && selectedPatientId === row.patientId"
+            >
+              <div class="overlay-content">ggg</div>
             </div>
+          </ng-template>
+        </ngx-datatable>
+      </ng-container>
+
+      <div class="patient-container mt-3" *ngIf="!showTable">
+        <div class="card" *ngFor="let patient of searchedPatient">
+          <div class="card-body card-container">
+            <div class="patient-avatar"></div>
+            <div class="patient-data">
+              <p>patient name</p>
+              {{ patient.fullName }}
+            </div>
+            <div class="patient-data">
+              <p>patient number</p>
+              {{ patient.phone }}
+            </div>
+
+            <a
+              class="btn btn-psp-primary btn-new-visit btn-block"
+              style="background-color: white; color: navy"
+            >
+              last visit
+            </a>
+            <a
+              class="btn btn-psp-primary btn-new-visit btn-block"
+              [routerLink]="['addvisit',patient.patientId]"
+              >
+              new Visit
+          </a>
           </div>
-        </ng-template>
-      </ngx-datatable>
+          <!-- ... -->
+        </div>
+        <div *ngIf="searchedPatient.length === 0" class="empty-patient-list">
+          Hmm, There is no patient to display😔
+        </div>
+      </div>
     </div>
   </div>
 </div>
