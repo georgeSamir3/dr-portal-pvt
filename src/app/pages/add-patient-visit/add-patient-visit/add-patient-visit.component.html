@@ -74,20 +74,34 @@
             <a
               class="btn btn-psp-primary btn-new-visit btn-block"
               style="background-color: white; color: navy"
+              [routerLink]="['lastvisit']"
             >
               last visit
             </a>
             <a
               class="btn btn-psp-primary btn-new-visit btn-block"
-              [routerLink]="['addvisit',patient.patientId]"
-              >
+              [routerLink]="['addvisit', patient.fullName]"
+              style="margin: 0"
+            >
+            
               new Visit
-          </a>
+            </a>
           </div>
-          <!-- ... -->
+         
         </div>
         <div *ngIf="searchedPatient.length === 0" class="empty-patient-list">
-          Hmm, There is no patient to display😔
+          <h3>Sorry! we couldn't find this patient</h3>
+          <p >
+            this patient doesn't have an account on the system . you can create
+            an account for him to register his visit
+          </p>
+          <a
+            class="btn btn-psp-primary btn-new-visit btn-block"
+            style="margin: 0; color: white; margin:20px"
+            [routerLink]="['addvisit', '']"
+          >
+            New Visit
+          </a>
         </div>
       </div>
     </div>

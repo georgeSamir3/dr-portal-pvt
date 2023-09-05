@@ -53,41 +53,7 @@ export class AddPatientVisitComponent implements OnInit {
       selectedMessage: 'selected',
     };
   }
-  // getAllDoctorPatients() {
-  //   this.loading = true;
-  //   this.spinner.show();
-  //   this.patientsWithDoctorService
-  //     .getAllDoctorPatients(this.searchValue, this.currentPage, this.pageSize)
-  //     .subscribe((response) => {
-  //       if (this.searchValue) {
-  //         this.showTable = false;
-  //         this.searchedPatient = response.data.items; 
-  //       } else {
-  //         this.showTable = true;
-  //         this.patientListItems = response.data.items;
-  //       }
-
-  //       this.columns = [
-  //         { prop: 'patientId', name: 'Patient ID' },
-  //         { prop: 'fullName', name: 'Patient Name' },
-  //         { prop: 'phone', name: 'Patient Phone' },
-  //         {
-  //           prop: 'Ehr',
-  //           name: '',
-  //           cellTemplate: this.ehrButtonTemplateRef,
-  //           sortable: false,
-  //         },
-  //       ];
-  //       this.patientListItems = response.data.items;
-  //       this.loading = false;
-  //       this.totalPages = response.data?.pagination?.totalPages;
-  //       this.currentPage = response.data?.pagination?.currentPage;
-  //       this.totalItems = response.data?.pagination?.totalItems;
-  //       this.spinner.hide();
-  //     });
-  //     console.log(this.patientListItems);
-
-  // }
+  
   getAllDoctorPatients() {
     this.loading = true;
     this.spinner.show();

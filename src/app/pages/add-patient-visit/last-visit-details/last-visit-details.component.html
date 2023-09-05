@@ -1,0 +1,135 @@
+<form action="">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <a class="back-btn d-inline-block mb-4" [routerLink]="['']">
+          <i class="fa fa-arrow-left"></i>
+          Patient Visit Details
+        </a>
+        <div class="table-title mb-1">
+          <h3 class="title mb-0">Patient Visit Details</h3>
+        </div>
+        <hr />
+        <div class="user-container">
+          <div class="flex-row">
+            <div class="patient-avatar"></div>
+            <p>john doe</p>
+          </div>
+          <div class="flex-row">
+            <!-- <a
+              class="btn btn-psp-primary btn-new-visit btn-block"
+              style="background-color: white; color: navy"
+            >
+            Create RX
+            </a> -->
+            <a
+              class="btn btn-psp-primary btn-new-visit btn-block"
+              style="background-color: white; color: navy"
+            >
+              View EHR
+            </a>
+            <a
+              class="btn btn-psp-primary btn-new-visit btn-block"
+              style="background-color: white; color: navy; margin: 0"
+            >
+              Create RX
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="table-title mb-1">
+          <h4 class="title mb-0">Patient Information</h4>
+        </div>
+        <div class="container">
+          <span>
+            <p>patient name</p>
+            just a placeholder
+          </span>
+          <span>
+            <p>patient phone number</p>
+            just a placeholder
+          </span>
+        </div>
+        <hr />
+        <div class="table-title mb-1">
+          <h4 class="title mb-0">Visit Information</h4>
+        </div>
+        <div class="container">
+          <span>
+            <p>visit type</p>
+          </span>
+          <span>
+            <p>visit date</p>
+          </span>
+        </div>
+        <hr />
+        <div class="table-title mb-1">
+          <h4 class="title mb-0">Insurance Information</h4>
+        </div>
+        <div class="container">
+          <span>
+            <p>Patient type</p>
+            Insured
+          </span>
+        </div>
+        <hr />
+        <div class="table-title mb-1">
+          <h4 class="title mb-0">Amount Details</h4>
+        </div>
+        <div class="container">
+          <span>
+            <p>Money recieved</p>
+            500
+          </span>
+          <span>
+            <p>Discount applied</p>
+            yes
+          </span>
+        </div>
+        <div class="d-flex justify-content-end">
+          <a
+            class="btn btn-psp-primary btn-new-visit"
+            style="background-color: white; color: navy"
+          >
+            Delete visit
+          </a>
+          <!-- <a class="btn btn-psp-primary btn-new-visit" style="color: white">
+            Revisit
+          </a> -->
+          <p-overlayPanel #op>
+            <img
+              src="https://primefaces.org/cdn/primeng/images/demo/product/bamboo-watch.jpg"
+              alt="product"
+            />
+          </p-overlayPanel>
+          <button
+            (click)="op.toggle($event)"
+            class="btn btn-psp-primary btn-new-visit"
+          >
+            Revisit
+          </button>
+          <!-- <p-button
+            (click)="op.show($event, targetEl)"
+            icon="pi pi-image"
+            label="Show"
+          ></p-button>
+          <div
+            #targetEl
+            class="mt-5 w-10rem h-5rem border-1 surface-border border-round flex align-items-center justify-content-center"
+          >
+            <span>Target Element</span>
+          </div>
+          <p-overlayPanel #op>
+            <img
+              src="https://primefaces.org/cdn/primeng/images/demo/product/bamboo-watch.jpg"
+              alt="product"
+            />
+          </p-overlayPanel> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

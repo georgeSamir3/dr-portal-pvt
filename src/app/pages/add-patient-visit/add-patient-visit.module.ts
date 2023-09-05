@@ -7,11 +7,14 @@ import { AddVisitComponent } from './add-visit/add-visit.component';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { LastVisitDetailsComponent } from './last-visit-details/last-visit-details.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [
     AddPatientVisitComponent,
-    AddVisitComponent
+    AddVisitComponent,
+    LastVisitDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -19,7 +22,9 @@ import { CalendarModule } from 'primeng/calendar';
     SharedModule,
     FormsModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    OverlayPanelModule
+
   ]
 })
 export class AddPatientVisitModule{ 
