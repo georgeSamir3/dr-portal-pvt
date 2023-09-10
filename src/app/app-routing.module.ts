@@ -66,6 +66,11 @@ const routes: Routes = [
           import('@pages/add-patient-visit/add-patient-visit.module').then((m) => m.AddPatientVisitModule)
       },
       {
+        path:'clinic-finances/clinic-fees',
+        loadChildren:()=>
+        import('@pages/clinic-fees/clinic-fees.module').then((m)=>m.ClinicFeesModule)
+      },
+      {
         path: 'about',
         component: AboutComponent,
       },

@@ -32,7 +32,11 @@ export class SidebarComponent implements OnInit {
         path: 'add-patient-visit',
         title: 'patients visit',
         type: 'link',
-      },
+      },{
+        path: 'clinic-fees',
+        title: 'Clinic fees',
+        type: 'link',
+      }
     ],
   };
   constructor(private router: Router) {
@@ -66,6 +70,7 @@ export class SidebarComponent implements OnInit {
       
     });
     this.menuItems.push(this.clinicFees);
+
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
     });
