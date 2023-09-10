@@ -55,8 +55,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('@pages/drug-drug-interaction/drug-drug-interaction.module').then((m) => m.DrugDrugInteractionModule)
       },
+      // {
+      //   path: 'add-patient-visit',
+      //   loadChildren: () =>
+      //     import('@pages/add-patient-visit/add-patient-visit.module').then((m) => m.AddPatientVisitModule)
+      // },
       {
-        path: 'add-patient-visit',
+        path: 'clinic-finances/add-patient-visit',
         loadChildren: () =>
           import('@pages/add-patient-visit/add-patient-visit.module').then((m) => m.AddPatientVisitModule)
       },

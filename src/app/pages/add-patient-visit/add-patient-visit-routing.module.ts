@@ -9,8 +9,7 @@ const routes: Routes = [
     component: AddPatientVisitComponent,
     pathMatch: 'full',
   },
-  // { path: 'addvisit', component: AddVisitComponent },
-  { path: 'addvisit/:fullName?', component: AddVisitComponent },
+  { path: 'addvisit/:fullName', component: AddVisitComponent },
   { path: 'lastvisit', component: LastVisitDetailsComponent },
 ];
 

@@ -18,8 +18,30 @@ export class SidebarComponent implements OnInit {
   menuItems: IRouteInfo[];
   navigationModel: NavigationModel;
 
+  visitType: any[];
+  selectedType: any;
+  clinicFees = {
+    path: '/clinic-finances',
+    title: 'Clinic Finances',
+    type: 'sub',
+    icontype: 'fas fa-cog text-primary',
+    collapse: 'clinic-finances',
+    isCollapsed: true,
+    children: [
+      {
+        path: 'add-patient-visit',
+        title: 'patients visit',
+        type: 'link',
+      },
+    ],
+  };
   constructor(private router: Router) {
     this.navigationModel = new NavigationModel();
+    this.visitType = [
+      { label: 'Follow up', value: 'Follow up' },
+      { label: 'London', value: 'London' },
+      { label: 'Paris', value: 'Paris' },
+    ];
   }
 
   ngOnInit(): void {
@@ -28,8 +50,9 @@ export class SidebarComponent implements OnInit {
         menuItem.path.includes('home') ||
         menuItem.path.includes('appointments') ||
         menuItem.path.includes('patientList') ||
-        menuItem.path.includes('drug-drug-interaction')||
-        menuItem.path.includes('add-patient-visit')
+        menuItem.path.includes('drug-drug-interaction')
+        // || menuItem.path.includes('add-patient-visit')
+        // || menuItem.path.includes('clinic-finances')
       ) {
         return menuItem;
       }
@@ -40,14 +63,18 @@ export class SidebarComponent implements OnInit {
       ) {
         return menuItem;
       }
+      
     });
-
+    this.menuItems.push(this.clinicFees);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
     });
+    console.log('clinic finances', this.menuItems);
   }
 
-
+  toggleSubmenu(menuItem: IRouteInfo): void {
+    menuItem.isCollapsed = !menuItem.isCollapsed;
+  }
   onMouseEnterSidenav() {
     if (!document.body.classList.contains('g-sidenav-pinned')) {
       // document.body.classList.add('g-sidenav-show');

@@ -1,4 +1,3 @@
-<!-- 
 <form action="">
   <div class="container-fluid">
     <div class="card">
@@ -31,117 +30,9 @@
             </ng-template>
           </span>
           <span>
-            <p>patient phone number</p>
-            <ng-container *ngIf="patientPhone; else phoneInput">
-              {{ patientPhone }}
-            </ng-container>
-            <ng-template #phoneInput>
-              <input
-                type="text"
-                class="form-control"
-                style="width: 25vw"
-                placeholder="Enter phone number"
-                [(ngModel)]="patientPhone"
-              />
-            </ng-template>
-          </span>
-        </div>
-        <hr />
-        <div class="table-title mb-1">
-          <h4 class="title mb-0">Visit Information</h4>
-        </div>
-        <div class="container">
-          <span>
-            <p>visit type</p>
-            <p-dropdown
-              [options]="visitType"
-              [(ngModel)]="selectedType"
-            ></p-dropdown>
-          </span>
-          <span>
-            <p>visit date</p>
-            <p-calendar [(ngModel)]="selectedDate"></p-calendar>
-          </span>
-        </div>
-        <hr />
-        <div class="table-title mb-1">
-          <h4 class="title mb-0">Insurance Information</h4>
-        </div>
-        <div class="container">
-          <span>
-            <p>Patient type</p>
-            <button class="btn btn-primary">insured</button>
-            <button class="btn btn-outline-primary">uninsured</button>
-          </span>
-        </div>
-        <hr />
-        <div class="table-title mb-1">
-          <h4 class="title mb-0">Amount Details</h4>
-        </div>
-        <div class="container">
-          <span>
-            <p>Money recieved</p>
-            <input
-              type="text"
-              class="form-control"
-              style="width: 25vw"
-              placeholder="ex:100 le"
-            />
-          </span>
-          <span>
-            <p>Discount applied</p>
-            <button class="btn btn-primary">yes</button>
-            <button class="btn btn-outline-primary">no</button>
-          </span>
-        </div>
-        <div class="d-flex justify-content-end">
-          <a
-            class="btn btn-psp-primary btn-new-visit "
-            style="background-color: white; color: navy"
-          >
-            cancel
-          </a>
-          <a class="btn btn-psp-primary btn-new-visit " style="color: white;"> submit </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</form> -->
-<form action="">
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-body">
-        <a class="back-btn d-inline-block mb-4" [routerLink]="['']">
-          <i class="fa fa-arrow-left"></i>
-          Back to Home
-        </a>
-        <div class="table-title mb-1">
-          <h3 class="title mb-0">Add a Patient Visit</h3>
-        </div>
-        <hr />
-        <div class="table-title mb-1">
-          <h4 class="title mb-0">Patient Information</h4>
-        </div>
-        <div class="container">
-          <span>
-            <p>patient name</p>
-            <ng-container *ngIf="patientName; else nameInput">
-              {{ patientName }} 
-            </ng-container>
-            <ng-template #nameInput>
-              <input
-                type="text"
-                class="form-control"
-                style="width: 25vw"
-                placeholder="Enter patient name"
-                [(ngModel)]="patientName"
-              />
-            </ng-template>
-          </span>
-          <span>
             <p>Phone Number</p>
             <ng-container *ngIf="phone; else phoneInput">
-              {{ phone }} 
+              {{ phone }}
             </ng-container>
             <ng-template #phoneInput>
               <input
@@ -159,12 +50,26 @@
           <h4 class="title mb-0">Visit Information</h4>
         </div>
         <div class="container">
+          <!-- <span>
+            <p>visit type</p>
+          
+            <p-dropdown
+              [options]="visitType"
+              [(ngModel)]="selectedType"
+            ><i class='fa fa-angle-down'></i>
+          </p-dropdown>
+          </span> -->
           <span>
             <p>visit type</p>
             <p-dropdown
               [options]="visitType"
               [(ngModel)]="selectedType"
-            ></p-dropdown>
+              optionLabel="label"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                {{ option.label }} <i class="fa fa-angle-down"></i>
+              </ng-template>
+            </p-dropdown>
           </span>
           <span>
             <p>visit date</p>
@@ -178,8 +83,22 @@
         <div class="container">
           <span>
             <p>Patient type</p>
-            <button class="btn btn-primary">insured</button>
-            <button class="btn btn-outline-primary">uninsured</button>
+            <button
+              class="btn"
+              [class.btn-primary]="isPatientInsured"
+              [class.btn-outline-primary]="!isPatientInsured"
+              (click)="isPatientInsured = true"
+            >
+              insured
+            </button>
+            <button
+              class="btn"
+              [class.btn-primary]="!isPatientInsured"
+              [class.btn-outline-primary]="isPatientInsured"
+              (click)="isPatientInsured = false"
+            >
+              uninsured
+            </button>
           </span>
         </div>
         <hr />
@@ -194,22 +113,43 @@
               class="form-control"
               style="width: 25vw"
               placeholder="ex:100 le"
+              [(ngModel)]="moneyReceived"
             />
           </span>
           <span>
             <p>Discount applied</p>
-            <button class="btn btn-primary">yes</button>
-            <button class="btn btn-outline-primary">no</button>
+            <button
+              class="btn btn-primary"
+              [class.btn-primary]="isDiscountApplied"
+              [class.btn-outline-primary]="!isDiscountApplied"
+              (click)="isDiscountApplied = true"
+            >
+              yes
+            </button>
+            <button
+              class="btn btn-outline-primary"
+              [class.btn-primary]="!isDiscountApplied"
+              [class.btn-outline-primary]="isDiscountApplied"
+              (click)="isDiscountApplied = false"
+            >
+              no
+            </button>
           </span>
         </div>
         <div class="d-flex justify-content-end">
           <a
-            class="btn btn-psp-primary btn-new-visit "
+            class="btn btn-psp-primary btn-new-visit"
             style="background-color: white; color: navy"
           >
             cancel
           </a>
-          <a class="btn btn-psp-primary btn-new-visit " style="color: white;"> submit </a>
+          <a
+            class="btn btn-psp-primary btn-new-visit"
+            style="color: white"
+            (click)="(addPatientVisit)"
+          >
+            submit
+          </a>
         </div>
       </div>
     </div>

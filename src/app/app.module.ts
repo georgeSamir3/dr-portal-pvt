@@ -19,7 +19,8 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from '@components/navbar/navbar.component';
 import { FooterComponent } from '@components/footer/footer.component';
 import { SidebarComponent } from '@components/sidebar/sidebar.component';
-
+import { OverLayComponent } from './components/over-lay/over-lay.component';
+import { DropdownModule } from 'primeng/dropdown';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
 };
@@ -30,6 +31,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterComponent,
     SidebarComponent,
     appModuleRoutingComponents,
+    OverLayComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppRoutingModule,
     PerfectScrollbarModule,
     SharedModule,
+    DropdownModule
+
   ],
   providers: [
     {

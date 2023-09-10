@@ -38,11 +38,30 @@
                 <i class="ni {{ menuitem.icontype }}"></i>
                 <span class="nav-link-text">{{ menuitem.title }}</span>
               </a>
-              <a
+              <!-- <a
                 *ngIf="menuitem.type === 'sub'"
                 data-toggle="collapse"
                 routerLinkActive="active"
                 (click)="menuitem.isCollapsed = !menuitem.isCollapsed"
+                [attr.aria-expanded]="!menuitem.isCollapsed"
+                [attr.aria-controls]="menuitem.collapse"
+                class="nav-link"
+              >
+                <i class="ni {{ menuitem.icontype }}"></i>
+                <span class="nav-link-text">{{ menuitem.title }}</span>
+              </a>
+              <div
+                *ngIf="menuitem.type === 'sub'"
+                id="{{ menuitem.collapse }}"
+                class="collapse"
+                [collapse]="menuitem.isCollapsed"
+                [isAnimated]="true"
+              > -->
+              <a
+                *ngIf="menuitem.type === 'sub'"
+                data-toggle="collapse"
+                routerLinkActive="active"
+                (click)="toggleSubmenu(menuitem)"
                 [attr.aria-expanded]="!menuitem.isCollapsed"
                 [attr.aria-controls]="menuitem.collapse"
                 class="nav-link"
@@ -92,7 +111,14 @@
                           *ngFor="let childitem of childitems.children"
                           class="nav-item"
                         >
-                          <a [routerLink]="[menuitem.path, childitems.path, childitem.path]" class="nav-link">
+                          <a
+                            [routerLink]="[
+                              menuitem.path,
+                              childitems.path,
+                              childitem.path
+                            ]"
+                            class="nav-link"
+                          >
                             {{ childitem.title }}
                           </a>
                         </li>

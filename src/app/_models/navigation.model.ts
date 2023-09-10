@@ -1,4 +1,4 @@
-import { IRouteInfo } from "@interfaces/i-route-info";
+import { IRouteInfo } from '@interfaces/i-route-info';
 
 export class NavigationModel {
   routes: IRouteInfo[];
@@ -9,38 +9,45 @@ export class NavigationModel {
         path: 'home',
         title: 'Home',
         type: 'link',
-        icontype: 'fas fa-home text-primary'
+        icontype: 'fas fa-home text-primary',
+        isCollapsed: true,
       },
       {
         path: 'patientList',
         title: 'Patients List',
         type: 'link',
-        icontype: 'fas fa-users text-primary'
+        icontype: 'fas fa-users text-primary',
+        isCollapsed: true,
       },
       {
         path: 'appointments',
         title: 'Appointments',
         type: 'link',
-        icontype: 'fas fa-calendar-check text-primary'
+        icontype: 'fas fa-calendar-check text-primary',
+        isCollapsed: true,
       },
       {
         path: 'gliptus-pms',
         title: 'Gliptus PMS',
         type: 'link',
-        icontype: 'ni-briefcase-24 text-primary'
+        icontype: 'ni-briefcase-24 text-primary',
+        isCollapsed: true,
       },
       {
         path: 'drug-drug-interaction',
         title: 'Drug Drug Interaction',
         type: 'link',
-        icontype: 'ni-briefcase-24 text-primary'
+        icontype: 'ni-briefcase-24 text-primary',
+        isCollapsed: true,
       },
       {
         path: 'add-patient-visit',
         title: 'Patient Visit',
         type: 'link',
-        icontype: 'ni-briefcase-24 text-primary'
+        icontype: 'ni-briefcase-24 text-primary',
+        isCollapsed: true,
       },
+      
       // {
       //   path: '/settings',
       //   title: 'Settings',
@@ -66,7 +73,6 @@ export class NavigationModel {
       //     },
       //   ],
       // },
-
     ];
   }
 }

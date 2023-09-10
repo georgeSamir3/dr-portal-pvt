@@ -19,12 +19,11 @@
 .card-container {
   display: flex;
   flex-direction: row;
-  // justify-content: space-between;
+  justify-content: space-between;
   align-items: center;
 }
 .patient-data {
-  margin-right: 15vw;
-  margin-left: 15px;
+  margin-left: 10px;
 }
 .patient-data p {
   margin: 0;
@@ -51,4 +50,9 @@
     width: 40%;
     display: flex;
     text-align: center;
+}
+.inner-container{
+  display: flex;
+  flex-direction: row;
+
 }
