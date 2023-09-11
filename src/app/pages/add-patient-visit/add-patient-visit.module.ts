@@ -9,12 +9,14 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { LastVisitDetailsComponent } from './last-visit-details/last-visit-details.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { OverLayComponent } from '@components/over-lay/over-lay.component';
 
 @NgModule({
   declarations: [
     AddPatientVisitComponent,
     AddVisitComponent,
     LastVisitDetailsComponent,
+    OverLayComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     FormsModule,
     DropdownModule,
     CalendarModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    // OverLayComponent
 
   ]
 })

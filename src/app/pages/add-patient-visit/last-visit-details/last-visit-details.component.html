@@ -42,8 +42,15 @@
       <div class="card-body">
         <div class="table-title mb-1 edit">
           <h4 class="title mb-0">Patient Information</h4>
-          <i (click)="op.toggle($event)" style="cursor: pointer ;">edit</i>
+          <i
+            (click)="op3.toggle($event); assignTitle('Edit data')"
+            style="cursor: pointer"
+            >edit</i
+          >
         </div>
+        <p-overlayPanel #op3>
+          <over-lay [data]="title"></over-lay>
+        </p-overlayPanel>
         <div class="container">
           <span>
             <p>patient name</p>
@@ -144,111 +151,10 @@
             Delete
           </button>
           <p-overlayPanel #op>
-            <form action="">
-              <div class="container-fluid">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="table-title mb-1">
-                      <h3 class="title mb-0">Add a Revisit</h3>
-                    </div>
-                    <hr />
-                    <div class="table-title mb-1">
-                      <h4 class="title mb-0">Patient Information</h4>
-                    </div>
-                    <div class="container">
-                      <span>
-                        <p>patient name</p>
-
-                        <input
-                          type="text"
-                          class="form-control"
-                          style="width: 25vw"
-                          value="Osama"
-                          disabled
-                        />
-                      </span>
-                      <span>
-                        <p>Phone Number</p>
-                        <input
-                          type="text"
-                          class="form-control"
-                          style="width: 25vw"
-                          value="1234567899"
-                          disabled
-                        />
-                      </span>
-                    </div>
-                    <hr />
-                    <div class="table-title mb-1">
-                      <h4 class="title mb-0">Visit Information</h4>
-                    </div>
-                    <div class="container">
-                      <span>
-                        <p>visit type</p>
-                        <p-dropdown
-                          [options]="visitType"
-                          [(ngModel)]="selectedType"
-                        ></p-dropdown>
-                      </span>
-                      <span>
-                        <p>visit date</p>
-                        <p-calendar [(ngModel)]="selectedDate"></p-calendar>
-                      </span>
-                    </div>
-                    <hr />
-                    <div class="table-title mb-1">
-                      <h4 class="title mb-0">Insurance Information</h4>
-                    </div>
-                    <div class="container">
-                      <span>
-                        <p>Patient type</p>
-                        <button class="btn btn-primary">insured</button>
-                        <button class="btn btn-outline-primary">
-                          uninsured
-                        </button>
-                      </span>
-                    </div>
-                    <hr />
-                    <div class="table-title mb-1">
-                      <h4 class="title mb-0">Amount Details</h4>
-                    </div>
-                    <div class="container">
-                      <span>
-                        <p>Money recieved</p>
-                        <input
-                          type="text"
-                          class="form-control"
-                          style="width: 25vw"
-                          placeholder="ex:100 le"
-                        />
-                      </span>
-                      <span>
-                        <p>Discount applied</p>
-                        <button class="btn btn-primary">yes</button>
-                        <button class="btn btn-outline-primary">no</button>
-                      </span>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                      <a
-                        class="btn btn-psp-primary btn-new-visit"
-                        style="background-color: white; color: navy"
-                      >
-                        cancel
-                      </a>
-                      <a
-                        class="btn btn-psp-primary btn-new-visit"
-                        style="color: white"
-                      >
-                        submit
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
+            <over-lay [data]="title"></over-lay>
           </p-overlayPanel>
           <button
-            (click)="op.toggle($event)"
+            (click)="op.toggle($event); assignTitle('Add a Revisit')"
             class="btn btn-psp-primary btn-new-visit"
           >
             Revisit

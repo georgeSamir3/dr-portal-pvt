@@ -31,7 +31,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterComponent,
     SidebarComponent,
     appModuleRoutingComponents,
-    OverLayComponent,
+    // OverLayComponent,
   ],
   imports: [
     CommonModule,

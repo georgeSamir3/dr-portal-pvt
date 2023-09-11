@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OverLayComponent } from '@components/over-lay/over-lay.component';
 @Component({
   selector: 'last-visit-details',
   templateUrl: './last-visit-details.component.html',
-  styleUrls: ['./last-visit-details.component.scss']
+  styleUrls: ['./last-visit-details.component.scss'],
+  // template:'<over-lay [data]="title"></over-lay>'
 })
 export class LastVisitDetailsComponent implements OnInit {
   countries:any[];
@@ -10,7 +12,7 @@ export class LastVisitDetailsComponent implements OnInit {
   selectedDate: Date = new Date();
   visitType: any[];
   selectedType: any;
-  constructor() {
+  title: string;  constructor() {
     this.countries=[
       {label:"EG +20",value:"+20" },
       {label:"EG +20",value:"+20" },
@@ -25,5 +27,10 @@ export class LastVisitDetailsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  assignTitle(title:string): void {
+    this.title = title;
+    console.log(this.title);
+  }
 
+ 
 }
