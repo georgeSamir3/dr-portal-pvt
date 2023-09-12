@@ -7,6 +7,7 @@ import { ISmartTablePagination } from '@interfaces/smart-table/i-pagination';
 import { PatientsWithDoctorService } from '@services/home/patients-with-doctor.service/patients-with-doctor.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RouterLink } from '@angular/router';
+import { AddVisitService } from '@services/add-visit/add-visit.service';
 @Component({
   selector: 'add-patient-visit',
   templateUrl: './add-patient-visit.component.html',
@@ -37,12 +38,12 @@ export class AddPatientVisitComponent implements OnInit {
   showTable: boolean = true;
   searchedPatient: IItems[] = [];
 
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private patientsWithDoctorService: PatientsWithDoctorService
+    private patientsWithDoctorService: PatientsWithDoctorService,
+    private addVisitService: AddVisitService
   ) {}
 
   ngOnInit() {
@@ -52,8 +53,13 @@ export class AddPatientVisitComponent implements OnInit {
       totalMessage: 'total',
       selectedMessage: 'selected',
     };
+    // this.getAllVisits()
   }
-  
+  getAllVisits() {
+    this.addVisitService.getAllVisits().subscribe((response) => {
+      console.log(response);
+    });
+  }
   getAllDoctorPatients() {
     this.loading = true;
     this.spinner.show();
@@ -67,7 +73,7 @@ export class AddPatientVisitComponent implements OnInit {
           this.showTable = true;
           this.patientListItems = response.data.items;
         }
-  
+
         this.columns = [
           { prop: 'patientId', name: 'Patient ID' },
           { prop: 'fullName', name: 'Patient Name' },
@@ -79,7 +85,7 @@ export class AddPatientVisitComponent implements OnInit {
             sortable: false,
           },
         ];
-  
+
         if (this.searchValue) {
           this.totalItems = this.searchedPatient.length;
         } else {
@@ -87,26 +93,26 @@ export class AddPatientVisitComponent implements OnInit {
           this.totalPages = response.data?.pagination?.totalPages;
           this.currentPage = response.data?.pagination?.currentPage;
         }
-  
+
         this.loading = false;
         this.spinner.hide();
       });
-      console.log(this.patientListItems);
+    console.log(this.patientListItems);
   }
 
   searchPatient(value: string) {
     this.searchValue = value;
     this.currentPage = 1;
-    this.getAllDoctorPatients()
-    console.log("search item",this.searchedPatient);
+    this.getAllDoctorPatients();
+    console.log('search item', this.searchedPatient);
   }
   onChangePage(pageDetails: ISmartTablePagination) {
     this.currentPage = pageDetails.offset + 1;
     this.getAllDoctorPatients();
   }
-  showPopUp(event:MouseEvent,selectedPatient:any) {
+  showPopUp(event: MouseEvent, selectedPatient: any) {
     this.selectedPatientId = selectedPatient.patientId;
-    console.log(selectedPatient)
+    console.log(selectedPatient);
     const buttonElement = event.target as HTMLElement;
     const buttonRect = buttonElement.getBoundingClientRect();
     const buttonTop = buttonRect.top + window.pageYOffset;

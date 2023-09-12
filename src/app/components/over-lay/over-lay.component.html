@@ -1,4 +1,4 @@
-<form action="">
+<form [formGroup]="overlayForm">
   <div class="container-fluid con-parent">
     <div class="card">
       <div class="card-body">
@@ -41,7 +41,9 @@
             <p>visit type</p>
             <p-dropdown
               [options]="visitType"
-              [(ngModel)]="selectedType"
+              formControlName="visitType"
+              id="visitType"
+              name="visitType"
               optionLabel="label"
             >
             <ng-template let-option pTemplate="selectedItem">
@@ -51,18 +53,42 @@
           </span>
           <span>
             <p>visit date</p>
-            <p-calendar [(ngModel)]="selectedDate" ></p-calendar>
+            <!-- <p-calendar formControlName="selectedDate" ></p-calendar> -->
+            <p-calendar formControlName="date" [showIcon]="true"  icon="fa-clock" aria-label="Date" date-format=" M/d/yy" [showTime]="true"  placeholder="select date">
+              
+            </p-calendar>
           </span>
         </div>
         <hr />
         <div class="table-title mb-1">
           <h4 class="title mb-0">Insurance Information</h4>
         </div>
-        <div class="container">
+        <!-- <div class="container">
           <span>
             <p>Patient type</p>
             <button class="btn btn-primary">insured</button>
             <button class="btn btn-outline-primary">
+              uninsured
+            </button>
+          </span>
+        </div> -->
+        <div class="container">
+          <span>
+            <p>Patient type</p>
+            <button
+              class="btn"
+              [class.btn-primary]="overlayForm.get('isPatientInsured').value"
+              [class.btn-outline-primary]="!overlayForm.get('isPatientInsured').value"
+              (click)="updatePatientType(true,$event) "
+            >
+              insured
+            </button>
+            <button
+              class="btn"
+              [class.btn-primary]="!overlayForm.get('isPatientInsured').value"
+              [class.btn-outline-primary]="overlayForm.get('isPatientInsured').value"
+              (click)="updatePatientType(false,$event) "
+            >
               uninsured
             </button>
           </span>
@@ -79,12 +105,27 @@
               class="form-control"
               style="width: 25vw"
               placeholder="ex:100 le"
+              formControlName="moneyReceived"
             />
           </span>
           <span>
             <p>Discount applied</p>
-            <button class="btn btn-primary">yes</button>
-            <button class="btn btn-outline-primary">no</button>
+            <button
+              class="btn btn-primary"
+              [class.btn-primary]="overlayForm.get('isDiscountApplied').value"
+              [class.btn-outline-primary]="!overlayForm.get('isDiscountApplied').value"
+              (click)="updateDiscountStatus(true,$event)"
+            >
+              yes
+            </button>
+            <button
+              class="btn btn-outline-primary"
+              [class.btn-primary]="!overlayForm.get('isDiscountApplied').value"
+              [class.btn-outline-primary]="overlayForm.get('isDiscountApplied').value"
+              (click)="updateDiscountStatus(false,$event)"
+            >
+              no
+            </button>
           </span>
         </div>
         <div class="d-flex justify-content-end">

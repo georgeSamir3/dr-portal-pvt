@@ -31,3 +31,14 @@
     padding: 0.8rem 2rem !important;
     width: fit-content;
   }
+  .calendar-input {
+    position: relative;
+    max-width: fit-content;
+  }
+  
+  .calendar-input i.fa-calendar-days {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+  }

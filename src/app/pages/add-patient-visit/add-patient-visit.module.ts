@@ -10,6 +10,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { LastVisitDetailsComponent } from './last-visit-details/last-visit-details.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { OverLayComponent } from '@components/over-lay/over-lay.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { OverLayComponent } from '@components/over-lay/over-lay.component';
     DropdownModule,
     CalendarModule,
     OverlayPanelModule,
+    ReactiveFormsModule
     // OverLayComponent
 
   ]

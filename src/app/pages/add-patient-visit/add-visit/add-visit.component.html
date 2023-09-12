@@ -1,4 +1,4 @@
-<form action="">
+<form [formGroup]="userForm" (ngSubmit)="addPatientVisit()">
   <div class="container-fluid">
     <div class="card">
       <div class="card-body">
@@ -16,7 +16,7 @@
         <div class="container">
           <span>
             <p>patient name</p>
-            <ng-container *ngIf="patientName; else nameInput">
+            <ng-container *ngIf="patientName !== ''; else nameInput">
               {{ patientName }}
             </ng-container>
             <ng-template #nameInput>
@@ -25,8 +25,24 @@
                 class="form-control"
                 style="width: 25vw"
                 placeholder="Enter patient name"
-                [(ngModel)]="patientName"
+                id="fullName"
+                name="fullName"
+                formControlName="fullName"
+                (change)="inputChange()"
+                [class.is-invalid]="
+                  userForm.get('fullName').invalid &&
+                  userForm.get('fullName').touched
+                "
               />
+              <div
+                *ngIf="
+                  userForm.get('fullName').invalid &&
+                  userForm.get('fullName').touched
+                "
+                class="invalid-feedback"
+              >
+                Please enter a valid patient name.
+              </div>
             </ng-template>
           </span>
           <span>
@@ -40,8 +56,17 @@
                 class="form-control"
                 style="width: 25vw"
                 placeholder="Enter phone number"
-                [(ngModel)]="phone"
+                formControlName="phone"
+                id="phone"
+                name="phone"
+                [class.is-invalid]="userForm.get('phone').invalid && userForm.get('phone').touched"
               />
+              <div
+                *ngIf="userForm.get('phone').invalid && userForm.get('phone').touched"
+                class="invalid-feedback"
+              >
+                Please enter a valid phone number.
+              </div>
             </ng-template>
           </span>
         </div>
@@ -50,22 +75,45 @@
           <h4 class="title mb-0">Visit Information</h4>
         </div>
         <div class="container">
-         
           <span>
             <p>visit type</p>
             <p-dropdown
               [options]="visitType"
-              [(ngModel)]="selectedType"
+              formControlName="visitType"
+              id="visitType"
+              name="visitType"
               optionLabel="label"
             >
+              <!-- [(ngModel)]="selectedType" -->
               <ng-template let-option pTemplate="selectedItem">
                 {{ option.label }} <i class="fa fa-angle-down"></i>
               </ng-template>
             </p-dropdown>
           </span>
+
           <span>
             <p>visit date</p>
-            <p-calendar [(ngModel)]="selectedDate"></p-calendar>
+            <!-- <div class="calendar-input">
+              <p-calendar formControlName="date" ></p-calendar>
+              <i class="fa-solid fa-calendar-days">c</i>
+            </div> -->
+            <p-calendar
+              formControlName="date"
+              [showIcon]="true"
+              icon="fa-clock"
+              aria-label="Date"
+              date-format=" M/d/yy"
+              [showTime]="true"
+              placeholder="select date"
+              [class.is-invalid]="userForm.get('date').invalid && userForm.get('date').touched"
+            >
+            </p-calendar>
+            <div
+                *ngIf="userForm.get('date').invalid && userForm.get('date').touched"
+                class="invalid-feedback"
+              >
+                Please enter a valid date.
+              </div>
           </span>
         </div>
         <hr />
@@ -77,17 +125,21 @@
             <p>Patient type</p>
             <button
               class="btn"
-              [class.btn-primary]="isPatientInsured"
-              [class.btn-outline-primary]="!isPatientInsured"
-              (click)="isPatientInsured = true"
+              [class.btn-primary]="userForm.get('isPatientInsured').value"
+              [class.btn-outline-primary]="
+                !userForm.get('isPatientInsured').value
+              "
+              (click)="updatePatientType(true, $event)"
             >
               insured
             </button>
             <button
               class="btn"
-              [class.btn-primary]="!isPatientInsured"
-              [class.btn-outline-primary]="isPatientInsured"
-              (click)="isPatientInsured = false"
+              [class.btn-primary]="!userForm.get('isPatientInsured').value"
+              [class.btn-outline-primary]="
+                userForm.get('isPatientInsured').value
+              "
+              (click)="updatePatientType(false, $event)"
             >
               uninsured
             </button>
@@ -105,24 +157,37 @@
               class="form-control"
               style="width: 25vw"
               placeholder="ex:100 le"
-              [(ngModel)]="moneyReceived"
+              id="moneyReceived"
+              name="moneyReceived"
+              formControlName="moneyReceived"
+              [class.is-invalid]="userForm.get('moneyReceived').invalid && userForm.get('moneyReceived').touched"
             />
+            <div
+                *ngIf="userForm.get('moneyReceived').invalid && userForm.get('moneyReceived').touched"
+                class="invalid-feedback"
+              >
+                Please enter a valid amount of money.
+              </div>
           </span>
           <span>
             <p>Discount applied</p>
             <button
               class="btn btn-primary"
-              [class.btn-primary]="isDiscountApplied"
-              [class.btn-outline-primary]="!isDiscountApplied"
-              (click)="isDiscountApplied = true"
+              [class.btn-primary]="userForm.get('isDiscountApplied').value"
+              [class.btn-outline-primary]="
+                !userForm.get('isDiscountApplied').value
+              "
+              (click)="updateDiscountStatus(true, $event)"
             >
               yes
             </button>
             <button
               class="btn btn-outline-primary"
-              [class.btn-primary]="!isDiscountApplied"
-              [class.btn-outline-primary]="isDiscountApplied"
-              (click)="isDiscountApplied = false"
+              [class.btn-primary]="!userForm.get('isDiscountApplied').value"
+              [class.btn-outline-primary]="
+                userForm.get('isDiscountApplied').value
+              "
+              (click)="updateDiscountStatus(false, $event)"
             >
               no
             </button>
@@ -135,13 +200,20 @@
           >
             cancel
           </a>
-          <a
+          <!-- <a
             class="btn btn-psp-primary btn-new-visit"
             style="color: white"
             (click)="(addPatientVisit)"
           >
             submit
-          </a>
+          </a> -->
+          <button
+            type="submit"
+            class="btn btn-psp-primary btn-new-visit"
+            style="color: white"
+          >
+            submit
+          </button>
         </div>
       </div>
     </div>
