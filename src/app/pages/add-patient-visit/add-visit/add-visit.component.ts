@@ -36,20 +36,32 @@ export class AddVisitComponent implements OnInit {
   ) {
     this.visitType = [
       { label: 'Follow up', value: 'Follow up' },
-      { label: 'London', value: 'London' },
-      { label: 'Paris', value: 'Paris' },
+      { label: 'Examination', value: 'Examination' },
     ];
   }
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
       fullName: new FormControl('', Validators.required),
-      phone: new FormControl('',[ Validators.required,Validators.minLength(11),Validators.maxLength(11)]),
+      phone: new FormControl('', [
+        Validators.required,
+        Validators.minLength(11),
+        Validators.maxLength(11),
+      ]),
       isPatientInsured: new FormControl(true, Validators.required),
-      isDiscountApplied: new FormControl(false ,Validators.required),
-      moneyReceived:new FormControl(0, [Validators.required,Validators.min(1)]),
-      visitType: new FormControl([], Validators.required),
-      date:new FormControl(Date, Validators.required)
+      isDiscountApplied: new FormControl(false, Validators.required),
+      moneyReceived: new FormControl(0, [
+        Validators.required,
+        Validators.min(1),
+      ]),
+      visitType: new FormControl(
+        [
+          { label: 'Follow up', value: 'Follow up' },
+          { label: 'Examination', value: 'Examination' },
+        ],
+        Validators.required
+      ),
+      date: new FormControl(Date, Validators.required),
     });
 
     console.log('object');
@@ -111,11 +123,11 @@ export class AddVisitComponent implements OnInit {
   }
   updatePatientType(isInsured: boolean, event: Event): void {
     this.userForm.get('isPatientInsured')?.setValue(isInsured);
-    event.preventDefault()
+    event.preventDefault();
     console.log(this.userForm.get('fullName').value);
   }
   updateDiscountStatus(isApplied: boolean, event: Event): void {
     this.userForm.get('isDiscountApplied')?.setValue(isApplied);
-    event.preventDefault()
+    event.preventDefault();
   }
 }

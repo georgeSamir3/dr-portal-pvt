@@ -59,10 +59,14 @@
                 formControlName="phone"
                 id="phone"
                 name="phone"
-                [class.is-invalid]="userForm.get('phone').invalid && userForm.get('phone').touched"
+                [class.is-invalid]="
+                  userForm.get('phone').invalid && userForm.get('phone').touched
+                "
               />
               <div
-                *ngIf="userForm.get('phone').invalid && userForm.get('phone').touched"
+                *ngIf="
+                  userForm.get('phone').invalid && userForm.get('phone').touched
+                "
                 class="invalid-feedback"
               >
                 Please enter a valid phone number.
@@ -83,10 +87,11 @@
               id="visitType"
               name="visitType"
               optionLabel="label"
+              trigger="icon"
+              icon="fa fa-angle-down"
             >
-              <!-- [(ngModel)]="selectedType" -->
-              <ng-template let-option pTemplate="selectedItem">
-                {{ option.label }} <i class="fa fa-angle-down"></i>
+              <ng-template let-option pTemplate="selectedItem" >
+                  {{ option.label }} <i class="fa fa-angle-down"></i>
               </ng-template>
             </p-dropdown>
           </span>
@@ -100,20 +105,24 @@
             <p-calendar
               formControlName="date"
               [showIcon]="true"
-              icon="fa-clock"
+              icon="fa fa-calendar"
               aria-label="Date"
               date-format=" M/d/yy"
               [showTime]="true"
               placeholder="select date"
-              [class.is-invalid]="userForm.get('date').invalid && userForm.get('date').touched"
+              [class.is-invalid]="
+                userForm.get('date').invalid && userForm.get('date').touched
+              "
             >
             </p-calendar>
             <div
-                *ngIf="userForm.get('date').invalid && userForm.get('date').touched"
-                class="invalid-feedback"
-              >
-                Please enter a valid date.
-              </div>
+              *ngIf="
+                userForm.get('date').invalid && userForm.get('date').touched
+              "
+              class="invalid-feedback"
+            >
+              Please enter a valid date.
+            </div>
           </span>
         </div>
         <hr />
@@ -160,14 +169,20 @@
               id="moneyReceived"
               name="moneyReceived"
               formControlName="moneyReceived"
-              [class.is-invalid]="userForm.get('moneyReceived').invalid && userForm.get('moneyReceived').touched"
+              [class.is-invalid]="
+                userForm.get('moneyReceived').invalid &&
+                userForm.get('moneyReceived').touched
+              "
             />
             <div
-                *ngIf="userForm.get('moneyReceived').invalid && userForm.get('moneyReceived').touched"
-                class="invalid-feedback"
-              >
-                Please enter a valid amount of money.
-              </div>
+              *ngIf="
+                userForm.get('moneyReceived').invalid &&
+                userForm.get('moneyReceived').touched
+              "
+              class="invalid-feedback"
+            >
+              Please enter a valid amount of money.
+            </div>
           </span>
           <span>
             <p>Discount applied</p>

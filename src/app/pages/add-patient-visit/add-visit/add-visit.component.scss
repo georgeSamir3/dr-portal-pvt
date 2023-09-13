@@ -42,3 +42,8 @@
     right: 0.5rem;
     transform: translateY(-50%);
   }
+  .con{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
