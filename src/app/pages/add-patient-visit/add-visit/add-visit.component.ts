@@ -13,16 +13,16 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AddVisitComponent implements OnInit {
   userForm: FormGroup;
-
+  patientId: number;
   patientName: string = '';
   phone: string = '';
   visitType: any[];
-  isPatientInsured: boolean = true;
-  isDiscountApplied: boolean = false;
+  // isPatientInsured: boolean = true;
+  // isDiscountApplied: boolean = false;
   selectedType: any;
   selectedDate: Date = new Date();
   loading = false;
-  moneyReceived: number = 0;
+  // moneyReceived: number = 0;
   searchValue: string;
   currentPage: number = 1;
   pageSize: number = 10;
@@ -35,8 +35,8 @@ export class AddVisitComponent implements OnInit {
     private router: Router
   ) {
     this.visitType = [
-      { label: 'Follow up', value: 'Follow up' },
-      { label: 'Examination', value: 'Examination' },
+      { label: 'Follow up', value: 1 },
+      { label: 'Examination', value: 2 },
     ];
   }
 
@@ -87,31 +87,32 @@ export class AddVisitComponent implements OnInit {
         if (this.patientName) {
           this.phone = response.data.items[0].phone;
           this.patientName = response.data.items[0].fullName;
+          this.patientId=response.data.items[0].patientId
+        }
+        else{
+          this.patientId=0  
         }
         console.log('this phone', this.phone);
+        console.log('this id', this.patientId);
         console.log('this name', this.patientName);
       });
   }
   addPatientVisit() {
     const requestBody = {
-      DoctorId: 0,
-      PatientId: 0,
+      // DoctorId: 0,
+      PatientId: this.patientId,
       VisitTypeId: this.selectedType,
-      Date: this.selectedDate.toISOString(),
-      IsPatientInsured: this.isPatientInsured,
-      MoneyRecieved: this.moneyReceived,
-      PatientFullName: this.patientName,
-      PatientPhone: this.phone,
+      Date: this.userForm.get('date').value.toLocaleDateString('en-US'),
+      IsPatientInsured: this.userForm.get('isPatientInsured').value,
+      MoneyRecieved: this.userForm.get('moneyReceived').value,
+      PatientFullName: this.userForm.get('fullName').value,
+      PatientPhone: this.userForm.get('phone').value,
     };
 
     this.addVisitService.addVisit(requestBody).subscribe(
       (response) => {
         console.log('Visit added successfully:', response);
         this.router.navigateByUrl('/');
-        // this.patientName = '';
-        // this.phone = '';
-        // this.selectedType = null;
-        // this.selectedDate = new Date();
       },
       (error) => {
         console.error('Error adding visit:', error);
@@ -124,7 +125,9 @@ export class AddVisitComponent implements OnInit {
   updatePatientType(isInsured: boolean, event: Event): void {
     this.userForm.get('isPatientInsured')?.setValue(isInsured);
     event.preventDefault();
-    console.log(this.userForm.get('fullName').value);
+    console.log(
+      this.userForm.get('date').value.toLocaleDateString('en-US')
+    );
   }
   updateDiscountStatus(isApplied: boolean, event: Event): void {
     this.userForm.get('isDiscountApplied')?.setValue(isApplied);

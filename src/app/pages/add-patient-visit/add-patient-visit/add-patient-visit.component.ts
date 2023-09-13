@@ -43,7 +43,7 @@ export class AddPatientVisitComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private patientsWithDoctorService: PatientsWithDoctorService,
-    private addVisitService: AddVisitService
+    private addVisitService: AddVisitService,
   ) {}
 
   ngOnInit() {
@@ -126,4 +126,5 @@ export class AddPatientVisitComponent implements OnInit {
 
     this.showOverlay = !this.showOverlay;
   }
+  
 }
