@@ -46,14 +46,14 @@
               class="bi bi-three-dots"
               style="cursor: pointer"
               (click)="showPopUp($event, row)"
-              >g</span
+              >...</span
             >
-            <div
+            <!-- <div
               class="overlay floatinSM"
               *ngIf="showOverlay && selectedPatientId === row.patientId"
             >
               <div class="overlay-content">ggg</div>
-            </div>
+            </div> -->
           </ng-template>
         </ngx-datatable>
       </ng-container>
@@ -65,24 +65,24 @@
               <div class="patient-avatar"></div>
               <div class="patient-data">
                 <p>patient name</p>
-                {{ patient.fullName }}
+                {{ patient.patientName}}
               </div>
             </div>
             <div class="patient-data">
               <p>patient number</p>
-              {{ patient.phone }}
+              {{ patient.patientPhone }}
             </div>
             <div class="inner-container">
               <a
                 class="btn btn-psp-primary btn-new-visit btn-block"
                 style="background-color: white; color: navy"
-                [routerLink]="['lastvisit']"
+                [routerLink]="['lastvisit',patient.patientId]"
               >
                 last visit
               </a>
               <a
                 class="btn btn-psp-primary btn-new-visit btn-block"
-                [routerLink]="['addvisit', patient.fullName]"
+                [routerLink]="['addvisit', patient.patientName]"
                 style="margin: 0"
               >
                 new Visit

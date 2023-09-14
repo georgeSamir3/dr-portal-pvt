@@ -13,7 +13,7 @@
         <div class="user-container">
           <div class="flex-row">
             <div class="patient-avatar"></div>
-            <p>john doe</p>
+            <p>{{lastVisitDetails.patientName}}</p>
           </div>
           <div class="flex-row">
             <!-- <a
@@ -49,16 +49,19 @@
           >
         </div>
         <p-overlayPanel #op3>
-          <over-lay [data]="title"></over-lay>
+          <!-- <over-lay [data]="title"></over-lay> -->
+          <ng-template pTemplate>
+            <add-visit [data]="lastVisitDetails" [type]="edit" ></add-visit>
+          </ng-template>
         </p-overlayPanel>
         <div class="container">
           <span>
             <p>patient name</p>
-            just a placeholder
+            {{lastVisitDetails.patientName}}
           </span>
           <span>
             <p>patient phone number</p>
-            just a placeholder
+            {{lastVisitDetails.patientPhone}}
           </span>
         </div>
         <hr />
@@ -68,9 +71,11 @@
         <div class="container">
           <span>
             <p>visit type</p>
+            {{lastVisitDetails.visitType}}
           </span>
           <span>
             <p>visit date</p>
+            {{lastVisitDetails.visitDate}}
           </span>
         </div>
         <hr />
@@ -80,7 +85,7 @@
         <div class="container">
           <span>
             <p>Patient type</p>
-            Insured
+            {{lastVisitDetails.patientType}}
           </span>
         </div>
         <hr />
@@ -90,11 +95,11 @@
         <div class="container">
           <span>
             <p>Money recieved</p>
-            500
+            {{lastVisitDetails.visitAmount}}
           </span>
           <span>
             <p>Discount applied</p>
-            yes
+            {{lastVisitDetails.visitDiscount}}
           </span>
         </div>
         <div class="d-flex justify-content-end">
@@ -151,7 +156,10 @@
             Delete
           </button>
           <p-overlayPanel #op>
-            <over-lay [data]="title"></over-lay>
+            <!-- <over-lay [data]="title"></over-lay> -->
+            <ng-template pTemplate>
+              <add-visit [data]="lastVisitDetails" [type]="revisit"></add-visit>
+            </ng-template>
           </p-overlayPanel>
           <button
             (click)="op.toggle($event); assignTitle('Add a Revisit')"

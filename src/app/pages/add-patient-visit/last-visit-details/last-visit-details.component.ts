@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { OverLayComponent } from '@components/over-lay/over-lay.component';
 import { AddVisitService } from '@services/add-visit/add-visit.service';
 @Component({
@@ -11,20 +12,33 @@ import { AddVisitService } from '@services/add-visit/add-visit.service';
 export class LastVisitDetailsComponent implements OnInit {
   lastVisitForm: FormGroup;
   lastVisitDetails: any;
-  userForm:FormGroup
- 
+  edit='edit'
+  revisit='revisit'
+  userForm: FormGroup;
+
+  // fullName: string;
+  // phone: string;
+  // visitDate: Date;
+  // patientType: string;
+  // visitAmount:number;
+  // visitDiscount:boolean;
+  // visitTypeO:string;
+  patientId: number;
+  
   selectedCountry;
   selectedDate: Date = new Date();
   visitType: any[];
   selectedType: any;
   title: string;
-  constructor(private addVisitService: AddVisitService) {
-    
-      (this.visitType = [
-        { label: 'Follow up', value: 'Follow up' },
-        { label: 'London', value: 'London' },
-        { label: 'Paris', value: 'Paris' },
-      ]);
+  constructor(
+    private addVisitService: AddVisitService,
+    private route: ActivatedRoute
+  ) {
+    this.visitType = [
+      { label: 'Follow up', value: 'Follow up' },
+      { label: 'London', value: 'London' },
+      { label: 'Paris', value: 'Paris' },
+    ];
   }
 
   ngOnInit(): void {
@@ -57,15 +71,29 @@ export class LastVisitDetailsComponent implements OnInit {
       selectedType: new FormControl(),
       title: new FormControl(),
     });
+    this.route.params.subscribe((param) => {
+      console.log(param);
+      if (param['patientId']) {
+        this.patientId = param['patientId'];
+        // this.getAllVisits();
+      }
+      console.log('params', this.patientId);
+    });
+    this.getLastVisit();
   }
   assignTitle(title: string): void {
     this.title = title;
     console.log(this.title);
   }
   getLastVisit() {
-    this.addVisitService.getLastVisit().subscribe(
-      (response) => { this.lastVisitDetails = response;},
-      (error) =>{ console.log('error retreiving dara:' + error)}
+    this.addVisitService.getLastVisit(this.patientId).subscribe(
+      (response) => {
+        this.lastVisitDetails = response.data;
+        console.log(this.lastVisitDetails);
+      },
+      (error) => {
+        console.log('error retreiving data:' + error);
+      }
     );
   }
   addPatientVisit() {
@@ -74,10 +102,10 @@ export class LastVisitDetailsComponent implements OnInit {
       PatientId: 0,
       VisitTypeId: this.selectedType,
       Date: this.selectedDate,
-      IsPatientInsured: this.userForm.get("isPatientInsured").value,
-      MoneyRecieved: this.userForm.get("moneyReceived").value,
-      PatientFullName: this.userForm.get("fullName").value,
-      PatientPhone: this.userForm.get("phone").value,
+      IsPatientInsured: this.userForm.get('isPatientInsured').value,
+      MoneyReceived: this.userForm.get('moneyReceived').value,
+      PatientFullName: this.userForm.get('fullName').value,
+      PatientPhone: this.userForm.get('phone').value,
     };
 
     this.addVisitService.addVisit(requestBody).subscribe(

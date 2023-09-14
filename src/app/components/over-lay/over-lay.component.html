@@ -1,9 +1,9 @@
-<form [formGroup]="overlayForm">
+<form [formGroup]="userForm">
   <div class="container-fluid con-parent">
     <div class="card">
       <div class="card-body">
         <div class="table-title mb-1">
-          <h3 class="title mb-0">{{data}}</h3>
+          <h3 class="title mb-0">{{ data }}</h3>
         </div>
         <hr />
         <div class="table-title mb-1">
@@ -17,8 +17,8 @@
               type="text"
               class="form-control"
               style="width: 25vw"
-              value="Osama"
-              disabled
+              formControlName="fullName"
+              
             />
           </span>
           <span>
@@ -27,8 +27,8 @@
               type="text"
               class="form-control"
               style="width: 25vw"
-              value="1234567899"
-              disabled
+              formControlName="phone"
+              
             />
           </span>
         </div>
@@ -46,16 +46,23 @@
               name="visitType"
               optionLabel="label"
             >
-            <ng-template let-option pTemplate="selectedItem">
-              {{ option.label }} <i class="fa fa-angle-down"></i>
-            </ng-template>
-          </p-dropdown>
+              <ng-template let-option pTemplate="selectedItem">
+                {{ option.label }} <i class="fa fa-angle-down"></i>
+              </ng-template>
+            </p-dropdown>
           </span>
           <span>
             <p>visit date</p>
             <!-- <p-calendar formControlName="selectedDate" ></p-calendar> -->
-            <p-calendar formControlName="date" [showIcon]="true"  icon="fa-clock" aria-label="Date" date-format=" M/d/yy" [showTime]="true"  placeholder="select date">
-              
+            <p-calendar
+              formControlName="date"
+              [showIcon]="true"
+              icon="fa-clock"
+              aria-label="Date"
+              date-format=" M/d/yy"
+              [showTime]="true"
+              placeholder="select date"
+            >
             </p-calendar>
           </span>
         </div>
@@ -78,16 +85,20 @@
             <button
               class="btn"
               [class.btn-primary]="overlayForm.get('isPatientInsured').value"
-              [class.btn-outline-primary]="!overlayForm.get('isPatientInsured').value"
-              (click)="updatePatientType(true,$event) "
+              [class.btn-outline-primary]="
+                !overlayForm.get('isPatientInsured').value
+              "
+              (click)="updatePatientType(true, $event)"
             >
               insured
             </button>
             <button
               class="btn"
               [class.btn-primary]="!overlayForm.get('isPatientInsured').value"
-              [class.btn-outline-primary]="overlayForm.get('isPatientInsured').value"
-              (click)="updatePatientType(false,$event) "
+              [class.btn-outline-primary]="
+                overlayForm.get('isPatientInsured').value
+              "
+              (click)="updatePatientType(false, $event)"
             >
               uninsured
             </button>
@@ -113,16 +124,20 @@
             <button
               class="btn btn-primary"
               [class.btn-primary]="overlayForm.get('isDiscountApplied').value"
-              [class.btn-outline-primary]="!overlayForm.get('isDiscountApplied').value"
-              (click)="updateDiscountStatus(true,$event)"
+              [class.btn-outline-primary]="
+                !overlayForm.get('isDiscountApplied').value
+              "
+              (click)="updateDiscountStatus(true, $event)"
             >
               yes
             </button>
             <button
               class="btn btn-outline-primary"
               [class.btn-primary]="!overlayForm.get('isDiscountApplied').value"
-              [class.btn-outline-primary]="overlayForm.get('isDiscountApplied').value"
-              (click)="updateDiscountStatus(false,$event)"
+              [class.btn-outline-primary]="
+                overlayForm.get('isDiscountApplied').value
+              "
+              (click)="updateDiscountStatus(false, $event)"
             >
               no
             </button>
@@ -138,6 +153,7 @@
           <a
             class="btn btn-psp-primary btn-new-visit"
             style="color: white"
+            (click)="addPatientVisit()"
           >
             submit
           </a>

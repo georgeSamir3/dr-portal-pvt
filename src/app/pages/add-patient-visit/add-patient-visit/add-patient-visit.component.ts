@@ -8,6 +8,7 @@ import { PatientsWithDoctorService } from '@services/home/patients-with-doctor.s
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RouterLink } from '@angular/router';
 import { AddVisitService } from '@services/add-visit/add-visit.service';
+import { IVisits } from '@interfaces/visits/visits';
 @Component({
   selector: 'add-patient-visit',
   templateUrl: './add-patient-visit.component.html',
@@ -15,7 +16,7 @@ import { AddVisitService } from '@services/add-visit/add-visit.service';
 })
 export class AddPatientVisitComponent implements OnInit {
   patientList: IPatientList[] = [];
-  patientListItems: IItems[] = [];
+  patientListItems: any[] = [];
   patientListThead: string[];
   mappedPatientList: {
     patientid: number;
@@ -37,65 +38,116 @@ export class AddPatientVisitComponent implements OnInit {
   selectedPatientId: number | null = null;
   showTable: boolean = true;
   searchedPatient: IItems[] = [];
-
+  isRecentVisit: boolean = true;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
     private patientsWithDoctorService: PatientsWithDoctorService,
-    private addVisitService: AddVisitService,
+    private addVisitService: AddVisitService
   ) {}
 
   ngOnInit() {
-    this.getAllDoctorPatients();
+    // this.getAllDoctorPatients();
     this.messages = {
       emptyMessage: 'Hmm, There is no patients to display😔',
       totalMessage: 'total',
       selectedMessage: 'selected',
     };
-    // this.getAllVisits()
+    this.getAllVisits();
   }
+
   getAllVisits() {
-    this.addVisitService.getAllVisits().subscribe((response) => {
-      console.log(response);
-    });
+    this.loading = true;
+    this.spinner.show();
+    this.addVisitService
+      .getAllVisits(
+        this.pageSize,
+        this.currentPage,
+        this.isRecentVisit,
+        this.searchValue
+      )
+      .subscribe(
+        (response) => {
+          console.log(response.data.items);
+          if (this.searchValue) {
+            this.showTable = false;
+            this.searchedPatient = response.data.items;
+            console.log('search', this.searchedPatient);
+          } else {
+            this.showTable = true;
+            this.patientListItems = response.data.items;
+          }
+          this.columns = [
+            { prop: 'visitType', name: 'Types' },
+            { prop: 'patientName', name: 'Name' },
+            { prop: 'phone', name: 'Phone' },
+            { prop: 'visitDate', name: 'Date' },
+            { prop: 'visitDiscount', name: 'Discount' },
+            { prop: 'patientType', name: 'Patient Type' },
+            { prop: 'visitStatus', name: 'Status' },
+            { prop: 'visitAmount', name: 'Amount' },
+            {
+              prop: 'Ehr',
+              name: '',
+              cellTemplate: this.ehrButtonTemplateRef,
+              sortable: false,
+            },
+          ];
+          if (this.searchValue) {
+            this.totalItems = this.searchedPatient.length;
+          } else {
+            this.totalItems = response.data?.pagination?.totalItems;
+            this.totalPages = response.data?.pagination?.totalPages;
+            this.currentPage = response.data?.pagination?.currentPage;
+          }
+
+          this.loading = false;
+          this.spinner.hide();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
+
   getAllDoctorPatients() {
     this.loading = true;
     this.spinner.show();
     this.patientsWithDoctorService
       .getAllDoctorPatients(this.searchValue, this.currentPage, this.pageSize)
       .subscribe((response) => {
+        console.log(response);
         if (this.searchValue) {
           this.showTable = false;
-          this.searchedPatient = response.data.items;
+          // this.searchedPatient = response.data.items;
         } else {
           this.showTable = true;
-          this.patientListItems = response.data.items;
+          // this.patientListItems = response.data.items;
         }
 
-        this.columns = [
-          { prop: 'patientId', name: 'Patient ID' },
-          { prop: 'fullName', name: 'Patient Name' },
-          { prop: 'phone', name: 'Patient Phone' },
-          {
-            prop: 'Ehr',
-            name: '',
-            cellTemplate: this.ehrButtonTemplateRef,
-            sortable: false,
-          },
-        ];
+        // this.columns = [
+        //   { prop: 'patientId', name: 'Patient ID' },
+        //   { prop: 'fullName', name: 'Patient Name' },
+        //   { prop: 'phone', name: 'Patient Phone' },
+        //   {
+        //     prop: 'Ehr',
+        //     name: '',
+        //     cellTemplate: this.ehrButtonTemplateRef,
+        //     sortable: false,
+        //   },
+        // ];
 
-        if (this.searchValue) {
-          this.totalItems = this.searchedPatient.length;
-        } else {
-          this.totalItems = response.data?.pagination?.totalItems;
-          this.totalPages = response.data?.pagination?.totalPages;
-          this.currentPage = response.data?.pagination?.currentPage;
-        }
+        // if (this.searchValue) {
+        //   this.totalItems = this.searchedPatient.length;
+        // } else {
+        //   this.totalItems = response.data?.pagination?.totalItems;
+        //   this.totalPages = response.data?.pagination?.totalPages;
+        //   this.currentPage = response.data?.pagination?.currentPage;
+        // }
 
-        this.loading = false;
-        this.spinner.hide();
+        // this.loading = false;
+        // this.spinner.hide();
       });
     console.log(this.patientListItems);
   }
@@ -103,7 +155,7 @@ export class AddPatientVisitComponent implements OnInit {
   searchPatient(value: string) {
     this.searchValue = value;
     this.currentPage = 1;
-    this.getAllDoctorPatients();
+    this.getAllVisits();
     console.log('search item', this.searchedPatient);
   }
   onChangePage(pageDetails: ISmartTablePagination) {
@@ -126,5 +178,4 @@ export class AddPatientVisitComponent implements OnInit {
 
     this.showOverlay = !this.showOverlay;
   }
-  
 }

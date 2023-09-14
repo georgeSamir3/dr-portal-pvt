@@ -10,7 +10,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   { path: 'addvisit/:fullName', component: AddVisitComponent },
-  { path: 'lastvisit', component: LastVisitDetailsComponent },
+  { path: 'lastvisit/:patientId', component: LastVisitDetailsComponent },
 ];
 
 @NgModule({
