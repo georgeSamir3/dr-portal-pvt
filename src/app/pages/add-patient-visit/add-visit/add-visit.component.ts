@@ -14,8 +14,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./add-visit.component.scss'],
 })
 export class AddVisitComponent implements OnInit {
-  @Input() data:any;
-  // @Input() type:string;
+  @Input() data: any;
+  @Input() type: string;
   userForm: FormGroup;
   patientId: number;
   patientName: string = '';
@@ -31,7 +31,9 @@ export class AddVisitComponent implements OnInit {
   searchValue: string;
   currentPage: number = 1;
   pageSize: number = 10;
-
+  // dates:Date=new Date()
+  retreivedDate:Date;
+  finalPatientId:number
   constructor(
     private route: ActivatedRoute,
     private patientsWithDoctorService: PatientsWithDoctorService,
@@ -47,7 +49,7 @@ export class AddVisitComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("the data passed",this.data);
+    console.log('the data passed', this.data);
     this.userForm = new FormGroup({
       fullName: new FormControl('', Validators.required),
       phone: new FormControl('', [
@@ -71,17 +73,41 @@ export class AddVisitComponent implements OnInit {
       date: new FormControl(Date, Validators.required),
       selectedType: new FormControl(),
     });
+
+    if (this.type === 'edit' && this.data) {
+      let {
+        patientName,
+        patientPhone,
+        patientType,
+        visitDiscount,
+        visitAmount,
+        visitType,
+        visitDate,
+        patientId
+      } = this.data;
+      this.patientId=patientId;
+      this.userForm.patchValue({
+
+        fullName: patientName || '',
+        phone: patientPhone || '',
+        isPatientInsured: patientType || true,
+        isDiscountApplied: visitDiscount=="yes"?true : false||false,
+        moneyReceived: visitAmount || 0,
+        visitType: visitType || null,
+        date: new Date(visitDate) || null,
+      });
+    }
+
     this.route.params.subscribe((param) => {
       console.log(param);
       if (param['fullName']) {
         this.patientName = param['fullName'];
-        // this.getAllVisits();
       }
-      console.log("params",this.patientName);
+      console.log('params', this.patientName);
     });
     this.getVisit();
   }
-  
+
   getVisit() {
     this.loading = true;
     this.spinner.show();
@@ -94,12 +120,13 @@ export class AddVisitComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          console.log("data:",response.data.items);
+          console.log('data:', response.data.items);
           if (this.patientName) {
             this.phone = response.data.items[0].patientPhone;
-            console.log("phone",this.phone);
+            console.log('phone', this.phone);
             this.patientId = response.data.items[0].patientId;
-          } else {
+          }
+           else {
             this.patientId = 0;
           }
 
@@ -154,10 +181,13 @@ export class AddVisitComponent implements OnInit {
   updatePatientType(isInsured: boolean, event: Event): void {
     this.userForm.get('isPatientInsured')?.setValue(isInsured);
     event.preventDefault();
-    // console.log(
-    //   this.userForm.get("selectedType").value.value,
-    //   // this.selectedType
-    // );
+    console.log(
+      this.userForm.get("date").value,
+      new Date(this.userForm.get("date").value),
+      // this.dates
+      // this.selectedType
+    );
+
   }
   updateDiscountStatus(isApplied: boolean, event: Event): void {
     this.userForm.get('isDiscountApplied')?.setValue(isApplied);

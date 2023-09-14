@@ -39,6 +39,7 @@ export class AddPatientVisitComponent implements OnInit {
   showTable: boolean = true;
   searchedPatient: IItems[] = [];
   isRecentVisit: boolean = true;
+  showCard:boolean=false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -101,67 +102,30 @@ export class AddPatientVisitComponent implements OnInit {
             this.totalPages = response.data?.pagination?.totalPages;
             this.currentPage = response.data?.pagination?.currentPage;
           }
-
           this.loading = false;
           this.spinner.hide();
         },
         (error) => {
+          this.showTable=false
+          this.showCard=true;
+          console.log("searched items",this.searchedPatient.length,this.showTable,this.showCard);
           console.log(error);
         }
       );
   }
 
-  getAllDoctorPatients() {
-    this.loading = true;
-    this.spinner.show();
-    this.patientsWithDoctorService
-      .getAllDoctorPatients(this.searchValue, this.currentPage, this.pageSize)
-      .subscribe((response) => {
-        console.log(response);
-        if (this.searchValue) {
-          this.showTable = false;
-          // this.searchedPatient = response.data.items;
-        } else {
-          this.showTable = true;
-          // this.patientListItems = response.data.items;
-        }
-
-        // this.columns = [
-        //   { prop: 'patientId', name: 'Patient ID' },
-        //   { prop: 'fullName', name: 'Patient Name' },
-        //   { prop: 'phone', name: 'Patient Phone' },
-        //   {
-        //     prop: 'Ehr',
-        //     name: '',
-        //     cellTemplate: this.ehrButtonTemplateRef,
-        //     sortable: false,
-        //   },
-        // ];
-
-        // if (this.searchValue) {
-        //   this.totalItems = this.searchedPatient.length;
-        // } else {
-        //   this.totalItems = response.data?.pagination?.totalItems;
-        //   this.totalPages = response.data?.pagination?.totalPages;
-        //   this.currentPage = response.data?.pagination?.currentPage;
-        // }
-
-        // this.loading = false;
-        // this.spinner.hide();
-      });
-    console.log(this.patientListItems);
-  }
+  
 
   searchPatient(value: string) {
     this.searchValue = value;
     this.currentPage = 1;
     this.getAllVisits();
-    console.log('search item', this.searchedPatient);
   }
   onChangePage(pageDetails: ISmartTablePagination) {
     this.currentPage = pageDetails.offset + 1;
-    this.getAllDoctorPatients();
+    this.getAllVisits();
   }
+
   showPopUp(event: MouseEvent, selectedPatient: any) {
     this.selectedPatientId = selectedPatient.patientId;
     console.log(selectedPatient);
@@ -178,4 +142,47 @@ export class AddPatientVisitComponent implements OnInit {
 
     this.showOverlay = !this.showOverlay;
   }
+
 }
+
+
+// getAllDoctorPatients() {
+//   this.loading = true;
+//   this.spinner.show();
+//   this.patientsWithDoctorService
+//     .getAllDoctorPatients(this.searchValue, this.currentPage, this.pageSize)
+//     .subscribe((response) => {
+//       console.log(response);
+//       if (this.searchValue) {
+//         this.showTable = false;
+//         // this.searchedPatient = response.data.items;
+//       } else {
+//         this.showTable = true;
+//         // this.patientListItems = response.data.items;
+//       }
+
+//       // this.columns = [
+//       //   { prop: 'patientId', name: 'Patient ID' },
+//       //   { prop: 'fullName', name: 'Patient Name' },
+//       //   { prop: 'phone', name: 'Patient Phone' },
+//       //   {
+//       //     prop: 'Ehr',
+//       //     name: '',
+//       //     cellTemplate: this.ehrButtonTemplateRef,
+//       //     sortable: false,
+//       //   },
+//       // ];
+
+//       // if (this.searchValue) {
+//       //   this.totalItems = this.searchedPatient.length;
+//       // } else {
+//       //   this.totalItems = response.data?.pagination?.totalItems;
+//       //   this.totalPages = response.data?.pagination?.totalPages;
+//       //   this.currentPage = response.data?.pagination?.currentPage;
+//       // }
+
+//       // this.loading = false;
+//       // this.spinner.hide();
+//     });
+//   console.log(this.patientListItems);
+// }

@@ -58,7 +58,7 @@
         </ngx-datatable>
       </ng-container>
 
-      <div class="patient-container mt-3" *ngIf="!showTable">
+      <div class="patient-container mt-3" *ngIf="!showTable&&!showCard">
         <div class="card" *ngFor="let patient of searchedPatient">
           <div class="card-body card-container">
             <div class="inner-container">
@@ -90,7 +90,10 @@
             </div>
           </div>
         </div>
-        <div *ngIf="searchedPatient.length === 0" class="empty-patient-list">
+        
+      </div>
+     
+        <div *ngIf="showCard" class="empty-patient-list">
           <svg
             width="78"
             height="93"
@@ -463,7 +466,6 @@
             New Visit
           </a>
         </div>
-      </div>
     </div>
   </div>
 </div>
