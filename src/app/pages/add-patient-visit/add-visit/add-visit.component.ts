@@ -21,17 +21,13 @@ export class AddVisitComponent implements OnInit {
   patientName: string = '';
   phone: string = '';
   visitType: any[];
-  // isPatientInsured: boolean = true;
-  // isDiscountApplied: boolean = false;
   isRecentVisit: boolean = true;
   selectedType: any;
   selectedDate: Date = new Date();
   loading = false;
-  // moneyReceived: number = 0;
   searchValue: string;
   currentPage: number = 1;
   pageSize: number = 10;
-  // dates:Date=new Date()
   retreivedDate:Date;
   finalPatientId:number
   constructor(
@@ -181,12 +177,11 @@ export class AddVisitComponent implements OnInit {
   updatePatientType(isInsured: boolean, event: Event): void {
     this.userForm.get('isPatientInsured')?.setValue(isInsured);
     event.preventDefault();
-    console.log(
-      this.userForm.get("date").value,
-      new Date(this.userForm.get("date").value),
-      // this.dates
-      // this.selectedType
-    );
+    // console.log(
+    //   this.userForm.get("date").value,
+    //   new Date(this.userForm.get("date").value),
+      
+    // );
 
   }
   updateDiscountStatus(isApplied: boolean, event: Event): void {

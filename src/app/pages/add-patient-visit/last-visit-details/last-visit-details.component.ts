@@ -15,14 +15,6 @@ export class LastVisitDetailsComponent implements OnInit {
   edit='edit'
   revisit='revisit'
   userForm: FormGroup;
-
-  // fullName: string;
-  // phone: string;
-  // visitDate: Date;
-  // patientType: string;
-  // visitAmount:number;
-  // visitDiscount:boolean;
-  // visitTypeO:string;
   patientId: number;
   
   selectedCountry;

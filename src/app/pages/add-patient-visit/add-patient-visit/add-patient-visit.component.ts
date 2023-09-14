@@ -49,7 +49,6 @@ export class AddPatientVisitComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.getAllDoctorPatients();
     this.messages = {
       emptyMessage: 'Hmm, There is no patients to display😔',
       totalMessage: 'total',
@@ -103,6 +102,7 @@ export class AddPatientVisitComponent implements OnInit {
             this.currentPage = response.data?.pagination?.currentPage;
           }
           this.loading = false;
+          this.showCard=false;
           this.spinner.hide();
         },
         (error) => {
@@ -144,45 +144,3 @@ export class AddPatientVisitComponent implements OnInit {
   }
 
 }
-
-
-// getAllDoctorPatients() {
-//   this.loading = true;
-//   this.spinner.show();
-//   this.patientsWithDoctorService
-//     .getAllDoctorPatients(this.searchValue, this.currentPage, this.pageSize)
-//     .subscribe((response) => {
-//       console.log(response);
-//       if (this.searchValue) {
-//         this.showTable = false;
-//         // this.searchedPatient = response.data.items;
-//       } else {
-//         this.showTable = true;
-//         // this.patientListItems = response.data.items;
-//       }
-
-//       // this.columns = [
-//       //   { prop: 'patientId', name: 'Patient ID' },
-//       //   { prop: 'fullName', name: 'Patient Name' },
-//       //   { prop: 'phone', name: 'Patient Phone' },
-//       //   {
-//       //     prop: 'Ehr',
-//       //     name: '',
-//       //     cellTemplate: this.ehrButtonTemplateRef,
-//       //     sortable: false,
-//       //   },
-//       // ];
-
-//       // if (this.searchValue) {
-//       //   this.totalItems = this.searchedPatient.length;
-//       // } else {
-//       //   this.totalItems = response.data?.pagination?.totalItems;
-//       //   this.totalPages = response.data?.pagination?.totalPages;
-//       //   this.currentPage = response.data?.pagination?.currentPage;
-//       // }
-
-//       // this.loading = false;
-//       // this.spinner.hide();
-//     });
-//   console.log(this.patientListItems);
-// }
