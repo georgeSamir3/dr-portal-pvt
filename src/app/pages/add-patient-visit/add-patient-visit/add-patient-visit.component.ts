@@ -39,7 +39,7 @@ export class AddPatientVisitComponent implements OnInit {
   showTable: boolean = true;
   searchedPatient: IItems[] = [];
   isRecentVisit: boolean = true;
-  showCard:boolean=false;
+  showCard: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -77,22 +77,23 @@ export class AddPatientVisitComponent implements OnInit {
           } else {
             this.showTable = true;
             this.patientListItems = response.data.items;
+            console.log(this.patientListItems);
           }
           this.columns = [
             { prop: 'visitType', name: 'Types' },
             { prop: 'patientName', name: 'Name' },
-            { prop: 'phone', name: 'Phone' },
+            { prop: 'patientPhone', name: 'Phone' },
             { prop: 'visitDate', name: 'Date' },
             { prop: 'visitDiscount', name: 'Discount' },
             { prop: 'patientType', name: 'Patient Type' },
             { prop: 'visitStatus', name: 'Status' },
             { prop: 'visitAmount', name: 'Amount' },
-            {
-              prop: 'Ehr',
-              name: '',
-              cellTemplate: this.ehrButtonTemplateRef,
-              sortable: false,
-            },
+            // {
+            //   prop: 'Ehr',
+            //   name: '',
+            //   cellTemplate: this.ehrButtonTemplateRef,
+            //   sortable: false,
+            // },
           ];
           if (this.searchValue) {
             this.totalItems = this.searchedPatient.length;
@@ -102,19 +103,22 @@ export class AddPatientVisitComponent implements OnInit {
             this.currentPage = response.data?.pagination?.currentPage;
           }
           this.loading = false;
-          this.showCard=false;
+          this.showCard = false;
           this.spinner.hide();
         },
         (error) => {
-          this.showTable=false
-          this.showCard=true;
-          console.log("searched items",this.searchedPatient.length,this.showTable,this.showCard);
+          this.showTable = false;
+          this.showCard = true;
+          console.log(
+            'searched items',
+            this.searchedPatient.length,
+            this.showTable,
+            this.showCard
+          );
           console.log(error);
         }
       );
   }
-
-  
 
   searchPatient(value: string) {
     this.searchValue = value;
@@ -142,5 +146,4 @@ export class AddPatientVisitComponent implements OnInit {
 
     this.showOverlay = !this.showOverlay;
   }
-
 }

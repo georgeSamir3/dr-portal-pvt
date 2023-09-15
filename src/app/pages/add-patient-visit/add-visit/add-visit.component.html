@@ -2,12 +2,20 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-body">
+        <div *ngIf="!data">
         <a class="back-btn d-inline-block mb-4" [routerLink]="['']">
           <i class="fa fa-arrow-left"></i>
           Back to Home
         </a>
-        <div class="table-title mb-1">
+      </div >
+        <div class="table-title mb-1" *ngIf="!data">
           <h3 class="title mb-0">Add a Patient Visit</h3>
+        </div>
+        <div class="table-title mb-1" *ngIf="data&&type==='edit'">
+          <h3 class="title mb-0">Edit Visit</h3>
+        </div>
+        <div class="table-title mb-1" *ngIf="data &&type==='revisit'">
+          <h3 class="title mb-0">Revisit</h3>
         </div>
         <hr />
         <div class="table-title mb-1">
@@ -222,20 +230,13 @@
             </button>
           </span>
         </div>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex " [class]="data ?'justify-content-center': 'justify-content-end' " style="margin: 20px;">
           <a
             class="btn btn-psp-primary btn-new-visit"
             style="background-color: white; color: navy"
           >
             cancel
           </a>
-          <!-- <a
-            class="btn btn-psp-primary btn-new-visit"
-            style="color: white"
-            (click)="(addPatientVisit)"
-          >
-            submit
-          </a> -->
           <button
             type="submit"
             class="btn btn-psp-primary btn-new-visit"
