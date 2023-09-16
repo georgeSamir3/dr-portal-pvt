@@ -9,7 +9,7 @@ import { ClinicFeesComponent } from './clinic-fees/clinic-fees.component';
     ClinicFeesComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ]
 })
 export class ClinicFeesModule { }
